@@ -1,13 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.dataart.spring.i18n.text"/>
-<html lang="${language}">
+<html lang='<spring:message code="language" text="language" />'>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,7 +45,6 @@
 					</tr>
 				</tbody>
 			</table>
-			<strong><spring:message code="test.message" /></strong>
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->

@@ -1,8 +1,8 @@
 <div class="navbar-form navbar-right">
 	<p style="color: white;">
-		<fmt:message key="log_as" /> ${account.login}.
+		<spring:message code="log_as" text="log_as" /> ${account.login}.
 		<a href="logout">
-			<fmt:message key="log_out" />
+			<spring:message code="log_out" text="log_out" />
 		</a>
 	</p>
 </div>

@@ -26,15 +26,8 @@
 
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<beans:property name="basename" value="messages" />
+		<beans:property name="basename" value="WEB-INF/messages" />
 		<beans:property name="defaultEncoding" value="UTF-8" />
-	</beans:bean>
-
-	<beans:bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<beans:property name="defaultLocale" value="en" />
-		<beans:property name="cookieName" value="myAppLocaleCookie"></beans:property>
-		<beans:property name="cookieMaxAge" value="3600"></beans:property>
 	</beans:bean>
 
 	<context:component-scan base-package="com.dataart.spring" />

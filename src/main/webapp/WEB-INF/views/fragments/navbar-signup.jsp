@@ -1,3 +1,4 @@
 <div class="navbar-form navbar-right">
-	<a href="signup"><button type="button" class="btn btn-primary"><fmt:message key="sign_up" /></button></a>
+		<spring:message code="sign_up" text="sign_up" var="sign_up"/>
+	<a href="signup"><button type="button" class="btn btn-primary">${sign_up}</button></a>
 </div>

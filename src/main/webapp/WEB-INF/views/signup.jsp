@@ -1,12 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.dataart.spring.i18n.text"/>
-<html lang="${language}">
+<html lang='<spring:message code="language" text="language" />'>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,27 +14,34 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
-				<h2><fmt:message key="signup.label.register" /></h2>
 				<form:form action="signup" method="post" modelAttribute="user">
+					<spring:message code="signup.label.register" text="signup.label.register" var="signup_label_register"/>
+					<h2 class="form-signin-heading">${signup_label_register}</h2>
 					<div class="form-group">
 						<form:errors path="*" element="div" class="alert alert-danger" />
 					</div>
 					<div class="form-group">
-						<input type="text" id="login" name="login" class="form-control" placeholder="<fmt:message key="login" />" required>
+						<spring:message code="login" text="login" var="login"/>
+						<form:input path="login" placeholder="${login}" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
-						<input type="password" id="password" name="password" class="form-control" placeholder="<fmt:message key="password" />" required>
+						<spring:message code="password" text="password" var="password"/>
+						<form:password path="password" placeholder="${password}" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
-						<input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="<fmt:message key="signup.password.confirm" />" required>
+						<spring:message code="signup.password.confirm" text="signup.password.confirm" var="signup_password_confirm"/>
+						<form:password path="passwordConfirm" placeholder="${signup_password_confirm}" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
-						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="<fmt:message key="signup.name.first" />" required>
+						<spring:message code="signup.name.first" text="signup.name.first" var="signup_name_first"/>
+						<form:input path="firstName" placeholder="${signup_name_first}" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
-						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="<fmt:message key="signup.name.last" />" required>
+						<spring:message code="signup.name.last" text="signup.name.last" var="signup_name_last"/>
+						<form:input path="lastName" placeholder="${signup_name_last}" class="form-control" required="true" />
 					</div>
-					<button type="submit" class="btn btn-success"><fmt:message key="sign_up" /></button>
+					<spring:message code="sign_up" text="sign_up" var="sign_up"/>
+					<button type="submit" class="btn btn-success">${sign_up}</button>
 				</form:form>
 			</div>
 		</div>
