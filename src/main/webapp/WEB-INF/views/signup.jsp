@@ -26,10 +26,10 @@
 						<input type="text" id="login" name="login" class="form-control" placeholder="<fmt:message key="login" />" required>
 					</div>
 					<div class="form-group">
-						<input type="text" id="password" name="password" class="form-control" placeholder="<fmt:message key="password" />" required>
+						<input type="password" id="password" name="password" class="form-control" placeholder="<fmt:message key="password" />" required>
 					</div>
 					<div class="form-group">
-						<input type="text" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="<fmt:message key="signup.password.confirm" />" required>
+						<input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="<fmt:message key="signup.password.confirm" />" required>
 					</div>
 					<div class="form-group">
 						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="<fmt:message key="signup.name.first" />" required>

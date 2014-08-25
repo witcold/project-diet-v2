@@ -13,9 +13,8 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
-				<h3>
-					Something go wrong...
-				</h3>
+				<h2>We've got an error here</h2>
+				<p>${message}</p>
 			</div>
 		</div>
 		
