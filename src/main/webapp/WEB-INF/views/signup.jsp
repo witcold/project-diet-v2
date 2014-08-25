@@ -1,8 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ru">
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="com.dataart.spring.i18n.text"/>
+<html lang="${language}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,27 +17,27 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
-				<h2>Registering new user</h2>
+				<h2><fmt:message key="signup.label.register" /></h2>
 				<form:form action="signup" method="post" modelAttribute="user">
 					<div class="form-group">
 						<form:errors path="*" element="div" class="alert alert-danger" />
 					</div>
 					<div class="form-group">
-						<form:input  path="login" placeholder="Login" class="form-control" required="true" />
+						<input type="text" id="login" name="login" class="form-control" placeholder="<fmt:message key="login" />" required>
 					</div>
 					<div class="form-group">
-						<form:password path="password" placeholder="Password" class="form-control" required="true" />
+						<input type="text" id="password" name="password" class="form-control" placeholder="<fmt:message key="password" />" required>
 					</div>
 					<div class="form-group">
-						<form:password path="passwordConfirm" placeholder="Confirm password" class="form-control" required="true" />
+						<input type="text" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="<fmt:message key="signup.password.confirm" />" required>
 					</div>
 					<div class="form-group">
-						<form:input path="firstName" placeholder="First name" class="form-control" required="true" />
+						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="<fmt:message key="signup.name.first" />" required>
 					</div>
 					<div class="form-group">
-						<form:input path="lastName" placeholder="Last name" class="form-control" required="true" />
+						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="<fmt:message key="signup.name.last" />" required>
 					</div>
-					<button type="submit" class="btn btn-success">Sign up</button>
+					<button type="submit" class="btn btn-success"><fmt:message key="sign_up" /></button>
 				</form:form>
 			</div>
 		</div>

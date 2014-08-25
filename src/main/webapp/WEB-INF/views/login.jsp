@@ -1,8 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ru">
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="com.dataart.spring.i18n.text"/>
+<html lang="${language}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,16 +18,16 @@
 		<div class="container">
 			<div class="jumbotron">
 				<form:form action="login" method="post" modelAttribute="user">
-					<h2 class="form-signin-heading">Please log in</h2>
+					<h2 class="form-signin-heading"><fmt:message key="login.label.login" /></h2>
 					<form:errors path="*" element="div" class="alert alert-danger" />
 					<div class="form-group">
-						<form:input path="login" placeholder="Login" class="form-control" required="true" autofocus="true" />
+						<input type="text" id="login" name="login" class="form-control" placeholder="<fmt:message key="login" />" required autofocus>
 					</div>
 					<div class="form-group">
-						<form:password path="password" placeholder="Password" class="form-control" required="true" />
+						<input type="text" id="password" name="password" class="form-control" placeholder="<fmt:message key="password" />" required>
 					</div>
 					<div class="form-group">
-						<form:button class="btn btn-success">Log in</form:button>
+						<form:button class="btn btn-success"><fmt:message key="log_in" /></form:button>
 					</div>
 				</form:form>
 			</div>

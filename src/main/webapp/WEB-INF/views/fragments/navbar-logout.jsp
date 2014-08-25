@@ -1,8 +1,8 @@
 <div class="navbar-form navbar-right">
 	<p style="color: white;">
-		You logged in as ${account.login}.
+		<fmt:message key="log_as" /> ${account.login}.
 		<a href="logout">
-			<button type="button" class="btn btn-xs btn-link">Log out</button>
+			<fmt:message key="log_out" />
 		</a>
 	</p>
 </div>
