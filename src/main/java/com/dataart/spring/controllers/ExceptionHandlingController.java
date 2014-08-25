@@ -22,13 +22,13 @@ public class ExceptionHandlingController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlingController.class);
 
 	@ExceptionHandler(Exception.class)
-	public ModelAndView handleError(HttpServletRequest req, Exception exception) {
-		LOGGER.error("Request: " + req.getRequestURL() + " raised " + exception);
+	public ModelAndView handleError(HttpServletRequest request, Exception exception) {
+		LOGGER.error("Request: {} raised {}", request.getRequestURL(), exception);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("exception", exception);
 		mav.addObject("message", exception.getLocalizedMessage());
-		mav.addObject("url", req.getRequestURL());
+		mav.addObject("url", request.getRequestURL());
 		mav.setViewName("error");
 		return mav;
 	}

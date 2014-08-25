@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
@@ -48,6 +49,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<strong><spring:message code="test.message" /></strong>
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
