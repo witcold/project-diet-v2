@@ -14,7 +14,7 @@ import com.dataart.spring.model.User;
  * @author vmeshcheryakov
  *
  */
-public class UserValidator implements Validator {
+public class SignUpValidator implements Validator {
 
 
 	@Override
@@ -37,7 +37,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("password", "password.toosmall", "Password must be at least 4 character tall");
 		}
 		String passwordConfirm = user.getPasswordConfirm();
-		if (passwordConfirm != null && !password.equals(passwordConfirm)) {
+		if (!password.equals(passwordConfirm)) {
 			errors.rejectValue("login", "login.notequal", "Passwords not equal");
 		}
 	}

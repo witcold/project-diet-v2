@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dataart.spring.dao.UserDAO;
 import com.dataart.spring.model.User;
-import com.dataart.spring.validators.UserValidator;
+import com.dataart.spring.validators.LoginValidator;
 
 /**
  * @author vmeshcheryakov
@@ -42,7 +42,7 @@ public class LoginController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new UserValidator());
+		binder.setValidator(new LoginValidator());
 	}
 
 	/**

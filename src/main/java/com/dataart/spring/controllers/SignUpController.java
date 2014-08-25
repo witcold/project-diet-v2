@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.dataart.spring.dao.UserDAO;
 import com.dataart.spring.model.User;
-import com.dataart.spring.validators.UserValidator;
+import com.dataart.spring.validators.SignUpValidator;
 
 /**
  * @author vmeshcheryakov
@@ -40,7 +40,7 @@ public class SignUpController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new UserValidator());
+		binder.setValidator(new SignUpValidator());
 	}
 
 	/**
