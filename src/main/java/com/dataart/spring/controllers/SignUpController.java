@@ -58,7 +58,10 @@ public class SignUpController {
 			HttpSession session) {
 		LOGGER.info("Adding: \"{}\"", user);
 		if (!result.hasErrors()) {
-			if (userDAO.insert(user)) {
+			if (userDAO.selectByLogin(user.getLogin()) != null) {
+				result.rejectValue("login", "login.existed", "Login already registered, please choose another one");
+				return "signup";
+			} else if (userDAO.insert(user)) {
 				session.setAttribute("account", user);
 			}
 			return "redirect:/";

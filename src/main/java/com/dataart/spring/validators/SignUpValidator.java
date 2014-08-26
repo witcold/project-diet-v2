@@ -16,7 +16,6 @@ import com.dataart.spring.model.User;
  */
 public class SignUpValidator implements Validator {
 
-
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return User.class.equals(clazz);

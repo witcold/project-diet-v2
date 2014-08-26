@@ -16,6 +16,7 @@
 			<div class="container">
 				<h1>Hello, world!</h1>
 			</div>
+			<!--
 			<table class="table table-condensed">
 				<thead>
 					<tr>
@@ -45,6 +46,7 @@
 					</tr>
 				</tbody>
 			</table>
+			-->
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
