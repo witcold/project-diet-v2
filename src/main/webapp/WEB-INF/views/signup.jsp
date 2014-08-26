@@ -13,7 +13,7 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
-				<form:form action="signup" method="post" modelAttribute="user">
+				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="user">
 					<h2 class="form-signin-heading"><spring:message code="signup.label.register" /></h2>
 					<div class="form-group">
 						<form:errors path="*" element="div" class="alert alert-danger" />

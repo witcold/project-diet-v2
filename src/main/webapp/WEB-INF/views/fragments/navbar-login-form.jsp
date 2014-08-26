@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<form:form class="navbar-form navbar-right" action="login" method="post" modelAttribute="user">
+<form:form class="navbar-form navbar-right" action="login" accept-charset="UTF-8" method="post" modelAttribute="user">
 	<div class="form-group">
 		<spring:message code="login" var="login"/>
 		<form:input path="login" placeholder="${login}" class="form-control" required="true" />
