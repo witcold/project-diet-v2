@@ -37,7 +37,7 @@ public class HomeController {
 	public String home(HttpServletRequest request) {
 		LOGGER.info("Hi there! The client came in: {}:{}:{} ({})!",
 				request.getRemoteHost(), request.getRemotePort(),
-				request.getHeader("User-Agent"), request.getLocale());
+				request.getHeader("Accept-Language"), request.getHeader("User-Agent"));
 		return "home";
 	}
 

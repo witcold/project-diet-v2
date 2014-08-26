@@ -50,8 +50,9 @@ public class UserDAO {
 				new Object[] { login }, new ResultSetExtractor<User>() {
 					@Override
 					public User extractData(ResultSet rs) throws SQLException, DataAccessException {
-						User user = new User();
+						User user = null;
 						if (rs.next()) {
+							user = new User();
 							user.setLogin(login);
 							user.setPassword(rs.getString(1));
 							user.setFirstName(rs.getString(2));
