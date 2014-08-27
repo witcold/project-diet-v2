@@ -29,15 +29,15 @@ public class SignUpValidator implements Validator {
 		String login = user.getLogin();
 		EmailValidator validator = new EmailValidator();
 		if (!validator.isValid(login, null)) {
-			errors.rejectValue("login", "login.notvalid", "Login not valid, possible mask: 'email@domain.td'");
+			errors.rejectValue("login", "login.notvalid");
 		}
 		String password = user.getPassword();
 		if (password.length() < 4) {
-			errors.rejectValue("password", "password.toosmall", "Password must be at least 4 character tall");
+			errors.rejectValue("password", "password.toosmall");
 		}
 		String passwordConfirm = user.getPasswordConfirm();
 		if (!password.equals(passwordConfirm)) {
-			errors.rejectValue("login", "login.notequal", "Passwords not equal");
+			errors.rejectValue("password", "password.notequal");
 		}
 	}
 

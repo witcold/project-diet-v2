@@ -30,12 +30,7 @@ public class LoginValidator implements Validator {
 		String login = user.getLogin();
 		EmailValidator validator = new EmailValidator();
 		if (!validator.isValid(login, null)) {
-			errors.rejectValue("login", "login.notvalid", "Login not valid, possible mask: 'email@domain.td'");
-		}
-		String password = user.getPassword();
-		String passwordConfirm = user.getPasswordConfirm();
-		if (passwordConfirm != null && !password.equals(passwordConfirm)) {
-			errors.rejectValue("login", "login.notequal", "Passwords not equal");
+			errors.rejectValue("login", "login.notvalid");
 		}
 	}
 

@@ -11,6 +11,7 @@
 		</layout>
 	</appender>
 
+<!--
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>logFile.log</File>
@@ -26,11 +27,16 @@
 			</Pattern>
 		</layout>
 	</appender>
+-->
+
+	<logger name="ch.qos.logback" level="ERROR" />
+
+	<logger name="com.dataart" level="ALL" />
 
 	<root>
-		<level value="INFO" />
+		<level value="WARN" />
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="FILE" /> -->
 	</root>
 
 </configuration>

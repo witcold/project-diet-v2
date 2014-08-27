@@ -63,7 +63,7 @@ public class LoginController {
 			session.setAttribute("account", user);
 			return "redirect:/";
 		} else {
-			result.reject("notvalid", "Please ensure your data is valid");
+			result.reject("notvalid");
 			return "login";
 		}
 	}
