@@ -20,7 +20,7 @@
 					</div>
 					<div class="form-group">
 						<spring:message code="login" var="login"/>
-						<form:input path="login" placeholder="${login}" class="form-control" required="true" />
+						<form:input path="login" placeholder="${login}"  maxlength="40" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
 						<spring:message code="password" var="password"/>
@@ -32,11 +32,11 @@
 					</div>
 					<div class="form-group">
 						<spring:message code="signup.name.first" var="signup_name_first"/>
-						<form:input path="firstName" placeholder="${signup_name_first}" class="form-control" required="true" />
+						<form:input path="firstName" placeholder="${signup_name_first}" maxlength="20" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
 						<spring:message code="signup.name.last" var="signup_name_last"/>
-						<form:input path="lastName" placeholder="${signup_name_last}" class="form-control" required="true" />
+						<form:input path="lastName" placeholder="${signup_name_last}" maxlength="20" class="form-control" required="true" />
 					</div>
 					<button type="submit" class="btn btn-success"><spring:message code="sign_up" /></button>
 				</form:form>

@@ -18,7 +18,7 @@
 					<form:errors path="*" element="div" class="alert alert-danger" />
 					<div class="form-group">
 						<spring:message code="login" var="login"/>
-						<form:input path="login" placeholder="${login}" class="form-control" required="true" autofocus="true" />
+						<form:input path="login" placeholder="${login}" maxlength="40" class="form-control" required="true" autofocus="true" />
 					</div>
 					<div class="form-group">
 						<spring:message code="password" var="password"/>
