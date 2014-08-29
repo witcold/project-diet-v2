@@ -34,10 +34,13 @@ public class HomeController {
 	 */
 	@SuppressWarnings("boxing")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(HttpServletRequest request) {
+	public String home(HttpServletRequest request, HttpSession session) {
 		LOGGER.info("Hi there! The client came in: {}:{}:{} ({})!",
 				request.getRemoteHost(), request.getRemotePort(),
 				request.getHeader("Accept-Language"), request.getHeader("User-Agent"));
+		if (session.getAttribute("account") != null) {
+			return "dashboard";
+		}
 		return "home";
 	}
 
