@@ -14,7 +14,9 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- Processes application requests -->
+<!--
+Processes application requests
+This part now configured by class
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -29,6 +31,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+-->
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
