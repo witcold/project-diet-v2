@@ -14,34 +14,52 @@
 			<div class="container">
 				<h1>Weight</h1>
 				<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Username</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td colspan="2">Larry the Bird</td>
-						<td>@twitter</td>
-					</tr>
-				</tbody>
-			</table>
+					<thead>
+						<tr>
+							<th><spring:message code="date" /></th>
+							<th><spring:message code="weight.weight" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>2014-08-28 12:35</td>
+							<td>66.8</td>
+						</tr>
+						<tr>
+							<td>2014-08-29 12:35</td>
+							<td>66.6</td>
+						</tr>
+						<tr>
+							<td>2014-08-30 12:35</td>
+							<td>66.7</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal"><spring:message code="weight.add" /></button>
+				<button type="button" class="btn btn-warning"><spring:message code="weight.edit" /></button>
+				<button type="button" class="btn btn-danger"><spring:message code="weight.delete" /></button>
+			</div>
+		</div>
+
+		<div class="modal fade" id="weightModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">Weight</h4>
+					</div>
+					<div class="modal-body">
+						<form:form id="weightForm" accept-charset="UTF-8" method="post" >
+							
+						</form:form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary" form="weightForm">Save changes</button>
+					</div>
+				</div>
 			</div>
 		</div>
 

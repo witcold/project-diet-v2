@@ -39,7 +39,7 @@ public class HomeController {
 				request.getRemoteHost(), request.getRemotePort(),
 				request.getHeader("Accept-Language"), request.getHeader("User-Agent"));
 		if (session.getAttribute("account") != null) {
-			return "dashboard";
+			return "redirect:/dashboard";
 		}
 		return "home";
 	}

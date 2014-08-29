@@ -4,9 +4,9 @@
 package com.dataart.spring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author vmeshcheryakov
@@ -21,11 +21,9 @@ public class DashboardController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView dashboard() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("dashboard");
-		mav.addObject("dashboard_active", "active");
-		return mav;
+	public String dashboard(Model model) {
+		model.addAttribute("dashboard_active", "active");
+		return "dashboard";
 	}
 
 }
