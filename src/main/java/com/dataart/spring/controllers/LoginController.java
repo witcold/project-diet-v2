@@ -36,7 +36,7 @@ public class LoginController {
 	private UserDAO userDAO;
 
 	@ModelAttribute("user")
-	public User getUserBean() {
+	public User getUser() {
 		return new User();
 	}
 
