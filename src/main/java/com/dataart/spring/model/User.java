@@ -9,6 +9,8 @@ package com.dataart.spring.model;
  */
 public class User {
 
+	private long id;
+
 	private String login;
 
 	private String password;
@@ -20,6 +22,14 @@ public class User {
 	private String lastName;
 
 	public User() {
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getLogin() {
