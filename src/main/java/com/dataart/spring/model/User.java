@@ -74,7 +74,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "UserBean [login=" + login + ", password=" + password
+		return "User [id=" + id + ", login=" + login + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 

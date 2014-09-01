@@ -60,7 +60,7 @@ public class LoginController {
 			HttpSession session) {
 		LOGGER.info("Login: \"{}\"", user.getLogin());
 		if (!result.hasErrors() && userDAO.authenticate(user)) {
-			session.setAttribute("account", user);
+			session.setAttribute("account", userDAO.selectByLogin(user.getLogin()));
 			return "redirect:/";
 		} else {
 			result.reject("notvalid");

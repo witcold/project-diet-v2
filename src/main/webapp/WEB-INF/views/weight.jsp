@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,18 +22,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>2014-08-28 12:35</td>
-							<td>66.8</td>
-						</tr>
-						<tr>
-							<td>2014-08-29 12:35</td>
-							<td>66.6</td>
-						</tr>
-						<tr>
-							<td>2014-08-30 12:35</td>
-							<td>66.7</td>
-						</tr>
+						<c:forEach var="weight" items="${weight_list}">
+							<tr>
+								<td><c:out value="${weight.getDate()}"></c:out></td>
+								<td><c:out value="${weight.getWeight()}"></c:out></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal"><spring:message code="weight.add" /></button>
