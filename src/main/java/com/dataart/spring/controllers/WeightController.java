@@ -45,6 +45,7 @@ public class WeightController {
 
 	@RequestMapping(value="/addweight",  method = RequestMethod.POST)
 	public String add(Weight weight) {
+		weightDAO.insert(weight);
 		return "redirect:/weight";
 	}
 

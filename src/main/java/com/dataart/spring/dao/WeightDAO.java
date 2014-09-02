@@ -27,7 +27,7 @@ public class WeightDAO {
 
 	public boolean insert(final Weight weight) {
 		final String sql = "INSERT INTO weights (user_id, date, weight) VALUES (?, ?, ?);";
-		int result = template.update(sql);
+		int result = template.update(sql, weight.getUserId(), weight.getDate(), weight.getWeight());
 		return result == 1;
 	}
 
