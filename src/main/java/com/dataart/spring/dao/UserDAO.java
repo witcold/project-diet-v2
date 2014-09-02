@@ -31,7 +31,7 @@ public class UserDAO {
 	private JdbcTemplate template;
 
 	public boolean insert(final User user) {
-		final String sql = "INSERT INTO users (login, password, first_name, last_name) VALUES (?, ?, ?, ?)";
+		final String sql = "INSERT INTO users (login, password, first_name, last_name) VALUES (?, ?, ?, ?);";
 		KeyHolder holder = new GeneratedKeyHolder();
 		int result = template.update(new PreparedStatementCreator() {
 			@Override
@@ -51,7 +51,7 @@ public class UserDAO {
 
 	public User selectByLogin(final String login) {
 		return template.query(
-				"SELECT user_id, password, first_name, last_name FROM users WHERE login = ?",
+				"SELECT user_id, password, first_name, last_name FROM users WHERE login = ?;",
 				new Object[] { login }, new ResultSetExtractor<User>() {
 					@Override
 					public User extractData(ResultSet rs) throws SQLException, DataAccessException {

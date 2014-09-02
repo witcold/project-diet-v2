@@ -6,14 +6,15 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><spring:message code="welcome" /></title>
+		<title><spring:message code="weight" /></title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>Weight</h1>
+				<h1><spring:message code="weight" /></h1>
 				<table class="table">
 					<thead>
 						<tr>
@@ -49,7 +50,12 @@
 						<form:form id="weightForm" action="addweight" accept-charset="UTF-8" method="post" modelAttribute="weight">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
-								//datepicker
+								<div class='input-group date' id='datetimepicker'>
+									<input type='text' placeholder="${date}" class="form-control" data-date-format="YYYY/MM/DD"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
 							</div>
 							<div class="form-group">
 								<spring:message code="weight" var="weight"/>
@@ -66,7 +72,17 @@
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
+
+		<script type="text/javascript">
+			$(function () {
+				$('#datetimepicker').datetimepicker({
+					pickTime: false
+				});
+			});
+		</script>
 	</body>
 </html>
