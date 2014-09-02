@@ -21,6 +21,7 @@ import com.dataart.spring.model.Weight;
  *
  */
 @Controller
+@SuppressWarnings("static-method")
 public class WeightController {
 
 	@Autowired

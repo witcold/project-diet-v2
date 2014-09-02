@@ -78,4 +78,11 @@ public class User {
 				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
+	public void clone(User object) {
+		this.firstName = object.firstName;
+		this.id = object.id;
+		this.lastName = object.lastName;
+		this.login = object.login;
+		this.password = object.password;
+	}
 }

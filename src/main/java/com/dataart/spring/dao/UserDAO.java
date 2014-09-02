@@ -49,17 +49,6 @@ public class UserDAO {
 		return result == 1;
 	}
 
-	public boolean authenticate(User user) {
-		String passwordHash = null;
-		try {
-			passwordHash = template.queryForObject(
-					"SELECT password FROM users WHERE login = ?",
-					new Object[] { user.getLogin() }, String.class);
-		} catch (Exception e) {
-		}
-		return passwordHash != null && passwordHash.equals(PasswordHashing.encode(user.getPassword()));
-	}
-
 	public User selectByLogin(final String login) {
 		return template.query(
 				"SELECT user_id, password, first_name, last_name FROM users WHERE login = ?",
@@ -78,6 +67,15 @@ public class UserDAO {
 						return user;
 					}
 				});
+	}
+
+	public boolean authenticate(User user) {
+		User dbUser = selectByLogin(user.getLogin());
+		if (dbUser != null && dbUser.getPassword().equals(PasswordHashing.encode(user.getPassword()))) {
+			user.clone(dbUser);
+			return true;
+		}
+		return false;
 	}
 
 	@Autowired
