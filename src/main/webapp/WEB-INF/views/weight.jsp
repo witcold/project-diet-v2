@@ -22,10 +22,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="weight" items="${weight_list}">
+						<c:forEach var="weight" items="${weightList}">
 							<tr>
-								<td><c:out value="${weight.getDate()}"></c:out></td>
-								<td><c:out value="${weight.getWeight()}"></c:out></td>
+								<td><c:out value="${weight.date}"></c:out></td>
+								<td><c:out value="${weight.weight}"></c:out></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -43,11 +43,18 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title">Weight</h4>
+						<h4 class="modal-title"><spring:message code="weight.add" /></h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" accept-charset="UTF-8" method="post" >
-							
+						<form:form id="weightForm" action="addweight" accept-charset="UTF-8" method="post" modelAttribute="weight">
+							<div class="form-group">
+								<spring:message code="date" var="date"/>
+								//datepicker
+							</div>
+							<div class="form-group">
+								<spring:message code="weight" var="weight"/>
+								<form:input type="number" path="weight" placeholder="${weight}" class="form-control" required="true" />
+							</div>
 						</form:form>
 					</div>
 					<div class="modal-footer">
