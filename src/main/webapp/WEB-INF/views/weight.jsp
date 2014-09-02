@@ -15,6 +15,15 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
+				<div class="btn-group btn-group-justified">
+					<a class="btn btn-default navbar-btn" role="button">
+						&larr;
+					</a>
+					<a class="btn btn-default navbar-btn disabled" role="button"><c:out value="${currentMonth}" /></a>
+					<a class="btn btn-default navbar-btn" role="button">
+						&rarr;
+					</a>
+				</div>
 				<table class="table">
 					<thead>
 						<tr>
@@ -25,8 +34,8 @@
 					<tbody>
 						<c:forEach var="weight" items="${weightList}">
 							<tr>
-								<td><c:out value="${weight.date}"></c:out></td>
-								<td><c:out value="${weight.weight}"></c:out></td>
+								<td><c:out value="${weight.date}"/></td>
+								<td><c:out value="${weight.weight}"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -51,7 +60,7 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="YYYY/MM/DD"/>
+									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="DD/MM/YYYY"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -59,7 +68,7 @@
 							</div>
 							<div class="form-group">
 								<spring:message code="weight" var="weight"/>
-								<form:input type="number" path="weight" placeholder="${weight}" class="form-control" required="true" />
+								<form:input type="number" step="0.001" path="weight" placeholder="${weight}" class="form-control" required="true" />
 							</div>
 						</form:form>
 					</div>

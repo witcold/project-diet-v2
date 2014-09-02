@@ -3,6 +3,10 @@
  */
 package com.dataart.spring.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
@@ -36,8 +39,10 @@ public class WeightController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/weight", method = RequestMethod.GET)
-	public String weight(Model model, HttpSession session) {
+	public String weight(Model model, HttpSession session, Locale locale) {
 		model.addAttribute("weight_active", "active");
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM YYYY", locale);
+		model.addAttribute("currentMonth", sdf.format(new Date()));
 		User user = (User) session.getAttribute("account");
 		model.addAttribute("weightList", weightDAO.selectByUserId(user.getId()));
 		return "weight";
