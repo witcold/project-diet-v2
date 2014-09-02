@@ -51,7 +51,7 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<input type='text' placeholder="${date}" class="form-control" data-date-format="YYYY/MM/DD"/>
+									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="YYYY/MM/DD"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>

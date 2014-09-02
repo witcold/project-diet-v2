@@ -44,7 +44,9 @@ public class WeightController {
 	}
 
 	@RequestMapping(value="/addweight",  method = RequestMethod.POST)
-	public String add(Weight weight) {
+	public String add(Weight weight, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		weight.setUserId(user.getId());
 		weightDAO.insert(weight);
 		return "redirect:/weight";
 	}
