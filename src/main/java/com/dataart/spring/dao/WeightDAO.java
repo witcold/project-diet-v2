@@ -53,6 +53,18 @@ public class WeightDAO {
 
 	public List<Weight> selectByUserIdWithRange(final long userId, final Date from, final Date to) {
 		final String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?);";
+		List<Weight> list = template.query(sql,
+				new RowMapper<Weight>() {
+					@Override
+					public Weight mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						Weight weight = new Weight();
+						weight.setUserId(rs.getLong(1));
+						weight.setDate(rs.getDate(2));
+						weight.setWeight(rs.getFloat(3));
+						return weight;
+					}
+				}, userId, from, to);
 //		List<Weight> list = template.query(sql,
 //				new Object[] { userId, from, to },
 //				new int[] { Types.BIGINT, Types.DATE, Types.DATE },
@@ -67,28 +79,28 @@ public class WeightDAO {
 //						return weight;
 //					}
 //				});
-		List<Weight> list = template.query(
-				new PreparedStatementCreator() {
-					@Override
-					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-						PreparedStatement ps = con.prepareStatement(sql);
-						ps.setLong(1, userId);
-						ps.setDate(2, new java.sql.Date(from.getTime()));
-						ps.setDate(3, new java.sql.Date(to.getTime()));
-						return ps;
-					}
-				},
-				new RowMapper<Weight>() {
-					@Override
-					public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Weight weight = new Weight();
-						weight.setUserId(rs.getLong(1));
-						weight.setDate(rs.getDate(2));
-						weight.setWeight(rs.getFloat(3));
-						return weight;
-					}
-				}
-		);
+//		List<Weight> list = template.query(
+//				new PreparedStatementCreator() {
+//					@Override
+//					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+//						PreparedStatement ps = con.prepareStatement(sql);
+//						ps.setLong(1, userId);
+//						ps.setDate(2, new java.sql.Date(from.getTime()));
+//						ps.setDate(3, new java.sql.Date(to.getTime()));
+//						return ps;
+//					}
+//				},
+//				new RowMapper<Weight>() {
+//					@Override
+//					public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
+//						Weight weight = new Weight();
+//						weight.setUserId(rs.getLong(1));
+//						weight.setDate(rs.getDate(2));
+//						weight.setWeight(rs.getFloat(3));
+//						return weight;
+//					}
+//				}
+//		);
 		return list;
 	}
 
