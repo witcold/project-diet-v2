@@ -48,8 +48,8 @@ public class WeightController {
 	 */
 	@RequestMapping(value = "/weight", method = RequestMethod.GET)
 	public String weight(@RequestParam(value = "from", required = false) String date, Model model, HttpSession session, Locale locale) {
-		Calendar calendar = Calendar.getInstance(locale);
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.dd");
+		Calendar calendar = Calendar.getInstance(locale);
 		Date from;
 		try {
 			from = sdf.parse(date);
