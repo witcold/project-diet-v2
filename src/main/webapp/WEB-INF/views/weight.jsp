@@ -16,11 +16,11 @@
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
 				<div class="btn-group btn-group-justified">
-					<a class="btn btn-default navbar-btn" role="button">
+					<a href="?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
 						&larr;
 					</a>
-					<a class="btn btn-default navbar-btn disabled" role="button"><c:out value="${currentMonth}" /></a>
-					<a class="btn btn-default navbar-btn" role="button">
+					<a class="btn btn-link navbar-btn disabled" role="button"><c:out value="${currentMonth}" /></a>
+					<a href="?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
 						&rarr;
 					</a>
 				</div>
@@ -60,7 +60,7 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="DD/MM/YYYY"/>
+									<form:input path="date" placeholder="${date}" class="form-control"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>

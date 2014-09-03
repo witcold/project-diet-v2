@@ -5,6 +5,7 @@ package com.dataart.spring.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -43,6 +44,21 @@ public class WeightDAO {
 				return weight;
 			}
 		}, userId);
+		return list;
+	}
+
+	public List<Weight> selectByUserIdWithRange(final long userId, Date from, Date to) {
+		final String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) and (date between ? and ?);";
+		List<Weight> list = template.query(sql, new RowMapper<Weight>() {
+			@Override
+			public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Weight weight = new Weight();
+				weight.setUserId(rs.getLong(1));
+				weight.setDate(rs.getDate(2));
+				weight.setWeight(rs.getFloat(3));
+				return weight;
+			}
+		}, userId, from, to);
 		return list;
 	}
 
