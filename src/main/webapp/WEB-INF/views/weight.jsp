@@ -38,7 +38,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="weight" items="${weightList}">
-							<tr onclick="$('#weightModal').modal('show')">
+							<tr onclick="editForm('${weight.date}', ${weight.weight})">
 								<td><c:out value="${weight.date}"/></td>
 								<td><c:out value="${weight.weight}"/></td>
 							</tr>
@@ -75,7 +75,8 @@
 							</div>
 							<div class="form-group">
 								<spring:message code="weight" var="weight"/>
-								<form:input type="number" step="0.001" path="weight" placeholder="${weight}" class="form-control" required="true" />
+<%-- 								<form:input type="number" step="0.001" path="weight" placeholder="${weight}" class="form-control" required="true" /> --%>
+									<form:input type="text" path="weight" placeholder="${weight}" class="form-control" required="true" />
 							</div>
 						</form:form>
 					</div>
@@ -98,6 +99,20 @@
 				$('#datetimepicker').datetimepicker({
 					pickTime: false
 				});
+			});
+			
+			function editForm(date, weight) {
+				var dp = $('#datetimepicker').data("DateTimePicker");
+				dp.setDate(new Date(date));
+				dp.disable();
+				$('#weight').val(weight);
+				$('#weightModal').modal('show');
+			};
+
+			$('#weightModal').on('hidden.bs.modal', function (e) {
+				var form = $(e.currentTarget).find('form');
+				form.trigger('reset');
+				form.find('#datetimepicker').data("DateTimePicker").enable();
 			});
 		</script>
 	</body>
