@@ -3,7 +3,6 @@
  */
 package com.dataart.spring.controllers;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +47,7 @@ public class WeightController {
 	 */
 	@RequestMapping(value = "/weight", method = RequestMethod.GET)
 	public String weight(@RequestParam(value = "from", required = false) String date, Model model, HttpSession session, Locale locale) {
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Calendar calendar = Calendar.getInstance(locale);
 		Date from;
 		try {
