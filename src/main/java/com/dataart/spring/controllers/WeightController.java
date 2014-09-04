@@ -30,7 +30,6 @@ import com.dataart.spring.model.Weight;
  *
  */
 @Controller
-@SuppressWarnings("static-method")
 public class WeightController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(WeightController.class);
@@ -52,11 +51,13 @@ public class WeightController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/weight", method = RequestMethod.GET)
-	public String weight(Date from, Model model, HttpSession session, Locale locale) {
+	public String weight(Date from, Date to, Model model, HttpSession session, Locale locale) {
 		from = getFirstDayOfMonth(from);
 		model.addAttribute("currentDate", from);
 
-		Date to = getLastDayOfMonth(from);
+		if (to == null) {
+			to = getLastDayOfMonth(from);
+		}
 		User user = (User) session.getAttribute("account");
 		LOGGER.info("Get weight list for user {} ({} - {})", user.getId(), from, to);
 		model.addAttribute("weightList", weightDAO.selectByUserIdWithRange(user.getId(), from, to));

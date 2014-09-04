@@ -19,7 +19,6 @@ import com.dataart.spring.model.User;
  * @author vmeshcheryakov
  */
 @Controller
-@SuppressWarnings("static-method")
 public class HomeController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);

@@ -25,7 +25,6 @@ import com.dataart.spring.validators.SignUpValidator;
  *
  */
 @Controller
-@SuppressWarnings("static-method")
 public class SignUpController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignUpController.class);

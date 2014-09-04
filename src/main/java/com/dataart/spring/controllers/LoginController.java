@@ -27,7 +27,6 @@ import com.dataart.spring.validators.LoginValidator;
  */
 @Controller
 @RequestMapping(value = "/login")
-@SuppressWarnings("static-method")
 public class LoginController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping(value = "/dashboard")
-@SuppressWarnings("static-method")
 public class DashboardController {
 
 	/**

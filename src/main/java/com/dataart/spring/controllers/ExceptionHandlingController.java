@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @ControllerAdvice
-@SuppressWarnings("static-method")
 public class ExceptionHandlingController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlingController.class);
