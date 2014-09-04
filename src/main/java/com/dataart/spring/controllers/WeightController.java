@@ -48,6 +48,37 @@ public class WeightController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
 	}
 
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/weight", method = RequestMethod.GET)
+	public String weight(Date from, Model model, HttpSession session, Locale locale) {
+		from = getFirstDayOfMonth(from);
+		model.addAttribute("currentDate", from);
+
+		Date to = getLastDayOfMonth(from);
+		User user = (User) session.getAttribute("account");
+		LOGGER.info("Get weight list for user {} ({} - {})", user.getId(), from, to);
+		model.addAttribute("weightList", weightDAO.selectByUserIdWithRange(user.getId(), from, to));
+
+		Date prev = getPreviousMonth(from);
+		model.addAttribute("prevDate", prev);
+
+		Date next = getNextMonth(from);
+		model.addAttribute("nextDate", next);
+
+		model.addAttribute("weightActive", "active");
+		return "weight";
+	}
+
+	@RequestMapping(value="/addweight",  method = RequestMethod.POST)
+	public String add(Weight weight, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		weight.setUserId(user.getId());
+		weightDAO.insert(weight);
+		return "redirect:/weight";
+	}
+
 	private Date getFirstDayOfMonth(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		if (date != null) {
@@ -78,36 +109,6 @@ public class WeightController {
 		calendar.add(Calendar.MONTH, 1);
 		calendar.set(Calendar.DATE, 1);
 		return calendar.getTime();
-	}
-
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/weight", method = RequestMethod.GET)
-	public String weight(Date from, Model model, HttpSession session, Locale locale) {
-		from = getFirstDayOfMonth(from);
-		model.addAttribute("currentDate", from);
-
-		Date to = getLastDayOfMonth(from);
-		User user = (User) session.getAttribute("account");
-		model.addAttribute("weightList", weightDAO.selectByUserIdWithRange(user.getId(), from, to));
-
-		Date prev = getPreviousMonth(from);
-		model.addAttribute("prevDate", prev);
-
-		Date next = getNextMonth(from);
-		model.addAttribute("nextDate", next);
-
-		model.addAttribute("weightActive", "active");
-		return "weight";
-	}
-
-	@RequestMapping(value="/addweight",  method = RequestMethod.POST)
-	public String add(Weight weight, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		weight.setUserId(user.getId());
-		weightDAO.insert(weight);
-		return "redirect:/weight";
 	}
 
 }

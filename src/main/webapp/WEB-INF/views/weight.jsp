@@ -29,7 +29,7 @@
 						&rarr;
 					</a>
 				</div>
-				<table class="table">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th><spring:message code="date" /></th>
@@ -38,18 +38,18 @@
 					</thead>
 					<tbody>
 						<c:forEach var="weight" items="${weightList}">
-							<tr>
+							<tr onclick="$('#weightModal').modal('show')">
 								<td><c:out value="${weight.date}"/></td>
 								<td><c:out value="${weight.weight}"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal" action="addweight" >
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
 					<spring:message code="weight.add" />
 				</button>
-				<button type="button" class="btn btn-warning"><spring:message code="weight.edit" /></button>
-				<button type="button" class="btn btn-danger"><spring:message code="weight.delete" /></button>
+<%-- 				<button type="button" class="btn btn-warning"><spring:message code="weight.edit" /></button> --%>
+<%-- 				<button type="button" class="btn btn-danger"><spring:message code="weight.delete" /></button> --%>
 			</div>
 		</div>
 
@@ -63,7 +63,7 @@
 						<h4 class="modal-title"><spring:message code="weight.add" /></h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" accept-charset="UTF-8" method="post" modelAttribute="weight">
+						<form:form id="weightForm" action="addweight" accept-charset="UTF-8" method="post" modelAttribute="weight">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
