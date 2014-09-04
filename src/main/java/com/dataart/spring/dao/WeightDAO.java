@@ -3,11 +3,8 @@
  */
 package com.dataart.spring.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +12,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -65,42 +61,6 @@ public class WeightDAO {
 						return weight;
 					}
 				}, userId, from, to);
-//		List<Weight> list = template.query(sql,
-//				new Object[] { userId, from, to },
-//				new int[] { Types.BIGINT, Types.DATE, Types.DATE },
-//				new RowMapper<Weight>() {
-//					@Override
-//					public Weight mapRow(ResultSet rs, int rowNum)
-//							throws SQLException {
-//						Weight weight = new Weight();
-//						weight.setUserId(rs.getLong(1));
-//						weight.setDate(rs.getDate(2));
-//						weight.setWeight(rs.getFloat(3));
-//						return weight;
-//					}
-//				});
-//		List<Weight> list = template.query(
-//				new PreparedStatementCreator() {
-//					@Override
-//					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-//						PreparedStatement ps = con.prepareStatement(sql);
-//						ps.setLong(1, userId);
-//						ps.setDate(2, new java.sql.Date(from.getTime()));
-//						ps.setDate(3, new java.sql.Date(to.getTime()));
-//						return ps;
-//					}
-//				},
-//				new RowMapper<Weight>() {
-//					@Override
-//					public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
-//						Weight weight = new Weight();
-//						weight.setUserId(rs.getLong(1));
-//						weight.setDate(rs.getDate(2));
-//						weight.setWeight(rs.getFloat(3));
-//						return weight;
-//					}
-//				}
-//		);
 		return list;
 	}
 

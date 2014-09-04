@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,10 +17,13 @@
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
 				<div class="btn-group btn-group-justified">
+					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
 					<a href="?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
 						&larr;
 					</a>
+					<fmt:formatDate value="${currentDate}" var="currentMonth" pattern="MMMM yyyy"/>
 					<a class="btn btn-link navbar-btn disabled" role="button"><c:out value="${currentMonth}" /></a>
+					<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
 					<a href="?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
 						&rarr;
 					</a>
