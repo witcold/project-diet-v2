@@ -22,7 +22,7 @@ public class DashboardController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(Model model) {
-		model.addAttribute("dashboard_active", "active");
+		model.addAttribute("dashboardActive", "active");
 		return "dashboard";
 	}
 

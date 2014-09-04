@@ -48,34 +48,57 @@ public class WeightController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
 	}
 
+	private Date getFirstDayOfMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		if (date != null) {
+			calendar.setTime(date);
+		}
+		calendar.set(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+
+	private Date getLastDayOfMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return calendar.getTime();
+	}
+
+	private Date getPreviousMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.MONTH, -1);
+		calendar.set(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+
+	private Date getNextMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.MONTH, 1);
+		calendar.set(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/weight", method = RequestMethod.GET)
 	public String weight(Date from, Model model, HttpSession session, Locale locale) {
-		Calendar calendar = Calendar.getInstance(locale);
-		if (from == null) {
-			from = new Date();
-			calendar.setTime(from);
-			calendar.set(Calendar.DATE, 1);
-			from = calendar.getTime();
-		} else {
-			calendar.setTime(from);
-		}
-		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-		Date to = calendar.getTime();
-		calendar.add(Calendar.DATE, 1);
-		Date next = calendar.getTime();
-		model.addAttribute("nextDate", next);
-		calendar.add(Calendar.MONTH, -2);
-		Date prev = calendar.getTime();
-		model.addAttribute("prevDate", prev);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-		LOGGER.info("From {} To {}. Prev = {}, Next = {}", sdf.format(from), sdf.format(to), sdf.format(prev), sdf.format(next));
-		model.addAttribute("weight_active", "active");
+		from = getFirstDayOfMonth(from);
 		model.addAttribute("currentDate", from);
+
+		Date to = getLastDayOfMonth(from);
 		User user = (User) session.getAttribute("account");
 		model.addAttribute("weightList", weightDAO.selectByUserIdWithRange(user.getId(), from, to));
+
+		Date prev = getPreviousMonth(from);
+		model.addAttribute("prevDate", prev);
+
+		Date next = getNextMonth(from);
+		model.addAttribute("nextDate", next);
+
+		model.addAttribute("weightActive", "active");
 		return "weight";
 	}
 
