@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
 	<head>
+		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><spring:message code="sign_up" /></title>
@@ -20,7 +21,7 @@
 					</div>
 					<div class="form-group">
 						<spring:message code="login" var="login"/>
-						<form:input path="login" placeholder="${login}" maxlength="40" class="form-control" required="true" />
+						<form:input type="email" path="login" placeholder="${login}" maxlength="40" class="form-control" required="true" />
 					</div>
 					<div class="form-group">
 						<spring:message code="password" var="password"/>
