@@ -44,4 +44,10 @@ public class Weight {
 		this.weight = weight;
 	}
 
+	@Override
+	public String toString() {
+		return "Weight [userId=" + userId + ", date=" + date + ", weight="
+				+ weight + "]";
+	}
+
 }

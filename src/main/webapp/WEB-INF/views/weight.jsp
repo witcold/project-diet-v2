@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
 	<head>
+		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><spring:message code="weight" /></title>
@@ -32,15 +33,29 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th class="col-md-1"></th>
 							<th><spring:message code="date" /></th>
 							<th><spring:message code="weight.weight" /></th>
+							<th class="col-md-1"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="weight" items="${weightList}">
-							<tr onclick="editForm('${weight.date}', ${weight.weight})">
+							<tr>
+								<td>
+									<a href="#" onclick="editForm('${weight.date}', ${weight.weight})">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</a>
+								</td>
 								<td><c:out value="${weight.date}"/></td>
 								<td><c:out value="${weight.weight}"/></td>
+								<td class="text-right">
+									<spring:message code="delete.confirm" var="deleteConfirm" />
+									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
+									<a href="weight/delete/${dateToDelete}" class="text-danger" onclick="return confirm('${deleteConfirm}')">
+										<span class="glyphicon glyphicon-remove"></span>
+									</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -48,8 +63,6 @@
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
 					<spring:message code="weight.add" />
 				</button>
-<%-- 				<button type="button" class="btn btn-warning"><spring:message code="weight.edit" /></button> --%>
-<%-- 				<button type="button" class="btn btn-danger"><spring:message code="weight.delete" /></button> --%>
 			</div>
 		</div>
 
@@ -63,11 +76,11 @@
 						<h4 class="modal-title"><spring:message code="weight.add" /></h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" action="addweight" accept-charset="UTF-8" method="post" modelAttribute="weight">
+						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input path="date" placeholder="${date}" class="form-control"/>
+									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="YYYY.MM.DD"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -75,8 +88,7 @@
 							</div>
 							<div class="form-group">
 								<spring:message code="weight" var="weight"/>
-<%-- 								<form:input type="number" step="0.001" path="weight" placeholder="${weight}" class="form-control" required="true" /> --%>
-									<form:input type="text" path="weight" placeholder="${weight}" class="form-control" required="true" />
+								<form:input type="number" min="0" step="0.001" max="1000" path="weight" placeholder="${weight}" class="form-control" required="true" />
 							</div>
 						</form:form>
 					</div>
@@ -97,14 +109,16 @@
 		<script type="text/javascript">
 			$(function () {
 				$('#datetimepicker').datetimepicker({
-					pickTime: false
+					pickTime: false,
+					useStrict: true
 				});
 			});
 			
 			function editForm(date, weight) {
+				$('#weightForm').attr('action', 'weight/update');
 				var dp = $('#datetimepicker').data("DateTimePicker");
 				dp.setDate(new Date(date));
-				dp.disable();
+				//dp.disable();
 				$('#weight').val(weight);
 				$('#weightModal').modal('show');
 			};
@@ -112,7 +126,8 @@
 			$('#weightModal').on('hidden.bs.modal', function (e) {
 				var form = $(e.currentTarget).find('form');
 				form.trigger('reset');
-				form.find('#datetimepicker').data("DateTimePicker").enable();
+				form.attr('action', 'weight/add');
+				//form.find('#datetimepicker').data("DateTimePicker").enable();
 			});
 		</script>
 	</body>

@@ -1,7 +1,7 @@
 <div class="dropdown navbar-form navbar-right">
 	<a data-toggle="dropdown" class="btn" role="button" href="#">
-		<img alt="${pageContext.response.locale}" src="resources/images/${pageContext.response.locale}.png">
-		${pageContext.response.locale}
+		<img alt="${pageContext.response.locale.language}" src="resources/images/${pageContext.response.locale.language}.png">
+		${pageContext.response.locale.language}
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu" role="menu">

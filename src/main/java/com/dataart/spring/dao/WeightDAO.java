@@ -32,6 +32,18 @@ public class WeightDAO {
 		return result == 1;
 	}
 
+	public boolean update(final Weight weight) {
+		final String sql = "UPDATE weights SET weight = ? WHERE (user_id = ?) AND (date = ?);";
+		int result = template.update(sql, weight.getWeight(), weight.getUserId(), weight.getDate());
+		return result == 1;
+	}
+
+	public boolean delete(final Weight weight) {
+		final String sql = "DELETE FROM weights WHERE (user_id = ?) AND (date = ?);";
+		int result = template.update(sql, weight.getUserId(), weight.getDate());
+		return result == 1;
+	}
+
 	public List<Weight> selectByUserId(final long userId) {
 		final String sql = "SELECT user_id, date, weight FROM weights WHERE user_id = ?;";
 		List<Weight> list = template.query(sql, new RowMapper<Weight>() {

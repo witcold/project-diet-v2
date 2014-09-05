@@ -19,8 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
@@ -30,6 +32,7 @@ import com.dataart.spring.model.Weight;
  *
  */
 @Controller
+@RequestMapping(value = "/weight")
 public class WeightController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(WeightController.class);
@@ -50,7 +53,7 @@ public class WeightController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/weight", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String weight(Date from, Date to, Model model, HttpSession session, Locale locale) {
 		from = getFirstDayOfMonth(from);
 		model.addAttribute("currentDate", from);
@@ -72,11 +75,29 @@ public class WeightController {
 		return "weight";
 	}
 
-	@RequestMapping(value="/addweight",  method = RequestMethod.POST)
+	@RequestMapping(value="/add",  method = RequestMethod.POST)
 	public String add(Weight weight, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		weight.setUserId(user.getId());
 		weightDAO.insert(weight);
+		return "redirect:/weight";
+	}
+
+	@RequestMapping(value="/update",  method = RequestMethod.POST)
+	public String update(Weight weight, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		weight.setUserId(user.getId());
+		weightDAO.update(weight);
+		return "redirect:/weight";
+	}
+
+	@RequestMapping(value="/delete/{date}",  method = RequestMethod.DELETE)
+	public String delete(@PathVariable Date date, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		Weight weight = new Weight();
+		weight.setUserId(user.getId());
+		weight.setDate(date);
+		weightDAO.delete(weight);
 		return "redirect:/weight";
 	}
 
