@@ -43,7 +43,7 @@
 						<c:forEach var="weight" items="${weightList}">
 							<tr>
 								<td>
-									<a href="#" onclick="editForm('${weight.date}', ${weight.weight})">
+									<a style="cursor: pointer;" onclick="editForm('${weight.date}', ${weight.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
@@ -52,7 +52,7 @@
 								<td class="text-right">
 									<spring:message code="delete.confirm" var="deleteConfirm" />
 									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
-									<a href="weight/delete/${dateToDelete}" class="text-danger" onclick="return confirm('${deleteConfirm}')">
+									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -80,7 +80,7 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input path="date" placeholder="${date}" class="form-control" data-date-format="YYYY.MM.DD"/>
+									<form:input readonly="true" path="date" placeholder="${date}" class="form-control" data-date-format="YYYY.MM.DD"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -113,12 +113,23 @@
 					useStrict: true
 				});
 			});
-			
+
+			function deleteWeight(date) {
+				if (confirm('${deleteConfirm}'))
+					$.ajax({
+						url: 'weight/delete/'.concat(date),
+						type: 'DELETE',
+						success: function(result) {
+							alert('Ok!');
+						}
+					});
+			};
+
 			function editForm(date, weight) {
 				$('#weightForm').attr('action', 'weight/update');
 				var dp = $('#datetimepicker').data("DateTimePicker");
 				dp.setDate(new Date(date));
-				//dp.disable();
+				dp.find('.input-group-addon').attr('disabled');
 				$('#weight').val(weight);
 				$('#weightModal').modal('show');
 			};
@@ -127,7 +138,7 @@
 				var form = $(e.currentTarget).find('form');
 				form.trigger('reset');
 				form.attr('action', 'weight/add');
-				//form.find('#datetimepicker').data("DateTimePicker").enable();
+				form.find('#datetimepicker').data("DateTimePicker").enable();
 			});
 		</script>
 	</body>
