@@ -50,7 +50,6 @@
 								<td><c:out value="${weight.date}"/></td>
 								<td><c:out value="${weight.weight}"/></td>
 								<td class="text-right">
-									<spring:message code="delete.confirm" var="deleteConfirm" />
 									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
 									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
@@ -115,12 +114,13 @@
 			});
 
 			function deleteWeight(date) {
-				if (confirm('${deleteConfirm}'))
+				if (confirm('<spring:message code="delete.confirm" />'))
 					$.ajax({
-						url: 'weight/delete/'.concat(date),
-						type: 'DELETE',
+						url: 'weight/delete',
+						data: {'date': date},
+						type: 'POST',
 						success: function(result) {
-							alert('Ok!');
+							location.reload();
 						}
 					});
 			};

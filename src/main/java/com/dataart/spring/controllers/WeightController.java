@@ -91,8 +91,8 @@ public class WeightController {
 		return "redirect:/weight";
 	}
 
-	@RequestMapping(value="/delete/{date}",  method = RequestMethod.DELETE)
-	public String delete(@PathVariable Date date, HttpSession session) {
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String delete(Date date, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		Weight weight = new Weight();
 		weight.setUserId(user.getId());
