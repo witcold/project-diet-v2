@@ -14,3 +14,13 @@ CREATE TABLE weights (
 	PRIMARY KEY (user_id, date),
 	FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+CREATE TABLE categories (
+  category_id		BIGSERIAL,
+  parent_id			BIGINT NOT NULL,
+  name				VARCHAR(40) NOT NULL,
+  PRIMARY KEY (category_id),
+  FOREIGN KEY (parent_id) REFERENCES categories (category_id)
+);
+
+INSERT INTO categories (category_id, parent_id, name) VALUES (0, 0, 'NULL');

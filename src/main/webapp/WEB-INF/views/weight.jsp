@@ -17,7 +17,7 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
-				<div id="placeholder" class="centered" style="width:1000px;height:300px">
+				<div id="placeholder" class="center-block" style="width:1100px;height:300px">
 				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
