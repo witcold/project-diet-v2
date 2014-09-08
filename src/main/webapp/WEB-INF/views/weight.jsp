@@ -17,7 +17,7 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
-				<div id="placeholder" class="centered" style="width:1180px;height:300px">
+				<div id="placeholder" class="centered" style="width:1000px;height:300px">
 				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
@@ -126,9 +126,34 @@
 						var data = [];
 						for (var i = 0; i < result.length; i++)
 							data.push(result[i]['data']);
-						$.plot('#placeholder', [data], {
-							xaxis: { mode: "time" },
-							minTickSize: [1, "day"]
+						$.plot('#placeholder', [{label: '<spring:message code="weight.weight" />', data: data}], {
+							xaxis: { mode: "time", timezone: "browser" },
+							yaxis: { tickDecimals: 1 },
+							bars: { show: true, },
+							lines: { show: true },
+							points: { show: true },
+							grid: { hoverable: true },
+						});
+
+						$("<div id='tooltip'></div>").css({
+							position: "absolute",
+							display: "none",
+							border: "1px solid #fdd",
+							padding: "2px",
+							"background-color": "#fee",
+							opacity: 0.80
+						}).appendTo("body");
+
+						$("#placeholder").bind("plothover", function (event, pos, item) {
+							if (item) {
+								var x = item.datapoint[0],
+									y = item.datapoint[1].toFixed(2);
+								$("#tooltip").html(item.series.label + " = " + y + " (" + (new Date(x)).toDateString() + ")")
+									.css({top: item.pageY+5, left: item.pageX+5})
+									.fadeIn(200);
+							} else {
+								$("#tooltip").hide();
+							}
 						});
 					}
 				});
@@ -150,7 +175,7 @@
 				$('#weightForm').attr('action', 'weight/update');
 				var dp = $('#datetimepicker').data("DateTimePicker");
 				dp.setDate(new Date(date));
-				dp.find('.input-group-addon').attr('disabled');
+				$('#datetimepicker').find('.input-group-addon').attr('disabled');
 				$('#weight').val(weight);
 				$('#weightModal').modal('show');
 			};
