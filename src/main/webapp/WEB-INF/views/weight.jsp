@@ -17,16 +17,18 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
+				<div id="placeholder" class="centered" style="width:1180px;height:300px">
+				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
-					<a href="?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
+					<a href="weight?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
 						&larr;
 					</a>
 					<a class="btn btn-link navbar-btn disabled" role="button">
 						<fmt:formatDate value="${currentDate}" pattern="MMMM yyyy"/>
 					</a>
 					<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
-					<a href="?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
+					<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
 						&rarr;
 					</a>
 				</div>
@@ -103,13 +105,32 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="resources/js/bootstrap-datetimepicker.min.js"></script>
+		<script src="resources/js/bootstrap-datetimepicker.js"></script>
+		<script src="resources/js/jquery.flot.js"></script>
+		<script src="resources/js/jquery.flot.time.js"></script>
 
 		<script type="text/javascript">
-			$(function () {
+			$(function init() {
 				$('#datetimepicker').datetimepicker({
 					pickTime: false,
 					useStrict: true
+				});
+			});
+
+			$(function plot() {
+				$.ajax({
+					url: 'weight/raw',
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					type: 'GET',
+					success: function(result) {
+						var data = [];
+						for (var i = 0; i < result.length; i++)
+							data.push(result[i]['data']);
+						$.plot('#placeholder', [data], {
+							xaxis: { mode: "time" },
+							minTickSize: [1, "day"]
+						});
+					}
 				});
 			});
 

@@ -50,4 +50,8 @@ public class Weight {
 				+ weight + "]";
 	}
 
+	public Object[] getData() {
+		return new Object[] {date.getTime(), weight};
+	}
+
 }

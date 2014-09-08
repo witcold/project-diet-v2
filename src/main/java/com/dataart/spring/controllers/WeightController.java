@@ -6,6 +6,7 @@ package com.dataart.spring.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -19,9 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
@@ -63,7 +64,8 @@ public class WeightController {
 		}
 		User user = (User) session.getAttribute("account");
 		LOGGER.info("Get weight list for user {} ({} - {})", user.getId(), from, to);
-		model.addAttribute("weightList", weightDAO.selectByUserIdWithRange(user.getId(), from, to));
+		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
+		model.addAttribute("weightList", list);
 
 		Date prev = getPreviousMonth(from);
 		model.addAttribute("prevDate", prev);
@@ -99,6 +101,16 @@ public class WeightController {
 		weight.setDate(date);
 		weightDAO.delete(weight);
 		return "redirect:/weight";
+	}
+
+	@RequestMapping(value="/raw", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Weight> getData(Date from, Date to, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		if (to == null) {
+			to = getLastDayOfMonth(from);
+		}
+		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 	}
 
 	private Date getFirstDayOfMonth(Date date) {
