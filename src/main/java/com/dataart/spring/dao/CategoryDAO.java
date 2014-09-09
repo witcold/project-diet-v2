@@ -26,7 +26,7 @@ public class CategoryDAO {
 	private JdbcTemplate template;
 
 	public List<Category> selectAll() {
-		String sql = "SELECT category_id, parent_id, name FROM categories;";
+		String sql = "SELECT category_id, parent_id, name FROM categories WHERE (category_id > 0);";
 		List<Category> list = template.query(sql, new RowMapper<Category>() {
 			@Override
 			public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
