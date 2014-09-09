@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,6 +18,13 @@
 					<li><a href="#">Products</a></li>
 					<li class="active">Category</li>
 				</ol>
+				<div class="list-group col-md-2">
+					<c:forEach  var="category" items="${categoryList}">
+						<a href="food?category=${category.id}" class="list-group-item">
+							<c:out value="${category.name}"></c:out>
+						</a>
+					</c:forEach>
+				</div>
 				<h1>Food</h1>
 			</div>
 		</div>

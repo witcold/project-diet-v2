@@ -35,7 +35,7 @@ import com.dataart.spring.model.Weight;
 @Controller
 @RequestMapping(value = "/weight")
 public class WeightController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(WeightController.class);
 
 	@Autowired
