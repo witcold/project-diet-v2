@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dataart.spring.dao.CategoryDAO;
+import com.dataart.spring.dao.FoodDAO;
 import com.dataart.spring.model.Category;
+import com.dataart.spring.model.Food;
 
 /**
  * @author vmeshcheryakov
@@ -29,13 +31,19 @@ public class FoodController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 
+	@Autowired
+	private FoodDAO foodDAO;
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(Model model) {
-		List<Category> list = categoryDAO.selectAll();
-		model.addAttribute("categoryList", list);
+		List<Category> categories = categoryDAO.selectAll();
+		model.addAttribute("categoryList", categories);
+
+		List<Food> foods = foodDAO.selectAll();
+		model.addAttribute("foodList", foods);
 
 		model.addAttribute("foodActive", "active");
 		return "food";

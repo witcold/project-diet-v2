@@ -14,33 +14,42 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
+				<h1><spring:message code="food" /></h1>
 				<ol class="breadcrumb">
 					<li><a href="#">Products</a></li>
 					<li class="active">Category</li>
 				</ol>
 				<div class="list-group col-md-2">
-					<c:forEach  var="category" items="${categoryList}">
+					<c:forEach var="category" items="${categoryList}">
 						<a href="food?category=${category.id}" class="list-group-item">
 							<c:out value="${category.name}"></c:out>
 						</a>
 					</c:forEach>
 				</div>
-				<h1>Food</h1>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th><spring:message code="food.name" /></th>
-							<th><spring:message code="food.calories" /></th>
-							<th><spring:message code="food.proteins" /></th>
-							<th><spring:message code="food.fats" /></th>
-							<th><spring:message code="food.carbohydrates" /></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-						</tr>
-					</tbody>
-				</table>
+				<div class="col-md-10">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th><spring:message code="food.name" /></th>
+								<th><spring:message code="food.calories" /></th>
+								<th><spring:message code="food.proteins" /></th>
+								<th><spring:message code="food.fats" /></th>
+								<th><spring:message code="food.carbohydrates" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="food" items="${foodList}">
+								<tr>
+									<td><c:out value="${food.name}"></c:out></td>
+									<td><c:out value="${food.calories}"></c:out></td>
+									<td><c:out value="${food.proteins}"></c:out></td>
+									<td><c:out value="${food.fats}"></c:out></td>
+									<td><c:out value="${food.carbohydrates}"></c:out></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 
