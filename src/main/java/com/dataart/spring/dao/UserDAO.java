@@ -35,8 +35,7 @@ public class UserDAO {
 		KeyHolder holder = new GeneratedKeyHolder();
 		int result = template.update(new PreparedStatementCreator() {
 			@Override
-			public PreparedStatement createPreparedStatement(Connection con)
-					throws SQLException {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(sql, new String[] {"user_id"});
 				ps.setString(1, user.getLogin());
 				ps.setString(2, PasswordHashing.encode(user.getPassword()));
@@ -50,23 +49,22 @@ public class UserDAO {
 	}
 
 	public User selectByLogin(final String login) {
-		return template.query(
-				"SELECT user_id, password, first_name, last_name FROM users WHERE login = ?;",
-				new Object[] { login }, new ResultSetExtractor<User>() {
-					@Override
-					public User extractData(ResultSet rs) throws SQLException, DataAccessException {
-						User user = null;
-						if (rs.next()) {
-							user = new User();
-							user.setLogin(login);
-							user.setId(rs.getLong(1));
-							user.setPassword(rs.getString(2));
-							user.setFirstName(rs.getString(3));
-							user.setLastName(rs.getString(4));
-						}
-						return user;
-					}
-				});
+		String sql = "SELECT user_id, password, first_name, last_name FROM users WHERE (login = ?);";
+		return template.query(sql, new ResultSetExtractor<User>() {
+			@Override
+			public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+				User user = null;
+				if (rs.next()) {
+					user = new User();
+					user.setLogin(login);
+					user.setId(rs.getLong(1));
+					user.setPassword(rs.getString(2));
+					user.setFirstName(rs.getString(3));
+					user.setLastName(rs.getString(4));
+				}
+				return user;
+			}
+		}, login);
 	}
 
 	public boolean authenticate(User user) {

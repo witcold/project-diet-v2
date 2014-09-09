@@ -26,26 +26,26 @@ public class WeightDAO {
 
 	private JdbcTemplate template;
 
-	public boolean insert(final Weight weight) {
-		final String sql = "INSERT INTO weights (user_id, date, weight) VALUES (?, ?, ?);";
+	public boolean insert(Weight weight) {
+		String sql = "INSERT INTO weights (user_id, date, weight) VALUES (?, ?, ?);";
 		int result = template.update(sql, weight.getUserId(), weight.getDate(), weight.getWeight());
 		return result == 1;
 	}
 
-	public boolean update(final Weight weight) {
-		final String sql = "UPDATE weights SET weight = ? WHERE (user_id = ?) AND (date = ?);";
+	public boolean update(Weight weight) {
+		String sql = "UPDATE weights SET weight = ? WHERE (user_id = ?) AND (date = ?);";
 		int result = template.update(sql, weight.getWeight(), weight.getUserId(), weight.getDate());
 		return result == 1;
 	}
 
-	public boolean delete(final Weight weight) {
-		final String sql = "DELETE FROM weights WHERE (user_id = ?) AND (date = ?);";
+	public boolean delete(Weight weight) {
+		String sql = "DELETE FROM weights WHERE (user_id = ?) AND (date = ?);";
 		int result = template.update(sql, weight.getUserId(), weight.getDate());
 		return result == 1;
 	}
 
-	public List<Weight> selectByUserId(final long userId) {
-		final String sql = "SELECT user_id, date, weight FROM weights WHERE user_id = ?;";
+	public List<Weight> selectByUserId(long userId) {
+		String sql = "SELECT user_id, date, weight FROM weights WHERE user_id = ?;";
 		List<Weight> list = template.query(sql, new RowMapper<Weight>() {
 			@Override
 			public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -59,13 +59,12 @@ public class WeightDAO {
 		return list;
 	}
 
-	public List<Weight> selectByUserIdWithRange(final long userId, final Date from, final Date to) {
-		final String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?);";
+	public List<Weight> selectByUserIdWithRange(long userId, Date from, Date to) {
+		String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?);";
 		List<Weight> list = template.query(sql,
 				new RowMapper<Weight>() {
 					@Override
-					public Weight mapRow(ResultSet rs, int rowNum)
-							throws SQLException {
+					public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Weight weight = new Weight();
 						weight.setUserId(rs.getLong(1));
 						weight.setDate(rs.getDate(2));
