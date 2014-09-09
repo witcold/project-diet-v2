@@ -16,11 +16,23 @@ CREATE TABLE weights (
 );
 
 CREATE TABLE categories (
-  category_id		BIGSERIAL,
-  parent_id			BIGINT NOT NULL,
-  name				VARCHAR(40) NOT NULL,
-  PRIMARY KEY (category_id),
-  FOREIGN KEY (parent_id) REFERENCES categories (category_id)
+	category_id		BIGSERIAL,
+	parent_id		BIGINT NOT NULL,
+	name			VARCHAR(40) NOT NULL,
+	PRIMARY KEY (category_id),
+	FOREIGN KEY (parent_id) REFERENCES categories (category_id)
 );
 
 INSERT INTO categories (category_id, parent_id, name) VALUES (0, 0, 'NULL');
+
+CREATE TABLE foods (
+	food_id			BIGSERIAL,
+	category_id		BIGINT NOT NULL,
+	name			VARCHAR(80),
+	calories		SMALLINT NOT NULL,
+	proteins		SMALLINT NOT NULL,
+	fats			SMALLINT NOT NULL,
+	carbohydrates	SMALLINT NOT NULL,
+	PRIMARY KEY (food_id),
+	FOREIGN KEY (category_id) REFERENCES categories (category_id)
+);

@@ -26,6 +26,21 @@
 					</c:forEach>
 				</div>
 				<h1>Food</h1>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><spring:message code="food.name" /></th>
+							<th><spring:message code="food.calories" /></th>
+							<th><spring:message code="food.proteins" /></th>
+							<th><spring:message code="food.fats" /></th>
+							<th><spring:message code="food.carbohydrates" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
