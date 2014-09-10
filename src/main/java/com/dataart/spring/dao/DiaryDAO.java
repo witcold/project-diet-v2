@@ -47,7 +47,7 @@ public class DiaryDAO {
 
 	public List<Diary> selectByUserIdForDate(long userId, Date date) {
 		Date from = DateUtils.getDayStart(date);
-		Date to = DateUtils.getDayStart(date);
+		Date to = DateUtils.getDayEnd(date);
 		String sql = "SELECT user_id, food_id, timestamp, weight FROM diaries WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
 		List<Diary> list = template.query(sql,
 				new RowMapper<Diary>() {

@@ -46,7 +46,7 @@ public class DiaryController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd HH:mm"), true));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
 	}
 
 	/**
@@ -54,6 +54,9 @@ public class DiaryController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String weight(Date date, Model model, HttpSession session) {
+		if (date == null) {
+			date = new Date();
+		}
 		model.addAttribute("currentDate", date);
 
 		User user = (User) session.getAttribute("account");
