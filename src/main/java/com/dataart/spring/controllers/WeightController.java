@@ -4,7 +4,6 @@
 package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
+import com.dataart.spring.utils.DateUtils;
 
 /**
  * @author vmeshcheryakov
@@ -55,22 +55,22 @@ public class WeightController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String weight(Date from, Date to, Model model, HttpSession session, Locale locale) {
-		from = getFirstDayOfMonth(from);
+	public String weight(Date from, Date to, Model model, HttpSession session) {
+		from = DateUtils.getFirstDayOfMonth(from);
 		model.addAttribute("currentDate", from);
 
 		if (to == null) {
-			to = getLastDayOfMonth(from);
+			to = DateUtils.getLastDayOfMonth(from);
 		}
 		User user = (User) session.getAttribute("account");
 		LOGGER.info("Get weight list for user {} ({} - {})", user.getId(), from, to);
 		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 		model.addAttribute("weightList", list);
 
-		Date prev = getPreviousMonth(from);
+		Date prev = DateUtils.getPreviousMonth(from);
 		model.addAttribute("prevDate", prev);
 
-		Date next = getNextMonth(from);
+		Date next = DateUtils.getNextMonth(from);
 		model.addAttribute("nextDate", next);
 
 		model.addAttribute("weightActive", "active");
@@ -108,41 +108,9 @@ public class WeightController {
 	public List<Weight> getData(Date from, Date to, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		if (to == null) {
-			to = getLastDayOfMonth(from);
+			to = DateUtils.getLastDayOfMonth(from);
 		}
 		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
-	}
-
-	private Date getFirstDayOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		if (date != null) {
-			calendar.setTime(date);
-		}
-		calendar.set(Calendar.DATE, 1);
-		return calendar.getTime();
-	}
-
-	private Date getLastDayOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-		return calendar.getTime();
-	}
-
-	private Date getPreviousMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.MONTH, -1);
-		calendar.set(Calendar.DATE, 1);
-		return calendar.getTime();
-	}
-
-	private Date getNextMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.MONTH, 1);
-		calendar.set(Calendar.DATE, 1);
-		return calendar.getTime();
 	}
 
 }
