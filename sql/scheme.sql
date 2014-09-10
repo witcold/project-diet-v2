@@ -36,3 +36,13 @@ CREATE TABLE foods (
 	PRIMARY KEY (food_id),
 	FOREIGN KEY (category_id) REFERENCES categories (category_id)
 );
+
+CREATE TABLE diaries (
+	user_id			BIGINT NOT NULL,
+	food_id			BIGINT NOT NULL,
+	timestamp		TIMESTAMP NOT NULL,
+	weight			FLOAT,
+	PRIMARY KEY (user_id, food_id, timestamp),
+	FOREIGN KEY (user_id) REFERENCES users (user_id),
+	FOREIGN KEY (food_id) REFERENCES foods (food_id)
+);

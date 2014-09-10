@@ -39,9 +39,11 @@ public class FoodController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(Model model) {
+		LOGGER.info("Get categories list");
 		List<Category> categories = categoryDAO.selectAll();
 		model.addAttribute("categoryList", categories);
 
+		LOGGER.info("Get foods list");
 		List<Food> foods = foodDAO.selectAll();
 		model.addAttribute("foodList", foods);
 
