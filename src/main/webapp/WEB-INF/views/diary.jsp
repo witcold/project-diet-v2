@@ -39,6 +39,7 @@
 							<th><spring:message code="timestamp" /></th>
 							<th><spring:message code="food" /></th>
 							<th><spring:message code="diary.weight" /></th>
+							<th><spring:message code="diary.calories" /></th>
 							<th class="col-md-1"></th>
 						</tr>
 					</thead>
@@ -51,11 +52,10 @@
 									</a>
 								</td>
 								<td><c:out value="${diary.timestamp}"/></td>
-
-<!-- -----------TODO----------- -->
-
-								<td><c:out value="${foodMap.get(diary.foodId).name}"/></td>
+								<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
+								<td><c:out value="${food.name}"/></td>
 								<td><c:out value="${diary.weight}"/></td>
+								<td><fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"></fmt:formatNumber></td>
 								<td class="text-right">
 									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd"/>
 									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
