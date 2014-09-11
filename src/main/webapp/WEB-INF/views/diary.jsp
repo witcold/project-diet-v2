@@ -11,6 +11,7 @@
 		<title><spring:message code="diary" /></title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="resources/css/typeahead.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
@@ -66,8 +67,8 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
-					<spring:message code="weight.add" />
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diaryModal">
+					<spring:message code="diary.add" />
 				</button>
 			</div>
 		</div>
@@ -84,9 +85,6 @@
 					<div class="modal-body">
 						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary">
 							<div class="form-group">
-
-<!-- -----------TODO----------- -->
-
 								<spring:message code="timestamp" var="timestamp"/>
 								<div class='input-group date' id='datetimepicker'>
 									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control" data-date-format="YYYY.MM.DD"/>
@@ -94,6 +92,11 @@
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
+							</div>
+							<div class="form-group">
+								<spring:message code="diary.food" var="food"/>
+								<input type="text" id="typeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
+								<form:input type="hidden" path="foodId" />
 							</div>
 							<div class="form-group">
 								<spring:message code="weight" var="weight"/>
@@ -116,8 +119,31 @@
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
 		<script src="resources/js/jquery.flot.js"></script>
 		<script src="resources/js/jquery.flot.time.js"></script>
+		<script src="resources/js/typeahead.bundle.js"></script>
 
 		<script type="text/javascript">
+			$(function() {
+				var substringMatcher = function(strs) {
+					return function findMatches(q, cb) {
+						var matches, substringRegex;
+						matches = [];
+						// regex used to determine if a string contains the substring `q`
+						substrRegex = new RegExp(q, 'i');
+						$.each(strs, function(i, str) {
+							if (substrRegex.test(str)) {
+								matches.push({ value: str });
+							}
+						});
+						cb(matches);
+					};
+				};
+				$('.typeahead').typeahead({},
+				{
+					displayKey: 'value',
+					source: substringMatcher(['test1', 'test2'])
+				});
+			});
+
 			$(function init() {
 				$('#datetimepicker').datetimepicker({
 					pickTime: false,
@@ -180,7 +206,7 @@
 			};
 
 			function editForm(date, weight) {
-				$('#weightForm').attr('action', 'diary/update');
+				$('#diaryForm').attr('action', 'diary/update');
 				var dp = $('#datetimepicker').data("DateTimePicker");
 				dp.setDate(new Date(date));
 				$('#datetimepicker').find('.input-group-addon').attr('disabled');
