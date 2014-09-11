@@ -11,7 +11,7 @@
 		<title><spring:message code="diary" /></title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
-		<link rel="stylesheet" href="resources/css/typeahead.css">
+		<link rel="stylesheet" href="resources/css/typeaheadjs.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
@@ -127,7 +127,6 @@
 					return function findMatches(q, cb) {
 						var matches, substringRegex;
 						matches = [];
-						// regex used to determine if a string contains the substring `q`
 						substrRegex = new RegExp(q, 'i');
 						$.each(strs, function(i, str) {
 							if (substrRegex.test(str)) {
