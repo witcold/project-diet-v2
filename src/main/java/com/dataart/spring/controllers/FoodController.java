@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.CategoryDAO;
 import com.dataart.spring.dao.FoodDAO;
@@ -49,6 +50,12 @@ public class FoodController {
 
 		model.addAttribute("foodActive", "active");
 		return "food";
+	}
+
+	@RequestMapping(value="/raw", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Food> getData() {
+		return foodDAO.selectAll();
 	}
 
 }

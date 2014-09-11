@@ -106,7 +106,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary" form="weightForm">Save changes</button>
+						<button type="submit" class="btn btn-primary" form="diaryForm">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -136,10 +136,19 @@
 						cb(matches);
 					};
 				};
+				var source = [];
+				$.ajax({
+					url: 'food/raw',
+					type: 'GET',
+					success: function(result) {
+						for (var i = 0; i < result.length; i++)
+							source.push(result[i]['name']);
+					}
+				});
 				$('.typeahead').typeahead({},
 				{
 					displayKey: 'value',
-					source: substringMatcher(['test1', 'test2'])
+					source: substringMatcher(source)
 				});
 			});
 
