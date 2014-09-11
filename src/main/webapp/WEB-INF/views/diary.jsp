@@ -37,8 +37,8 @@
 					<thead>
 						<tr>
 							<th class="col-md-1"></th>
-							<th><spring:message code="timestamp" /></th>
-							<th><spring:message code="food" /></th>
+							<th><spring:message code="diary.timestamp" /></th>
+							<th><spring:message code="diary.food" /></th>
 							<th><spring:message code="diary.weight" /></th>
 							<th><spring:message code="diary.calories" /></th>
 							<th class="col-md-1"></th>
@@ -80,12 +80,12 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title"><spring:message code="weight.add" /></h4>
+						<h4 class="modal-title"><spring:message code="diary.add" /></h4>
 					</div>
 					<div class="modal-body">
 						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary">
 							<div class="form-group">
-								<spring:message code="timestamp" var="timestamp"/>
+								<spring:message code="diary.timestamp" var="timestamp"/>
 								<div class='input-group date' id='datetimepicker'>
 									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control" data-date-format="YYYY.MM.DD"/>
 									<span class="input-group-addon">
