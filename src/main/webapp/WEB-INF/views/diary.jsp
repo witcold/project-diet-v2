@@ -51,7 +51,10 @@
 									</a>
 								</td>
 								<td><c:out value="${diary.timestamp}"/></td>
-								<td><c:out value="${diary.foodId}"/></td>
+
+<!-- -----------TODO----------- -->
+
+								<td><c:out value="${foodMap.get(diary.foodId).name}"/></td>
 								<td><c:out value="${diary.weight}"/></td>
 								<td class="text-right">
 									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd"/>
@@ -81,6 +84,9 @@
 					<div class="modal-body">
 						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary">
 							<div class="form-group">
+
+<!-- -----------TODO----------- -->
+
 								<spring:message code="timestamp" var="timestamp"/>
 								<div class='input-group date' id='datetimepicker'>
 									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control" data-date-format="YYYY.MM.DD"/>

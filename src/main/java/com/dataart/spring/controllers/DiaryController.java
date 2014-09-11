@@ -4,6 +4,7 @@
 package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,11 @@ public class DiaryController {
 		List<Diary> diaries = diaryDAO.selectByUserIdForDate(user.getId(), date);
 		model.addAttribute("diaryList", diaries);
 
-		Map<Long, Food> foods = foodDAO.selectByIds(0);
+		List<Long> ids = new ArrayList<Long>();
+		for (Diary diary : diaries) {
+			ids.add(diary.getFoodId());
+		}
+		Map<Long, Food> foods = foodDAO.selectByIds(ids);
 		model.addAttribute("foodMap", foods);
 
 		Date prev = DateUtils.getPreviousDay(date);

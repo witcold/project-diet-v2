@@ -45,7 +45,7 @@ public class WeightDAO {
 	}
 
 	public List<Weight> selectByUserIdWithRange(long userId, Date from, Date to) {
-		String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?);";
+		String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?) ORDER BY 2 ASC;";
 		List<Weight> list = template.query(sql,
 				new RowMapper<Weight>() {
 					@Override

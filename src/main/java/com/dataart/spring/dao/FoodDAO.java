@@ -29,25 +29,27 @@ public class FoodDAO {
 
 	private NamedParameterJdbcTemplate template;
 
-	public Map<Long, Food> selectByIds(final long... ids) {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods WHERE food_id IN (:ids);";
-		List<Food> list = template.query(sql, Collections.singletonMap("ids", Arrays.asList(ids)), new RowMapper<Food>() {
-			@Override
-			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Food food = new Food();
-				food.setId(rs.getLong(1));
-				food.setCategoryId(rs.getLong(2));
-				food.setName(rs.getString(3));
-				food.setCalories(rs.getInt(4));
-				food.setProteins(rs.getInt(5));
-				food.setFats(rs.getInt(6));
-				food.setCarbohydrates(rs.getInt(7));
-				return food;
-			}
-		});
+	public Map<Long, Food> selectByIds(List<Long> ids) {
 		Map<Long, Food> map = new HashMap<Long, Food>();
-		for (Food food : list) {
-			map.put(food.getId(), food);
+		if (ids.size() > 0) {
+			String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods WHERE food_id IN (:ids);";
+			List<Food> list = template.query(sql, Collections.singletonMap("ids", ids), new RowMapper<Food>() {
+				@Override
+				public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Food food = new Food();
+					food.setId(rs.getLong(1));
+					food.setCategoryId(rs.getLong(2));
+					food.setName(rs.getString(3));
+					food.setCalories(rs.getInt(4));
+					food.setProteins(rs.getInt(5));
+					food.setFats(rs.getInt(6));
+					food.setCarbohydrates(rs.getInt(7));
+					return food;
+				}
+			});
+			for (Food food : list) {
+				map.put(food.getId(), food);
+			}
 		}
 		return map;
 	}
