@@ -49,7 +49,7 @@
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
-								<td><c:out value="${weight.date}"/></td>
+								<td><fmt:formatDate value="${weight.date}" pattern="dd MMMM yyyy"/></td>
 								<td><c:out value="${weight.weight}"/></td>
 								<td class="text-right">
 									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>

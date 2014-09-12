@@ -87,7 +87,7 @@
 							<div class="form-group">
 								<spring:message code="diary.timestamp" var="timestamp"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control" data-date-format="YYYY.MM.DD"/>
+									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -140,10 +140,11 @@
 				$('#foodId').val(datum.id);
 			});
 
-			$(function init() {
-				$('#datetimepicker').datetimepicker({
-					useStrict: true
-				});
+			$('#datetimepicker').datetimepicker({
+				format: 'DD MMMM YYYY HH:mm',
+				pickDate: false,
+				useCurrent: true,
+				useStrict: true
 			});
 
 			$(function plot() {
