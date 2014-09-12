@@ -122,34 +122,22 @@
 		<script src="resources/js/typeahead.bundle.js"></script>
 
 		<script type="text/javascript">
-			$(function() {
-				var substringMatcher = function(strs) {
-					return function findMatches(q, cb) {
-						var matches, substringRegex;
-						matches = [];
-						substrRegex = new RegExp(q, 'i');
-						$.each(strs, function(i, str) {
-							if (substrRegex.test(str)) {
-								matches.push({ value: str });
-							}
-						});
-						cb(matches);
-					};
-				};
-				var source = [];
-				$.ajax({
-					url: 'food/raw',
-					type: 'GET',
-					success: function(result) {
-						for (var i = 0; i < result.length; i++)
-							source.push(result[i]['name']);
-					}
-				});
-				$('.typeahead').typeahead({},
-				{
-					displayKey: 'value',
-					source: substringMatcher(source)
-				});
+			var engine = new Bloodhound({
+				name: 'foods',
+				local: [],
+				remote: 'food/raw?q=%QUERY',
+				datumTokenizer: function(d) {
+					return Bloodhound.tokenizers.whitespace(d.name);
+				},
+				queryTokenizer: Bloodhound.tokenizers.whitespace
+			});
+			engine.initialize();
+			$('.typeahead').typeahead(null, {
+				displayKey: 'name',
+				source: engine.ttAdapter()
+			});
+			$('.typeahead').on('typeahead:selected typeahead:autocompleted', function(e, datum) {
+				$('#foodId').val(datum.id);
 			});
 
 			$(function init() {
