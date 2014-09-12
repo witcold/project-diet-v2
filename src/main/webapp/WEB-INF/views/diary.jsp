@@ -52,7 +52,7 @@
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
-								<td><c:out value="${diary.timestamp}"/></td>
+								<td><fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/></td>
 								<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
 								<td><c:out value="${food.name}"/></td>
 								<td><c:out value="${diary.weight}"/></td>
@@ -142,7 +142,6 @@
 
 			$(function init() {
 				$('#datetimepicker').datetimepicker({
-					pickTime: false,
 					useStrict: true
 				});
 			});

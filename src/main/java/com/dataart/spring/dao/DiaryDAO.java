@@ -56,7 +56,7 @@ public class DiaryDAO {
 						Diary diary = new Diary();
 						diary.setUserId(rs.getLong(1));
 						diary.setFoodId(rs.getLong(2));
-						diary.setTimestamp(rs.getDate(3));
+						diary.setTimestamp(rs.getTimestamp(3));
 						diary.setWeight(rs.getFloat(4));
 						return diary;
 					}
