@@ -62,7 +62,7 @@ public class DiaryController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String weight(Date date, Model model, HttpSession session) {
+	public String diary(Date date, Model model, HttpSession session) {
 		if (date == null) {
 			date = new Date();
 		}
@@ -107,12 +107,9 @@ public class DiaryController {
 	}
 
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String delete(long foodId, Date timestamp, HttpSession session) {
+	public String delete(Diary diary, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		Diary diary = new Diary();
 		diary.setUserId(user.getId());
-		diary.setFoodId(foodId);
-		diary.setTimestamp(timestamp);
 		diaryDAO.delete(diary);
 		return "redirect:/diary";
 	}
