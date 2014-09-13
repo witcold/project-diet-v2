@@ -107,12 +107,13 @@ public class DiaryController {
 	}
 
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String delete(long food_id, Date date, HttpSession session) {
+	public String delete(long foodId, Date timestamp, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		Diary weight = new Diary();
-		weight.setUserId(user.getId());
-		weight.setTimestamp(date);
-		diaryDAO.delete(weight);
+		Diary diary = new Diary();
+		diary.setUserId(user.getId());
+		diary.setFoodId(foodId);
+		diary.setTimestamp(timestamp);
+		diaryDAO.delete(diary);
 		return "redirect:/diary";
 	}
 
@@ -120,7 +121,6 @@ public class DiaryController {
 	@ResponseBody
 	public List<Diary> getData(Date date, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-
 		return diaryDAO.selectByUserIdForDate(user.getId(), date);
 	}
 

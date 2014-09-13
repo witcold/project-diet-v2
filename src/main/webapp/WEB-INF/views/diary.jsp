@@ -46,20 +46,20 @@
 					</thead>
 					<tbody>
 						<c:forEach var="diary" items="${diaryList}">
+							<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
 							<tr>
 								<td>
-									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${diary.weight})">
+									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${food.id}, '${food.name}', ${diary.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
 								<td><fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/></td>
-								<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
 								<td><c:out value="${food.name}"/></td>
 								<td><c:out value="${diary.weight}"/></td>
 								<td><fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"></fmt:formatNumber></td>
 								<td class="text-right">
-									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd"/>
-									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
+									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd HH:mm"/>
+									<a style="cursor: pointer;" onclick="deleteWeight(${food.id}, '${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -95,7 +95,7 @@
 							</div>
 							<div class="form-group">
 								<spring:message code="diary.food" var="food"/>
-								<input type="text" id="typeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
+								<input type="text" id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
 								<form:input type="hidden" path="foodId" />
 							</div>
 							<div class="form-group">
@@ -147,6 +147,9 @@
 				useStrict: true
 			});
 
+			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
+			var diaryform = $('#diaryForm');
+
 			$(function plot() {
 				$.ajax({
 					url: 'diary/raw',
@@ -189,11 +192,11 @@
 				});
 			});
 
-			function deleteWeight(date) {
+			function deleteWeight(foodId, timestamp) {
 				if (confirm('<spring:message code="delete.confirm" />'))
 					$.ajax({
 						url: 'diary/delete',
-						data: {'date': date},
+						data: {'foodId': foodId, 'timestamp': timestamp},
 						type: 'POST',
 						success: function(result) {
 							location.reload();
@@ -201,20 +204,20 @@
 					});
 			};
 
-			function editForm(date, weight) {
-				$('#diaryForm').attr('action', 'diary/update');
-				var dp = $('#datetimepicker').data("DateTimePicker");
-				dp.setDate(new Date(date));
-				$('#datetimepicker').find('.input-group-addon').attr('disabled');
-				$('#weight').val(weight);
+			function editForm(date, foodId, foodName, weight) {
+				diaryform.attr('action', 'diary/update');
+				datetimepicker.setDate(new Date(date));
+				diaryform.find('.input-group-addon').attr('disabled');
+				diaryform.find('#foodTypeahead').val(foodName);
+				diaryform.find('#foodId').val(foodId);
+				diaryform.find('#weight').val(weight);
 				$('#diaryModal').modal('show');
 			};
 
 			$('#diaryModal').on('hidden.bs.modal', function (e) {
-				var form = $(e.currentTarget).find('form');
-				form.trigger('reset');
-				form.attr('action', 'diary/add');
-				form.find('#datetimepicker').data("DateTimePicker").enable();
+				diaryform.trigger('reset');
+				diaryform.attr('action', 'diary/add');
+				datetimepicker.enable();
 			});
 		</script>
 	</body>
