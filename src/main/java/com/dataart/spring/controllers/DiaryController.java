@@ -55,6 +55,7 @@ public class DiaryController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
+		binder.registerCustomEditor(Date.class, "timestamp", new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd HH:mm"), false));
 	}
 
 	/**

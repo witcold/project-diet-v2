@@ -141,7 +141,7 @@
 			});
 
 			$('#datetimepicker').datetimepicker({
-				format: 'DD MMMM YYYY HH:mm',
+				format: 'YYYY.MM.DD HH:mm',
 				pickDate: false,
 				useCurrent: true,
 				useStrict: true
