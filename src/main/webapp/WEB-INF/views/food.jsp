@@ -16,8 +16,17 @@
 			<div class="container">
 				<h1><spring:message code="food" /></h1>
 				<ol class="breadcrumb">
-					<li><a href="#">Products</a></li>
-					<li class="active">Category</li>
+					<li><a href="food"><spring:message code="food" /></a></li>
+					<li class="active">
+						<c:choose>
+							<c:when test="${not empty currentCategory}">
+								<c:out value="${currentCategory.name}"></c:out>
+							</c:when>
+							<c:otherwise>
+								<spring:message code="food.category.all" />
+							</c:otherwise>
+						</c:choose>
+					</li>
 				</ol>
 				<div class="list-group col-md-2">
 					<c:forEach var="category" items="${categoryList}">

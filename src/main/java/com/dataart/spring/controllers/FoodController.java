@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.CategoryDAO;
@@ -39,14 +40,23 @@ public class FoodController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String dashboard(Model model) {
+	public String dashboard(@RequestParam(value = "category", required = false) Long categoryId, Model model) {
 		LOGGER.info("Get categories list");
 		List<Category> categories = categoryDAO.selectAll();
 		model.addAttribute("categoryList", categories);
 
-		LOGGER.info("Get foods list");
-		List<Food> foods = foodDAO.selectAll();
-		model.addAttribute("foodList", foods);
+		List<Food> foods;
+		if (categoryId == null) {
+			LOGGER.info("Get all foods list");
+			foods = foodDAO.selectAll();
+			model.addAttribute("foodList", foods);
+		} else {
+			Category category = categoryDAO.selectById(categoryId);
+			model.addAttribute("currentCategory", category);
+			LOGGER.info("Get foods list for id {}", categoryId);
+			foods = foodDAO.selectByCategory(categoryId);
+			model.addAttribute("foodList", foods);
+		}
 
 		model.addAttribute("foodActive", "active");
 		return "food";
