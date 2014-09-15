@@ -94,8 +94,8 @@
 						</form:form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary" form="weightForm">Save changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
+						<button type="submit" class="btn btn-primary" form="weightForm"><spring:message code="form.save"/></button>
 					</div>
 				</div>
 			</div>

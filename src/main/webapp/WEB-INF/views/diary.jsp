@@ -105,8 +105,8 @@
 						</form:form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary" form="diaryForm">Save changes</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
+						<button type="submit" class="btn btn-primary" form="diaryForm"><spring:message code="form.save"/></button>
 					</div>
 				</div>
 			</div>
@@ -207,7 +207,7 @@
 			function editForm(date, foodId, foodName, weight) {
 				diaryform.attr('action', 'diary/update');
 				datetimepicker.setDate(new Date(date));
-				diaryform.find('.input-group-addon').attr('disabled');
+				diaryform.find('.input-group-addon').prop('disabled', true);
 				diaryform.find('#foodTypeahead').val(foodName);
 				diaryform.find('#foodId').val(foodId);
 				diaryform.find('#weight').val(weight);
