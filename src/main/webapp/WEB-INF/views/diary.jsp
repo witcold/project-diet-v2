@@ -207,7 +207,8 @@
 			function editForm(date, foodId, foodName, weight) {
 				diaryform.attr('action', 'diary/update');
 				datetimepicker.setDate(new Date(date));
-				diaryform.find('.input-group-addon').prop('disabled', true);
+				diaryform.find('.input-group-addon').hide();
+				diaryform.find('.date').removeClass('input-group');
 				diaryform.find('#foodTypeahead').val(foodName);
 				diaryform.find('#foodId').val(foodId);
 				diaryform.find('#weight').val(weight);
@@ -217,7 +218,8 @@
 			$('#diaryModal').on('hidden.bs.modal', function (e) {
 				diaryform.trigger('reset');
 				diaryform.attr('action', 'diary/add');
-				datetimepicker.enable();
+				diaryform.find('.date').addClass('input-group');
+				diaryform.find('.input-group-addon').show();
 			});
 		</script>
 	</body>

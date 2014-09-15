@@ -110,12 +110,13 @@
 		<script src="resources/js/jquery.flot.time.js"></script>
 
 		<script type="text/javascript">
-			$(function init() {
-				$('#datetimepicker').datetimepicker({
-					pickTime: false,
-					useStrict: true
-				});
+			$('#datetimepicker').datetimepicker({
+				pickTime: false,
+				useStrict: true
 			});
+
+			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
+			var weightform = $('#weightForm');
 
 			$(function plot() {
 				$.ajax({
@@ -172,19 +173,19 @@
 			};
 
 			function editForm(date, weight) {
-				$('#weightForm').attr('action', 'weight/update');
-				var dp = $('#datetimepicker').data("DateTimePicker");
-				dp.setDate(new Date(date));
-				$('#datetimepicker').find('.input-group-addon').attr('disabled');
+				weightform.attr('action', 'weight/update');
+				datetimepicker.setDate(new Date(date));
+				weightform.find('.input-group-addon').hide();
+				weightform.find('.date').removeClass('input-group');
 				$('#weight').val(weight);
 				$('#weightModal').modal('show');
 			};
 
 			$('#weightModal').on('hidden.bs.modal', function (e) {
-				var form = $(e.currentTarget).find('form');
-				form.trigger('reset');
-				form.attr('action', 'weight/add');
-				form.find('#datetimepicker').data("DateTimePicker").enable();
+				weightform.trigger('reset');
+				weightform.attr('action', 'weight/add');
+				weightform.find('.date').addClass('input-group');
+				weightform.find('.input-group-addon').show();
 			});
 		</script>
 	</body>
