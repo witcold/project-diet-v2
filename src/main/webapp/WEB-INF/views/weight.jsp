@@ -17,7 +17,7 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="weight" /></h1>
-				<div id="placeholder" class="center-block" style="width:1100px;height:300px">
+				<div id="placeholder" class="center-block" style="min-width:600px;height:200px">
 				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
@@ -106,8 +106,7 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
-		<script src="resources/js/jquery.flot.js"></script>
-		<script src="resources/js/jquery.flot.time.js"></script>
+		<script src="//code.highcharts.com/highcharts.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
@@ -125,36 +124,51 @@
 					type: 'GET',
 					success: function(result) {
 						var data = [];
-						for (var i = 0; i < result.length; i++)
-							data.push(result[i]['data']);
-						$.plot('#placeholder', [{label: '<spring:message code="weight.weight" />', data: data}], {
-							xaxis: { mode: "time", timezone: "browser" },
-							yaxis: { tickDecimals: 1 },
-							bars: { show: true, },
-							lines: { show: true },
-							points: { show: true },
-							grid: { hoverable: true },
-						});
-
-						$("<div id='tooltip'></div>").css({
-							position: "absolute",
-							display: "none",
-							border: "1px solid #fdd",
-							padding: "2px",
-							"background-color": "#fee",
-							opacity: 0.80
-						}).appendTo("body");
-
-						$("#placeholder").bind("plothover", function (event, pos, item) {
-							if (item) {
-								var x = item.datapoint[0],
-									y = item.datapoint[1].toFixed(2);
-								$("#tooltip").html(item.series.label + " = " + y + " (" + (new Date(x)).toDateString() + ")")
-									.css({top: item.pageY+5, left: item.pageX+5})
-									.fadeIn(200);
-							} else {
-								$("#tooltip").hide();
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([+date, result[i]['weight']]);
+						}
+						Highcharts.setOptions({
+							global: {
+								useUTC: false
 							}
+						});
+						$('#placeholder').highcharts({
+							chart: {
+								backgroundColor: null
+							},
+							legend: {
+								enabled: false
+							},
+							title: {
+								text: null
+							},
+							subtitle: {
+								text: null
+							},
+							xAxis: {
+								type: 'datetime',
+								tickInterval: 24 * 3600 * 1000, // one day
+								gridLineWidth: 1,
+								dateTimeLabelFormats: {
+									day: '%e.%m',
+								}
+							},
+							yAxis: [{
+								title: {
+										text: null
+								}
+							}, {
+								linkedTo: 0,
+								opposite: true,
+								title: {
+										text: null
+								}
+							}],
+							series: [{
+								data: data,
+							}]
 						});
 					}
 				});
