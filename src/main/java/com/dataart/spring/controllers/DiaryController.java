@@ -116,9 +116,15 @@ public class DiaryController {
 
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Diary> getData(Date date, HttpSession session) {
+	public List<Diary> getData(Date from, Date to, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		return diaryDAO.selectByUserIdForDate(user.getId(), date);
+		if (from == null) {
+			from = DateUtils.getFirstDayOfMonth(null);
+		}
+		if (to == null) {
+			to = DateUtils.getLastDayOfMonth(from);
+		}
+		return diaryDAO.selectByUserIdWithRange(user.getId(), from, to);
 	}
 
 }

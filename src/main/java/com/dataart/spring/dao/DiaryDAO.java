@@ -45,9 +45,7 @@ public class DiaryDAO {
 		return result == 1;
 	}
 
-	public List<Diary> selectByUserIdForDate(long userId, Date date) {
-		Date from = DateUtils.getDayStart(date);
-		Date to = DateUtils.getDayEnd(date);
+	protected List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
 		String sql = "SELECT user_id, food_id, timestamp, weight FROM diaries WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
 		return template.query(sql, new RowMapper<Diary>() {
 			@Override
@@ -60,6 +58,18 @@ public class DiaryDAO {
 				return diary;
 			}
 		}, userId, from, to);
+	}
+
+	public List<Diary> selectByUserIdWithRange(long userId, Date from, Date to) {
+		from = DateUtils.getDayStart(from);
+		to = DateUtils.getDayEnd(to);
+		return selectByUserIdForInterval(userId, from, to);
+	}
+
+	public List<Diary> selectByUserIdForDate(long userId, Date date) {
+		Date from = DateUtils.getDayStart(date);
+		Date to = DateUtils.getDayEnd(date);
+		return selectByUserIdForInterval(userId, from, to);
 	}
 
 	@Autowired

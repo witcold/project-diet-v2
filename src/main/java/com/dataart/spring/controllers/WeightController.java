@@ -105,6 +105,9 @@ public class WeightController {
 	@ResponseBody
 	public List<Weight> getData(Date from, Date to, HttpSession session) {
 		User user = (User) session.getAttribute("account");
+		if (from == null) {
+			from = DateUtils.getFirstDayOfMonth(null);
+		}
 		if (to == null) {
 			to = DateUtils.getLastDayOfMonth(from);
 		}
