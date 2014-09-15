@@ -49,19 +49,17 @@ public class DiaryDAO {
 		Date from = DateUtils.getDayStart(date);
 		Date to = DateUtils.getDayEnd(date);
 		String sql = "SELECT user_id, food_id, timestamp, weight FROM diaries WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
-		List<Diary> list = template.query(sql,
-				new RowMapper<Diary>() {
-					@Override
-					public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Diary diary = new Diary();
-						diary.setUserId(rs.getLong(1));
-						diary.setFoodId(rs.getLong(2));
-						diary.setTimestamp(rs.getTimestamp(3));
-						diary.setWeight(rs.getFloat(4));
-						return diary;
-					}
-				}, userId, from, to);
-		return list;
+		return template.query(sql, new RowMapper<Diary>() {
+			@Override
+			public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Diary diary = new Diary();
+				diary.setUserId(rs.getLong(1));
+				diary.setFoodId(rs.getLong(2));
+				diary.setTimestamp(rs.getTimestamp(3));
+				diary.setWeight(rs.getFloat(4));
+				return diary;
+			}
+		}, userId, from, to);
 	}
 
 	@Autowired

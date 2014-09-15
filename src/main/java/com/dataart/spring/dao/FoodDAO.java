@@ -55,7 +55,7 @@ public class FoodDAO {
 
 	public List<Food> selectByCategoryId(Long categoryId) {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods WHERE (category_id = :categoryId);";
-		List<Food> list = template.query(sql, new MapSqlParameterSource("categoryId", categoryId), new RowMapper<Food>() {
+		return template.query(sql, new MapSqlParameterSource("categoryId", categoryId), new RowMapper<Food>() {
 			@Override
 			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Food food = new Food();
@@ -69,12 +69,11 @@ public class FoodDAO {
 				return food;
 			}
 		});
-		return list;
 	}
 
 	public List<Food> selectAll() {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods;";
-		List<Food> list = template.query(sql, new RowMapper<Food>() {
+		return template.query(sql, new RowMapper<Food>() {
 			@Override
 			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Food food = new Food();
@@ -88,7 +87,6 @@ public class FoodDAO {
 				return food;
 			}
 		});
-		return list;
 	}
 
 	@Autowired

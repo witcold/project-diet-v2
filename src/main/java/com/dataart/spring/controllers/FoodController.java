@@ -54,7 +54,7 @@ public class FoodController {
 			Category category = categoryDAO.selectById(categoryId);
 			model.addAttribute("currentCategory", category);
 			LOGGER.info("Get foods list for id {}", categoryId);
-			foods = foodDAO.selectByCategory(categoryId);
+			foods = foodDAO.selectByCategoryId(categoryId);
 			model.addAttribute("foodList", foods);
 		}
 

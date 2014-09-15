@@ -46,18 +46,16 @@ public class WeightDAO {
 
 	public List<Weight> selectByUserIdWithRange(long userId, Date from, Date to) {
 		String sql = "SELECT user_id, date, weight FROM weights WHERE (user_id = ?) AND (date BETWEEN ? AND ?) ORDER BY 2 ASC;";
-		List<Weight> list = template.query(sql,
-				new RowMapper<Weight>() {
-					@Override
-					public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Weight weight = new Weight();
-						weight.setUserId(rs.getLong(1));
-						weight.setDate(rs.getDate(2));
-						weight.setWeight(rs.getFloat(3));
-						return weight;
-					}
-				}, userId, from, to);
-		return list;
+		return template.query(sql, new RowMapper<Weight>() {
+			@Override
+			public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Weight weight = new Weight();
+				weight.setUserId(rs.getLong(1));
+				weight.setDate(rs.getDate(2));
+				weight.setWeight(rs.getFloat(3));
+				return weight;
+			}
+		}, userId, from, to);
 	}
 
 	@Autowired
