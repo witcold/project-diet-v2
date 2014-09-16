@@ -156,8 +156,11 @@
 					type: 'GET',
 					success: function(result) {
 						var data = [];
-						for (var i = 0; i < result.length; i++)
-							data.push([result[i]['timestamp'], result[i]['weight']]);
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([date, result[i]['calories']]);
+						}
 						Highcharts.setOptions({
 							global: {
 								useUTC: false

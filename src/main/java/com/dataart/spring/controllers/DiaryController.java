@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.DiaryDAO;
 import com.dataart.spring.dao.FoodDAO;
+import com.dataart.spring.dto.CaloriesDTO;
 import com.dataart.spring.model.Diary;
 import com.dataart.spring.model.Food;
 import com.dataart.spring.model.User;
@@ -114,9 +115,9 @@ public class DiaryController {
 		return "redirect:/diary";
 	}
 
-	@RequestMapping(value="/raw", method = RequestMethod.GET)
+	@RequestMapping(value="/aggregated", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Diary> getData(Date from, Date to, HttpSession session) {
+	public List<CaloriesDTO> getData(Date from, Date to, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		if (from == null) {
 			from = DateUtils.getFirstDayOfMonth(null);
@@ -124,7 +125,7 @@ public class DiaryController {
 		if (to == null) {
 			to = DateUtils.getLastDayOfMonth(from);
 		}
-		return diaryDAO.selectByUserIdWithRange(user.getId(), from, to);
+		return diaryDAO.getAggregatedInfo(user.getId(), from, to);
 	}
 
 }
