@@ -71,6 +71,24 @@ public class FoodDAO {
 		});
 	}
 
+	public List<Food> selectByName(String name) {
+		String sql = "SELECT food_id, category_id, name, calories, proteins, fats,carbohydrates FROM foods WHERE (name ILIKE :name);";
+		return template.query(sql, new MapSqlParameterSource("name", '%' + name + '%'), new RowMapper<Food>() {
+			@Override
+			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Food food = new Food();
+				food.setId(rs.getLong(1));
+				food.setCategoryId(rs.getLong(2));
+				food.setName(rs.getString(3));
+				food.setCalories(rs.getInt(4));
+				food.setProteins(rs.getInt(5));
+				food.setFats(rs.getInt(6));
+				food.setCarbohydrates(rs.getInt(7));
+				return food;
+			}
+		});
+	}
+
 	public List<Food> selectAll() {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods;";
 		return template.query(sql, new RowMapper<Food>() {

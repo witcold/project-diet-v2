@@ -102,7 +102,7 @@
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
@@ -147,6 +147,9 @@
 							subtitle: {
 								text: null
 							},
+							tooltip: {
+								valueSuffix: ' kg'
+							},
 							xAxis: {
 								type: 'datetime',
 								tickInterval: 24 * 3600 * 1000, // one day
@@ -167,6 +170,7 @@
 								}
 							}],
 							series: [{
+								name: '<spring:message code="weight" />',
 								data: data,
 							}]
 						});

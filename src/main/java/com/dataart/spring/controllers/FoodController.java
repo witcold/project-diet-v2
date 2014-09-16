@@ -64,7 +64,10 @@ public class FoodController {
 
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Food> getData() {
+	public List<Food> getData(String query) {
+		if (query != null) {
+			return foodDAO.selectByName(query);
+		}
 		return foodDAO.selectAll();
 	}
 
