@@ -4,7 +4,11 @@ CREATE TABLE users (
 	password		VARCHAR(40) NOT NULL,
 	first_name		VARCHAR(40) NOT NULL,
 	last_name		VARCHAR(40) NOT NULL,
-	PRIMARY KEY (user_id)
+	gender			CHAR(1) NOT NULL,
+	birth_year		SMALLINT NOT NULL,
+	height			SMALLINT NOT NULL,
+	PRIMARY KEY (user_id),
+	CONSTANT users_gender_check CHECK (gender IN ('m', 'f', 'u'))
 );
 
 CREATE TABLE weights (
