@@ -68,7 +68,7 @@
 								<td><fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"></fmt:formatNumber></td>
 								<td class="text-right">
 									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd HH:mm"/>
-									<a style="cursor: pointer;" onclick="deleteWeight(${food.id}, '${dateToDelete}')" class="text-danger">
+									<a style="cursor: pointer;" onclick="deleteDiary(${food.id}, '${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -171,7 +171,7 @@
 						for (var i = 0; i < result.length; i++) {
 							var dateParts = result[i]['date'].split("-");
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([date, result[i]['calories']]);
+							data.push([+date, result[i]['calories']]);
 						}
 						Highcharts.setOptions({
 							global: {
@@ -214,7 +214,7 @@
 								}
 							}],
 							series: [{
-								name: '<spring:message code="weight" />',
+								name: '<spring:message code="diary" />',
 								data: data,
 							}]
 						});
@@ -222,7 +222,7 @@
 				});
 			});
 
-			function deleteWeight(foodId, timestamp) {
+			function deleteDiary(foodId, timestamp) {
 				if (confirm('<spring:message code="delete.confirm" />'))
 					$.ajax({
 						url: 'diary/delete',

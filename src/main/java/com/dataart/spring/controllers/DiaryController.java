@@ -121,9 +121,7 @@ public class DiaryController {
 	@ResponseBody
 	public List<CaloriesDTO> getData(Date from, Date to, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		if (from == null) {
-			from = DateUtils.getFirstDayOfMonth(null);
-		}
+		from = DateUtils.getFirstDayOfMonth(from);
 		if (to == null) {
 			to = DateUtils.getLastDayOfMonth(from);
 		}

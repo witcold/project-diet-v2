@@ -90,7 +90,7 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input readonly="true" path="date" placeholder="${date}" class="form-control" data-date-format="YYYY.MM.DD"/>
+									<form:input readonly="true" path="date" placeholder="${date}" class="form-control"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -119,6 +119,7 @@
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
+				format: 'YYYY.MM.DD',
 				pickTime: false,
 				useStrict: true
 			});
