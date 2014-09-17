@@ -44,10 +44,10 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-md-1"></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 							<th><spring:message code="date" /></th>
 							<th><spring:message code="weight.weight" /></th>
-							<th class="col-md-1"></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 						</tr>
 					</thead>
 					<tbody>

@@ -45,12 +45,12 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-md-1"></th>
-							<th><spring:message code="diary.timestamp" /></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
+							<th class="col-xs-2"><spring:message code="diary.timestamp" /></th>
 							<th><spring:message code="diary.food" /></th>
-							<th><spring:message code="diary.weight" /></th>
-							<th><spring:message code="diary.calories" /></th>
-							<th class="col-md-1"></th>
+							<th class="col-xs-2"><spring:message code="diary.weight" /></th>
+							<th class="col-xs-3"><spring:message code="diary.calories" /></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -214,7 +214,7 @@
 								}
 							}],
 							series: [{
-								name: '<spring:message code="diary" />',
+								name: '<spring:message code="diary.total" />',
 								data: data,
 							}]
 						});

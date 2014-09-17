@@ -15,6 +15,7 @@
 			<div class="container">
 				<h1>Dashboard</h1>
 			</div>
+			Hello, ${account.firstName} ${account.lastName}!
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
