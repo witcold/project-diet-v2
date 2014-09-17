@@ -21,6 +21,16 @@ public class User {
 
 	private String lastName;
 
+//	private Sex sex;
+//
+//	private short yearOfBirth;
+//
+//	private short countryId;
+//
+//	private short currentHeight; // in centimeters
+//
+//	private float currentWeight; // in kilograms
+
 	public User() {
 	}
 
