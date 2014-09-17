@@ -34,7 +34,7 @@
 	<logger name="com.dataart" level="ALL" />
 
 	<root>
-		<level value="INFO" />
+		<level value="WARN" />
 		<appender-ref ref="STDOUT" />
 		<!-- <appender-ref ref="FILE" /> -->
 	</root>

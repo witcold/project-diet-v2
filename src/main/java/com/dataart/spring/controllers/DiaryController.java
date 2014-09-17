@@ -70,7 +70,7 @@ public class DiaryController {
 		model.addAttribute("currentDate", date);
 
 		User user = (User) session.getAttribute("account");
-		LOGGER.info("Get diary for user {} on {}", user.getId(), date);
+		LOGGER.debug("Get diary for user {} on {}", user.getId(), date);
 		List<Diary> diaries = diaryDAO.selectByUserIdForDate(user.getId(), date);
 		model.addAttribute("diaryList", diaries);
 

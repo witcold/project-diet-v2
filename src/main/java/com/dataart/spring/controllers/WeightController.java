@@ -61,7 +61,7 @@ public class WeightController {
 			to = DateUtils.getLastDayOfMonth(from);
 		}
 		User user = (User) session.getAttribute("account");
-		LOGGER.info("Get weight list for user {} ({} - {})", user.getId(), from, to);
+		LOGGER.debug("Get weight list for user {} ({} - {})", user.getId(), from, to);
 		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 		model.addAttribute("weightList", list);
 

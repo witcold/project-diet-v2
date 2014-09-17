@@ -55,7 +55,7 @@ public class SignUpController {
 			@Valid User user,
 			BindingResult result,
 			HttpSession session) {
-		LOGGER.info("Adding: \"{}\"", user);
+		LOGGER.debug("Adding: \"{}\"", user);
 		if (!result.hasErrors()) {
 			if (userDAO.selectByLogin(user.getLogin()) != null) {
 				result.rejectValue("login", "login.existed", "Login already registered, please choose another one");

@@ -57,7 +57,7 @@ public class LoginController {
 			@Valid User user,
 			BindingResult result,
 			HttpSession session) {
-		LOGGER.info("Login: \"{}\"", user.getLogin());
+		LOGGER.debug("Login: \"{}\"", user.getLogin());
 		if (!result.hasErrors() && userDAO.authenticate(user)) {
 			session.setAttribute("account", user);
 			return "redirect:/";

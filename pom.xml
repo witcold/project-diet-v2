@@ -148,6 +148,7 @@
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
+					<debug>false</debug>
 				</configuration>
 			</plugin>
 		</plugins>

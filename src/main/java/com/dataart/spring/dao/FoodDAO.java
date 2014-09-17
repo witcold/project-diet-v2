@@ -66,7 +66,7 @@ public class FoodDAO {
 	}
 
 	public List<Food> selectAll() {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods;";
+		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods ORDER BY 3 ASC;";
 		return template.query(sql, rowMapper);
 	}
 

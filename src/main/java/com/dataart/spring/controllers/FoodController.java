@@ -41,19 +41,19 @@ public class FoodController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(@RequestParam(value = "category", required = false) Long categoryId, Model model) {
-		LOGGER.info("Get categories list");
+		LOGGER.debug("Get categories list");
 		List<Category> categories = categoryDAO.selectAll();
 		model.addAttribute("categoryList", categories);
 
 		List<Food> foods;
 		if (categoryId == null) {
-			LOGGER.info("Get all foods list");
+			LOGGER.debug("Get all foods list");
 			foods = foodDAO.selectAll();
 			model.addAttribute("foodList", foods);
 		} else {
 			Category category = categoryDAO.selectById(categoryId);
 			model.addAttribute("currentCategory", category);
-			LOGGER.info("Get foods list for id {}", categoryId);
+			LOGGER.debug("Get foods list for id {}", categoryId);
 			foods = foodDAO.selectByCategoryId(categoryId);
 			model.addAttribute("foodList", foods);
 		}
