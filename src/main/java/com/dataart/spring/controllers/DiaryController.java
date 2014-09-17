@@ -84,8 +84,10 @@ public class DiaryController {
 		Date prev = DateUtils.getPreviousDay(date);
 		model.addAttribute("prevDate", prev);
 
-		Date next = DateUtils.getNextDay(date);
-		model.addAttribute("nextDate", next);
+		if (!DateUtils.isCurrentDay(date)) {
+			Date next = DateUtils.getNextDay(date);
+			model.addAttribute("nextDate", next);
+		}
 
 		model.addAttribute("diaryActive", "active");
 		return "diary";

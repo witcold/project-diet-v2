@@ -27,10 +27,19 @@
 					<a class="btn btn-link navbar-btn disabled" role="button">
 						<fmt:formatDate value="${currentDate}" pattern="MMMM yyyy"/>
 					</a>
-					<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
-					<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
-						&rarr;
-					</a>
+					<c:choose>
+						<c:when test="${not empty nextDate}">
+							<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
+							<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
+								&rarr;
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="weight" class="btn btn-default navbar-btn disabled" role="button">
+								&rarr;
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<table class="table table-hover">
 					<thead>

@@ -28,10 +28,19 @@
 					<a class="btn btn-link navbar-btn disabled" role="button">
 						<fmt:formatDate value="${currentDate}" pattern="dd MMMM yyyy"/>
 					</a>
-					<fmt:formatDate value="${nextDate}" var="nextDay" pattern="yyyy.MM.dd"/>
-					<a href="diary?date=${nextDay}" class="btn btn-default navbar-btn" role="button">
-						&rarr;
-					</a>
+					<c:choose>
+						<c:when test="${not empty nextDate}">
+							<fmt:formatDate value="${nextDate}" var="nextDay" pattern="yyyy.MM.dd"/>
+							<a href="diary?date=${nextDay}" class="btn btn-default navbar-btn" role="button">
+								&rarr;
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="diary" class="btn btn-default navbar-btn disabled" role="button">
+								&rarr;
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<table class="table table-hover">
 					<thead>
@@ -142,12 +151,15 @@
 			$('#datetimepicker').datetimepicker({
 				format: 'YYYY.MM.DD HH:mm',
 				pickDate: false,
-				useCurrent: true,
 				useStrict: true
 			});
 
 			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
 			var diaryform = $('#diaryForm');
+
+			$(function() {
+				datetimepicker.setDate(new Date('<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'));
+			});
 
 			$(function plot() {
 				$.ajax({
@@ -180,7 +192,7 @@
 								text: null
 							},
 							tooltip: {
-								valueSuffix: ' kg'
+								valueSuffix: ' kcal'
 							},
 							xAxis: {
 								type: 'datetime',

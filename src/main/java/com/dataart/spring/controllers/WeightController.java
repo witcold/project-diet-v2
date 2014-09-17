@@ -68,8 +68,10 @@ public class WeightController {
 		Date prev = DateUtils.getPreviousMonth(from);
 		model.addAttribute("prevDate", prev);
 
-		Date next = DateUtils.getNextMonth(from);
-		model.addAttribute("nextDate", next);
+		if(!DateUtils.isCurrentMonth(from)) {
+			Date next = DateUtils.getNextMonth(from);
+			model.addAttribute("nextDate", next);
+		}
 
 		model.addAttribute("weightActive", "active");
 		return "weight";

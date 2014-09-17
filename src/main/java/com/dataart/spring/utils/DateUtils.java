@@ -91,4 +91,14 @@ public class DateUtils {
 		return calendar.getTime();
 	}
 
+	public static boolean isCurrentDay(Date date) {
+		Date current = getDayStart(null);
+		return current.equals(getDayStart(date));
+	}
+
+	public static boolean isCurrentMonth(Date date) {
+		Date current = getDayStart(getFirstDayOfMonth(null));
+		return current.equals(getDayStart(getFirstDayOfMonth(date)));
+	}
+
 }
