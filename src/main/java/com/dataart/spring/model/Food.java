@@ -3,11 +3,14 @@
  */
 package com.dataart.spring.model;
 
+import java.io.Serializable;
+
 /**
  * @author vmeshcheryakov
  *
  */
-public class Food {
+@SuppressWarnings("serial")
+public class Food implements Serializable {
 
 	private long id;
 

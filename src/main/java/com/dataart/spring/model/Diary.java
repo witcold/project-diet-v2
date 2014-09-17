@@ -3,13 +3,15 @@
  */
 package com.dataart.spring.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author vmeshcheryakov
  *
  */
-public class Diary {
+@SuppressWarnings("serial")
+public class Diary implements Serializable {
 
 	private long userId;
 

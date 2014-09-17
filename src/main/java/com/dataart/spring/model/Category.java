@@ -3,11 +3,14 @@
  */
 package com.dataart.spring.model;
 
+import java.io.Serializable;
+
 /**
  * @author vmeshcheryakov
  *
  */
-public class Category {
+@SuppressWarnings("serial")
+public class Category implements Serializable {
 
 	private long id;
 
