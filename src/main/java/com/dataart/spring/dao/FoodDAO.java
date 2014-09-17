@@ -28,24 +28,26 @@ public class FoodDAO {
 
 	private NamedParameterJdbcTemplate template;
 
+	private static RowMapper<Food> rowMapper = new RowMapper<Food>() {
+		@Override
+		public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Food food = new Food();
+			food.setId(rs.getLong(1));
+			food.setCategoryId(rs.getLong(2));
+			food.setName(rs.getString(3));
+			food.setCalories(rs.getInt(4));
+			food.setProteins(rs.getInt(5));
+			food.setFats(rs.getInt(6));
+			food.setCarbohydrates(rs.getInt(7));
+			return food;
+		}
+	};
+
 	public Map<Long, Food> selectByIds(List<Long> ids) {
 		Map<Long, Food> map = new HashMap<Long, Food>();
 		if (ids.size() > 0) {
 			String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods WHERE food_id IN (:ids);";
-			List<Food> list = template.query(sql, new MapSqlParameterSource("ids", ids), new RowMapper<Food>() {
-				@Override
-				public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
-					Food food = new Food();
-					food.setId(rs.getLong(1));
-					food.setCategoryId(rs.getLong(2));
-					food.setName(rs.getString(3));
-					food.setCalories(rs.getInt(4));
-					food.setProteins(rs.getInt(5));
-					food.setFats(rs.getInt(6));
-					food.setCarbohydrates(rs.getInt(7));
-					return food;
-				}
-			});
+			List<Food> list = template.query(sql, new MapSqlParameterSource("ids", ids), rowMapper);
 			for (Food food : list) {
 				map.put(food.getId(), food);
 			}
@@ -55,56 +57,17 @@ public class FoodDAO {
 
 	public List<Food> selectByCategoryId(Long categoryId) {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods WHERE (category_id = :categoryId);";
-		return template.query(sql, new MapSqlParameterSource("categoryId", categoryId), new RowMapper<Food>() {
-			@Override
-			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Food food = new Food();
-				food.setId(rs.getLong(1));
-				food.setCategoryId(rs.getLong(2));
-				food.setName(rs.getString(3));
-				food.setCalories(rs.getInt(4));
-				food.setProteins(rs.getInt(5));
-				food.setFats(rs.getInt(6));
-				food.setCarbohydrates(rs.getInt(7));
-				return food;
-			}
-		});
+		return template.query(sql, new MapSqlParameterSource("categoryId", categoryId), rowMapper);
 	}
 
 	public List<Food> selectByName(String name) {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats,carbohydrates FROM foods WHERE (name ILIKE :name);";
-		return template.query(sql, new MapSqlParameterSource("name", '%' + name + '%'), new RowMapper<Food>() {
-			@Override
-			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Food food = new Food();
-				food.setId(rs.getLong(1));
-				food.setCategoryId(rs.getLong(2));
-				food.setName(rs.getString(3));
-				food.setCalories(rs.getInt(4));
-				food.setProteins(rs.getInt(5));
-				food.setFats(rs.getInt(6));
-				food.setCarbohydrates(rs.getInt(7));
-				return food;
-			}
-		});
+		return template.query(sql, new MapSqlParameterSource("name", '%' + name + '%'), rowMapper);
 	}
 
 	public List<Food> selectAll() {
 		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates FROM foods;";
-		return template.query(sql, new RowMapper<Food>() {
-			@Override
-			public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Food food = new Food();
-				food.setId(rs.getLong(1));
-				food.setCategoryId(rs.getLong(2));
-				food.setName(rs.getString(3));
-				food.setCalories(rs.getInt(4));
-				food.setProteins(rs.getInt(5));
-				food.setFats(rs.getInt(6));
-				food.setCarbohydrates(rs.getInt(7));
-				return food;
-			}
-		});
+		return template.query(sql, rowMapper);
 	}
 
 	@Autowired

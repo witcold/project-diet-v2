@@ -28,6 +28,18 @@ public class DiaryDAO {
 
 	private JdbcTemplate template;
 
+	private static RowMapper<Diary> rowMapper = new RowMapper<Diary>() {
+		@Override
+		public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Diary diary = new Diary();
+			diary.setUserId(rs.getLong(1));
+			diary.setFoodId(rs.getLong(2));
+			diary.setTimestamp(rs.getTimestamp(3));
+			diary.setWeight(rs.getFloat(4));
+			return diary;
+		}
+	};
+
 	public boolean insert(Diary diary) {
 		String sql = "INSERT INTO diaries (user_id, food_id, timestamp, weight) VALUES (?, ?, ?, ?);";
 		int result = template.update(sql, diary.getUserId(), diary.getFoodId(), diary.getTimestamp(), diary.getWeight());
@@ -46,19 +58,9 @@ public class DiaryDAO {
 		return result == 1;
 	}
 
-	protected List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
+	private List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
 		String sql = "SELECT user_id, food_id, timestamp, weight FROM diaries WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
-		return template.query(sql, new RowMapper<Diary>() {
-			@Override
-			public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Diary diary = new Diary();
-				diary.setUserId(rs.getLong(1));
-				diary.setFoodId(rs.getLong(2));
-				diary.setTimestamp(rs.getTimestamp(3));
-				diary.setWeight(rs.getFloat(4));
-				return diary;
-			}
-		}, userId, from, to);
+		return template.query(sql, rowMapper, userId, from, to);
 	}
 
 	public List<Diary> selectByUserIdWithRange(long userId, Date from, Date to) {
