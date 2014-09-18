@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.dao;
 
 import java.sql.ResultSet;
@@ -27,40 +24,49 @@ public class CategoryDAO {
 
 	private JdbcTemplate template;
 
-	public Category selectById(long categoryId) {
-		String sql = "SELECT category_id, parent_id, name FROM categories WHERE (category_id = ?);";
-		return template.query(sql, new ResultSetExtractor<Category>() {
-			@Override
-			public Category extractData(ResultSet rs) throws SQLException, DataAccessException {
-				Category category = null;
-				if (rs.next()) {
-					category = new Category();
-					category.setId(rs.getLong(1));
-					category.setParentId(rs.getLong(2));
-					category.setName(rs.getString(3));
-				}
-				return category;
+	class CategoryRowMapper implements RowMapper<Category> {
+		@Override
+		public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return getCategory(rs);
+		}
+	}
+
+	class CategoryResultSetExtractor implements ResultSetExtractor<Category> {
+		@Override
+		public Category extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if (rs.next()) {
+				return getCategory(rs);
 			}
-		}, categoryId);
+			return null;
+		}
+	}
+
+	public Category selectById(long categoryId) {
+		String sql = "SELECT category_id, parent_id, name_en, name_ru"
+					+ " FROM categories"
+					+ " WHERE (category_id = ?);";
+		return template.query(sql, new CategoryResultSetExtractor(), categoryId);
 	}
 
 	public List<Category> selectAll() {
-		String sql = "SELECT category_id, parent_id, name FROM categories WHERE (category_id > 0);";
-		return template.query(sql, new RowMapper<Category>() {
-			@Override
-			public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Category category = new Category();
-				category.setId(rs.getLong(1));
-				category.setParentId(rs.getLong(2));
-				category.setName(rs.getString(3));
-				return category;
-			}
-		});
+		String sql = "SELECT category_id, parent_id, name"
+					+ " FROM categories"
+					+ " WHERE (category_id > 0);";
+		return template.query(sql, new CategoryRowMapper());
 	}
 
 	@Autowired
 	public void setDataSource(DataSource ds) {
 		this.template = new JdbcTemplate(ds);
+	}
+
+	Category getCategory(ResultSet rs) throws SQLException {
+		Category category = new Category();
+		category.setId(rs.getLong("category_id"));
+		category.setParentId(rs.getLong("parent_id"));
+		category.setNameEn(rs.getString("name_en"));
+		category.setNameRu(rs.getString("name_ru"));
+		return category;
 	}
 
 }

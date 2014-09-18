@@ -1,9 +1,28 @@
+DROP TABLE IF EXISTS diaries;
+
+DROP TABLE IF EXISTS foods;
+
+DROP TABLE IF EXISTS categories;
+
+DROP TABLE IF EXISTS weights;
+
+DROP TABLE IF EXISTS users;
+
+DROP TABLE IF EXISTS countries;
+
 CREATE TABLE countries (
 	country_id		CHAR(2) NOT NULL,
 	name_en			VARCHAR(40) NOT NULL,
 	name_ru			VARCHAR(40) NOT NULL,
 	PRIMARY KEY (country_id)
 );
+
+INSERT INTO countries
+	(country_id, name_en, name_ru)
+VALUES
+	('GB', 'United Kingdom', 'Великобритания'),
+	('RU', 'Russia', 'Россия'),
+	('US', 'United States', 'США');
 
 CREATE TABLE users (
 	user_id			BIGSERIAL,
@@ -13,7 +32,7 @@ CREATE TABLE users (
 	last_name		VARCHAR(40) NOT NULL,
 	gender			CHAR(1) NOT NULL,
 	birth_date		DATE NOT NULL,
-	country_id		SMALLINT NOT NULL,
+	country_id		CHAR(2) NOT NULL,
 	height			SMALLINT NOT NULL,
 	activity_level	FLOAT,
 	PRIMARY KEY (user_id),
@@ -38,7 +57,7 @@ CREATE TABLE categories (
 	FOREIGN KEY (parent_id) REFERENCES categories (category_id)
 );
 
-INSERT INTO categories (category_id, parent_id, name) VALUES (0, 0, 'NULL');
+INSERT INTO categories (category_id, parent_id, name_en, name_ru) VALUES (0, 0, 'NULL', 'NULL');
 
 CREATE TABLE foods (
 	food_id			BIGSERIAL,

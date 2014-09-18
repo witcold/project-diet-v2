@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.model;
 
 import java.io.Serializable;
@@ -16,7 +13,9 @@ public class Category implements Serializable {
 
 	private long parentId;
 
-	private String name;
+	private String nameEn;
+
+	private String nameRu;
 
 	public Category() {
 	}
@@ -37,12 +36,23 @@ public class Category implements Serializable {
 		this.parentId = parentId;
 	}
 
-	public String getName() {
-		return name;
+	public String getName(String language) {
+		if (language.equalsIgnoreCase("en")) {
+			return nameEn;
+		}
+		if (language.equalsIgnoreCase("ru")) {
+			return nameRu;
+		}
+		return null;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
 	}
+
+	public void setNameRu(String nameRu) {
+		this.nameRu = nameRu;
+	}
+
 
 }
