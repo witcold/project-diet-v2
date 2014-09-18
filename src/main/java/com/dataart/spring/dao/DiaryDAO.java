@@ -41,25 +41,34 @@ public class DiaryDAO {
 	};
 
 	public boolean insert(Diary diary) {
-		String sql = "INSERT INTO diaries (user_id, food_id, timestamp, weight) VALUES (?, ?, ?, ?);";
-		int result = template.update(sql, diary.getUserId(), diary.getFoodId(), diary.getTimestamp(), diary.getWeight());
+		String sql = "INSERT INTO diaries (user_id, food_id, timestamp, weight)"
+					+ " VALUES (?, ?, ?, ?);";
+		int result = template.update(sql, diary.getUserId(), diary.getFoodId(),
+				diary.getTimestamp(), diary.getWeight());
 		return result == 1;
 	}
 
 	public boolean update(Diary diary) {
-		String sql = "UPDATE diaries SET weight = ? WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
-		int result = template.update(sql, diary.getWeight(), diary.getUserId(), diary.getFoodId(), diary.getTimestamp());
+		String sql = "UPDATE diaries"
+					+ " SET weight = ?"
+					+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
+		int result = template.update(sql, diary.getWeight(), diary.getUserId(),
+				diary.getFoodId(), diary.getTimestamp());
 		return result == 1;
 	}
 
 	public boolean delete(Diary diary) {
-		String sql = "DELETE FROM diaries WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
-		int result = template.update(sql, diary.getUserId(), diary.getFoodId(), diary.getTimestamp());
+		String sql = "DELETE FROM diaries"
+					+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
+		int result = template.update(sql, diary.getUserId(), diary.getFoodId(),
+				diary.getTimestamp());
 		return result == 1;
 	}
 
 	private List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
-		String sql = "SELECT user_id, food_id, timestamp, weight FROM diaries WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
+		String sql = "SELECT user_id, food_id, timestamp, weight"
+					+ " FROM diaries"
+					+ " WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
 		return template.query(sql, rowMapper, userId, from, to);
 	}
 
@@ -76,7 +85,12 @@ public class DiaryDAO {
 	}
 
 	public List<CaloriesDTO> getAggregatedInfo(long userId, Date from, Date to) {
-		String sql = "SELECT timestamp::date as date, SUM(weight*calories*10) FROM diaries d JOIN foods f ON (d.food_id = f.food_id) WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?) GROUP BY user_id, date;";
+		String sql = "SELECT timestamp::date as date, SUM(weight*calories*10)"
+					+ " FROM diaries d"
+					+ " JOIN foods f ON (d.food_id = f.food_id)"
+					+ " WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?)"
+					+ " GROUP BY user_id, date"
+					+ " ORDER BY 1 ASC;";
 		return template.query(sql, new RowMapper<CaloriesDTO>() {
 			@Override
 			public CaloriesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
