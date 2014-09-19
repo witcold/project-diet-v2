@@ -22,7 +22,8 @@ public enum Gender {
 		return description;
 	}
 
-	private Gender (char newValue, String description) {
+	private Gender (char newValue, String newDescription) {
 		this.value = newValue;
+		this.description = newDescription;
 	}
 }
