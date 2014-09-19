@@ -12,6 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.dataart.spring.status.DBStatus;
+
 /**
  * @author vmeshcheryakov
  *
@@ -31,6 +33,11 @@ public class RootContext {
 		dataSource.setUsername(env.getProperty("user.login"));
 		dataSource.setPassword(env.getProperty("user.password"));
 		return dataSource;
+	}
+
+	@Bean(name = "dbStatus")
+	public DBStatus getDBStatus() {
+		return new DBStatus();
 	}
 
 }

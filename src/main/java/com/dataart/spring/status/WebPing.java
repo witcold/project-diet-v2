@@ -3,25 +3,30 @@
  */
 package com.dataart.spring.status;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  * @author vmeshcheryakov
  *
  */
-@Controller
-public class WebPing {
+@WebServlet("/status")
+@SuppressWarnings("serial")
+public class WebPing extends HttpServlet {
 
-	@Autowired
-	private DBStatus dbStatus;
-
-	@RequestMapping(value = "/status")
-	@ResponseBody
-	public boolean status() {
-		return dbStatus.getDBStatus();
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		DBStatus dbStatus = (DBStatus) context.getBean("dbStatus");
+		response.getWriter().println(dbStatus.getDBStatus());
 	}
 
 }
