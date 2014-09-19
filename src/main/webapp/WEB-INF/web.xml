@@ -8,4 +8,9 @@
 		<location>/WEB-INF/views/error404.jsp</location>
 	</error-page>
 
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern />
+	</filter-mapping>
+
 </web-app>
