@@ -97,8 +97,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<spring:message code="weight" var="weight"/>
-								<form:input type="number" min="0" step="0.001" max="1000" path="weight" placeholder="${weight}" class="form-control" required="true" />
+								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true" />
 							</div>
 						</form:form>
 					</div>

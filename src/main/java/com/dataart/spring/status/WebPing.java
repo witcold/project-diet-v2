@@ -25,7 +25,7 @@ public class WebPing extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		DBStatus dbStatus = (DBStatus) context.getBean("dbStatus");
+		DBStatus dbStatus = context.getBean(DBStatus.class);
 		response.getWriter().println(dbStatus.getDBStatus());
 	}
 

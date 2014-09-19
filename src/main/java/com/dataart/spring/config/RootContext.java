@@ -35,7 +35,7 @@ public class RootContext {
 		return dataSource;
 	}
 
-	@Bean(name = "dbStatus")
+	@Bean
 	public DBStatus getDBStatus() {
 		return new DBStatus();
 	}
