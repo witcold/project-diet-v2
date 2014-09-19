@@ -3,6 +3,8 @@
  */
 package com.dataart.spring.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,7 @@ public class RootContext {
 	private Environment env;
 
 	@Bean
-	public DriverManagerDataSource getDataSource() {
+	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(env.getProperty("driverClassName"));
 		dataSource.setUrl(env.getProperty("url"));

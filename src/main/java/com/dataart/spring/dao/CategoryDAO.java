@@ -24,14 +24,20 @@ public class CategoryDAO {
 
 	private JdbcTemplate template;
 
-	class CategoryRowMapper implements RowMapper<Category> {
+	private class CategoryRowMapper implements RowMapper<Category> {
+		public CategoryRowMapper() {
+		}
+
 		@Override
 		public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return getCategory(rs);
 		}
 	}
 
-	class CategoryResultSetExtractor implements ResultSetExtractor<Category> {
+	private class CategoryResultSetExtractor implements ResultSetExtractor<Category> {
+		public CategoryResultSetExtractor() {
+		}
+
 		@Override
 		public Category extractData(ResultSet rs) throws SQLException, DataAccessException {
 			if (rs.next()) {

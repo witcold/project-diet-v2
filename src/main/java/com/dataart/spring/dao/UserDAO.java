@@ -27,7 +27,10 @@ public class UserDAO {
 
 	private JdbcTemplate template;
 
-	class UserResultSetExtractor implements ResultSetExtractor<User> {
+	private class UserResultSetExtractor implements ResultSetExtractor<User> {
+		public UserResultSetExtractor() {
+		}
+
 		@Override
 		public User extractData(ResultSet rs) throws SQLException, DataAccessException {
 			User user = null;

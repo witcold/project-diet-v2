@@ -23,7 +23,10 @@ public class WeightDAO {
 
 	private JdbcTemplate template;
 
-	class WeightRowMapper implements RowMapper<Weight> {
+	private class WeightRowMapper implements RowMapper<Weight> {
+		public WeightRowMapper() {
+		}
+
 		@Override
 		public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Weight weight = new Weight();

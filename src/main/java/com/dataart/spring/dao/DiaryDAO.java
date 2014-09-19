@@ -25,7 +25,10 @@ public class DiaryDAO {
 
 	private JdbcTemplate template;
 
-	class DiaryRowMapper implements RowMapper<Diary> {
+	private class DiaryRowMapper implements RowMapper<Diary> {
+		public DiaryRowMapper() {
+		}
+
 		@Override
 		public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Diary diary = new Diary();
@@ -37,7 +40,10 @@ public class DiaryDAO {
 		}
 	}
 
-	class CaloriesRowMapper implements RowMapper<CaloriesDTO> {
+	private class CaloriesRowMapper implements RowMapper<CaloriesDTO> {
+		public CaloriesRowMapper() {
+		}
+
 		@Override
 		public CaloriesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CaloriesDTO caloriesDTO = new CaloriesDTO();

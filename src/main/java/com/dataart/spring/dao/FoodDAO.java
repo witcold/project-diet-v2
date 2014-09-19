@@ -25,7 +25,10 @@ public class FoodDAO {
 
 	private NamedParameterJdbcTemplate template;
 
-	class FoodRowMapper implements RowMapper<Food> {
+	private class FoodRowMapper implements RowMapper<Food> {
+		public FoodRowMapper() {
+		}
+
 		@Override
 		public Food mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Food food = new Food();
