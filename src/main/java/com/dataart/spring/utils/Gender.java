@@ -1,5 +1,8 @@
 package com.dataart.spring.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Simple type representing human gender (sex).
  * @author Witold Mescheryakov
@@ -10,7 +13,15 @@ public enum Gender {
 	FEMALE		('F', "gender.female"),
 	UNKNOWN		('U', "gender.unknown");
 
-	private char value;
+	private final char value;
+
+	// Reverse-lookup map
+	private static final Map<Character, Gender> lookup = new HashMap<Character, Gender>();
+
+	static {
+		for (Gender gender : Gender.values())
+			lookup.put(gender.getValue(), gender);
+	}
 
 	private String description;
 
@@ -26,4 +37,9 @@ public enum Gender {
 		this.value = newValue;
 		this.description = newDescription;
 	}
+
+	public static Gender get(Character value) {
+		return lookup.get(value);
+	}
+
 }
