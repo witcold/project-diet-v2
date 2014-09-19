@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.dao;
 
 import java.sql.Connection;
@@ -30,8 +27,25 @@ public class UserDAO {
 
 	private JdbcTemplate template;
 
+	class UserResultSetExtractor implements ResultSetExtractor<User> {
+		@Override
+		public User extractData(ResultSet rs) throws SQLException, DataAccessException {
+			User user = null;
+			if (rs.next()) {
+				user = new User();
+				user.setLogin(rs.getString("login"));
+				user.setId(rs.getLong("user_id"));
+				user.setPassword(rs.getString("password"));
+				user.setFirstName(rs.getString("first_name"));
+				user.setLastName(rs.getString("last_name"));
+			}
+			return user;
+		}
+	}
+
 	public boolean insert(final User user) {
-		final String sql = "INSERT INTO users (login, password, first_name, last_name) VALUES (?, ?, ?, ?);";
+		final String sql = "INSERT INTO users (login, password, first_name, last_name)"
+						+ " VALUES (?, ?, ?, ?);";
 		KeyHolder holder = new GeneratedKeyHolder();
 		int result = template.update(new PreparedStatementCreator() {
 			@Override
@@ -48,28 +62,17 @@ public class UserDAO {
 		return result == 1;
 	}
 
-	public User selectByLogin(final String login) {
-		String sql = "SELECT user_id, password, first_name, last_name FROM users WHERE (login = ?);";
-		return template.query(sql, new ResultSetExtractor<User>() {
-			@Override
-			public User extractData(ResultSet rs) throws SQLException, DataAccessException {
-				User user = null;
-				if (rs.next()) {
-					user = new User();
-					user.setLogin(login);
-					user.setId(rs.getLong(1));
-					user.setPassword(rs.getString(2));
-					user.setFirstName(rs.getString(3));
-					user.setLastName(rs.getString(4));
-				}
-				return user;
-			}
-		}, login);
+	public User selectByLogin(String login) {
+		String sql = "SELECT login, user_id, password, first_name, last_name"
+					+ " FROM users"
+					+ " WHERE (login = ?);";
+		return template.query(sql, new UserResultSetExtractor(), login);
 	}
 
 	public boolean authenticate(User user) {
 		User dbUser = selectByLogin(user.getLogin());
-		if (dbUser != null && dbUser.getPassword().equals(PasswordHashing.encode(user.getPassword()))) {
+		if (dbUser != null
+				&& dbUser.getPassword().equals(PasswordHashing.encode(user.getPassword()))) {
 			user.clone(dbUser);
 			return true;
 		}

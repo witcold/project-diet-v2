@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.model;
 
 import java.io.Serializable;

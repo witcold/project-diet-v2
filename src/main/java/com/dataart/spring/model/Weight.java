@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.model;
 
 import java.io.Serializable;
@@ -48,8 +45,7 @@ public class Weight implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Weight [userId=" + userId + ", date=" + date + ", weight="
-				+ weight + "]";
+		return "Weight [userId=" + userId + ", date=" + date + ", weight=" + weight + "]";
 	}
 
 }

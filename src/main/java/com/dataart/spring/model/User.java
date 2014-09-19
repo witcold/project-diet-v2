@@ -1,9 +1,9 @@
-/**
- * 
- */
 package com.dataart.spring.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.dataart.spring.utils.Gender;
 
 /**
  * @author vmeshcheryakov
@@ -24,15 +24,15 @@ public class User implements Serializable {
 
 	private String lastName;
 
-//	private Sex sex;
-//
-//	private short yearOfBirth;
-//
-//	private short countryId;
-//
-//	private short currentHeight; // in centimeters
-//
-//	private float currentWeight; // in kilograms
+	private Gender gender;
+
+	private Date birthDate;
+
+	private String countryId;
+
+	private int height;
+
+	private float activityLevel;
 
 	public User() {
 	}
@@ -85,17 +85,66 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(String countryId) {
+		this.countryId = countryId;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public float getActivityLevel() {
+		return activityLevel;
+	}
+
+	public void setActivityLevel(float activityLevel) {
+		this.activityLevel = activityLevel;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password
-				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
+				+ ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", gender=" + gender + ", birthDate=" + birthDate
+				+ ", countryId=" + countryId + ", height=" + height
+				+ ", activityLevel=" + activityLevel + "]";
 	}
 
 	public void clone(User object) {
-		this.firstName = object.firstName;
 		this.id = object.id;
-		this.lastName = object.lastName;
 		this.login = object.login;
 		this.password = object.password;
+		this.firstName = object.firstName;
+		this.lastName = object.lastName;
+		this.gender = object.gender;
+		this.birthDate = object.birthDate;
+		this.countryId = object.countryId;
+		this.height = object.height;
+		this.activityLevel = object.activityLevel;
 	}
+
 }

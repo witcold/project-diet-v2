@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.dao;
 
 import java.sql.ResultSet;
@@ -28,17 +25,27 @@ public class DiaryDAO {
 
 	private JdbcTemplate template;
 
-	private static RowMapper<Diary> rowMapper = new RowMapper<Diary>() {
+	class DiaryRowMapper implements RowMapper<Diary> {
 		@Override
 		public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Diary diary = new Diary();
-			diary.setUserId(rs.getLong(1));
-			diary.setFoodId(rs.getLong(2));
-			diary.setTimestamp(rs.getTimestamp(3));
-			diary.setWeight(rs.getFloat(4));
+			diary.setUserId(rs.getLong("user_id"));
+			diary.setFoodId(rs.getLong("food_id"));
+			diary.setTimestamp(rs.getTimestamp("timestamp"));
+			diary.setWeight(rs.getFloat("weight"));
 			return diary;
 		}
-	};
+	}
+
+	class CaloriesRowMapper implements RowMapper<CaloriesDTO> {
+		@Override
+		public CaloriesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CaloriesDTO caloriesDTO = new CaloriesDTO();
+			caloriesDTO.setDate(rs.getDate(1));
+			caloriesDTO.setCalories(rs.getInt(2));
+			return caloriesDTO;
+		}
+	}
 
 	public boolean insert(Diary diary) {
 		String sql = "INSERT INTO diaries (user_id, food_id, timestamp, weight)"
@@ -49,8 +56,7 @@ public class DiaryDAO {
 	}
 
 	public boolean update(Diary diary) {
-		String sql = "UPDATE diaries"
-					+ " SET weight = ?"
+		String sql = "UPDATE diaries" + " SET weight = ?"
 					+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
 		int result = template.update(sql, diary.getWeight(), diary.getUserId(),
 				diary.getFoodId(), diary.getTimestamp());
@@ -65,11 +71,12 @@ public class DiaryDAO {
 		return result == 1;
 	}
 
-	private List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
+	private List<Diary> selectByUserIdForInterval(long userId, Date from,
+			Date to) {
 		String sql = "SELECT user_id, food_id, timestamp, weight"
 					+ " FROM diaries"
 					+ " WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?);";
-		return template.query(sql, rowMapper, userId, from, to);
+		return template.query(sql, new DiaryRowMapper(), userId, from, to);
 	}
 
 	public List<Diary> selectByUserIdWithRange(long userId, Date from, Date to) {
@@ -91,15 +98,7 @@ public class DiaryDAO {
 					+ " WHERE (user_id = ?) AND (timestamp BETWEEN ? AND ?)"
 					+ " GROUP BY user_id, date"
 					+ " ORDER BY 1 ASC;";
-		return template.query(sql, new RowMapper<CaloriesDTO>() {
-			@Override
-			public CaloriesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-				CaloriesDTO dto = new CaloriesDTO();
-				dto.setDate(rs.getDate(1));
-				dto.setCalories(rs.getInt(2));
-				return dto;
-			}
-		}, userId, from, to);
+		return template.query(sql, new CaloriesRowMapper(), userId, from, to);
 	}
 
 	@Autowired
