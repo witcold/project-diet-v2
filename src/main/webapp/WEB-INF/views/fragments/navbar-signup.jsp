@@ -2,7 +2,7 @@
 <div class="navbar-form navbar-right">
 	<a href="signup">
 		<button type="button" class="btn btn-primary">
-			<spring:message code="sign.up"/>
+			<spring:message code="form.sign.up"/>
 		</button>
 	</a>
 </div>

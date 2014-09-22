@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,7 +8,9 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><spring:message code="diary" /></title>
+		<title>
+			<spring:message code="label.diary"/>
+		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="resources/css/typeaheadjs.css">
@@ -17,7 +19,9 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1><spring:message code="diary" /></h1>
+				<h1>
+					<spring:message code="label.diary"/>
+				</h1>
 				<div id="placeholder" class="center-block" style="min-width:600px;height:200px">
 				</div>
 				<div class="btn-group btn-group-justified">
@@ -45,27 +49,45 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-xs-1" style="width: 1px;"></th>
-							<th class="col-xs-2"><spring:message code="diary.timestamp" /></th>
-							<th><spring:message code="diary.food" /></th>
-							<th class="col-xs-2"><spring:message code="diary.weight" /></th>
-							<th class="col-xs-3"><spring:message code="diary.calories" /></th>
-							<th class="col-xs-1" style="width: 1px;"></th>
+							<th class="col-xs-1" style="width: 1px;">
+							</th>
+							<th class="col-xs-2">
+								<spring:message code="diary.timestamp"/>
+							</th>
+							<th>
+								<spring:message code="diary.food"/>
+							</th>
+							<th class="col-xs-2">
+								<spring:message code="diary.weight"/>
+							</th>
+							<th class="col-xs-3">
+								<spring:message code="diary.calories"/>
+							</th>
+							<th class="col-xs-1" style="width: 1px;">
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="diary" items="${diaryList}">
-							<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
+							<c:set var="food" value="${foodMap.get(diary.foodId)}"/>
 							<tr>
 								<td>
 									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${food.id}, '${food.getName(lang)}', ${diary.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
-								<td><fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/></td>
-								<td><c:out value="${food.getName(lang)}"/></td>
-								<td><c:out value="${diary.weight}"/></td>
-								<td><fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"></fmt:formatNumber></td>
+								<td>
+									<fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/>
+								</td>
+								<td>
+									<c:out value="${food.getName(lang)}"/>
+								</td>
+								<td>
+									<c:out value="${diary.weight}"/>
+								</td>
+								<td>
+									<fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"/>
+								</td>
 								<td class="text-right">
 									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd HH:mm"/>
 									<a style="cursor: pointer;" onclick="deleteDiary(${food.id}, '${dateToDelete}')" class="text-danger">
@@ -77,7 +99,7 @@
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diaryModal">
-					<spring:message code="diary.add" />
+					<spring:message code="diary.add"/>
 				</button>
 			</div>
 		</div>
@@ -87,15 +109,18 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title"><spring:message code="diary.add" /></h4>
+						<h4 class="modal-title">
+							<spring:message code="diary.add" />
+						</h4>
 					</div>
 					<div class="modal-body">
 						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary">
 							<div class="form-group">
 								<spring:message code="diary.timestamp" var="timestamp"/>
-								<div class='input-group date' id='datetimepicker'>
+								<div class="input-group date" id="datetimepicker">
 									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
@@ -105,17 +130,23 @@
 							<div class="form-group">
 								<spring:message code="diary.food" var="food"/>
 								<input type="text" id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
-								<form:input type="hidden" path="foodId" />
+								<form:input type="hidden" path="foodId"/>
 							</div>
-							<div class="form-group">
-								<spring:message code="weight" var="weight"/>
-								<form:input type="number" min="0" step="0.001" max="1000" path="weight" placeholder="${weight}" class="form-control" required="true" />
+							<div class="form-group input-group">
+								<form:input type="number" min="0.001" step="0.001" max="10" path="weight" class="form-control" required="true"/>
+								<span class="input-group-addon">
+									<spring:message code="diary.weight.measure"/>
+								</span>
 							</div>
 						</form:form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
-						<button type="submit" class="btn btn-primary" form="diaryForm"><spring:message code="form.save"/></button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<spring:message code="form.close"/>
+						</button>
+						<button type="submit" class="btn btn-primary" form="diaryForm">
+							<spring:message code="form.save"/>
+						</button>
 					</div>
 				</div>
 			</div>

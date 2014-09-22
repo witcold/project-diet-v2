@@ -6,20 +6,26 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><spring:message code="error.404" /></title>
+		<title>
+			<spring:message code="error.404"/>
+		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
-				<h2><spring:message code="error.404" /></h2>
-				<p><spring:message code="error.404.detailed" /></p>
+				<h2>
+					<spring:message code="error.404"/>
+				</h2>
+				<p>
+					<spring:message code="error.404.detailed"/>
+				</p>
 			</div>
 		</div>
-		
+
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	</body>
 </html>

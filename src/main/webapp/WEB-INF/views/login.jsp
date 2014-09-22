@@ -1,5 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -7,7 +7,9 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><spring:message code="log.in"/></title>
+		<title>
+			<spring:message code="form.log.in"/>
+		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
@@ -16,28 +18,28 @@
 			<div class="jumbotron">
 				<form:form action="login" accept-charset="UTF-8" method="post" modelAttribute="user">
 					<h2 class="form-signin-heading">
-						<spring:message code="login.label.login"/>
+						<spring:message code="label.login"/>
 					</h2>
 					<form:errors path="*" element="div" class="alert alert-danger"/>
 					<div class="form-group">
-						<spring:message code="login" var="login"/>
+						<spring:message code="user.login" var="login"/>
 						<form:input type="email" path="login" placeholder="${login}" maxlength="40" class="form-control" required="true" autofocus="true"/>
 					</div>
 					<div class="form-group">
-						<spring:message code="password" var="password"/>
+						<spring:message code="user.password" var="password"/>
 						<form:password path="password" placeholder="${password}" class="form-control" required="true"/>
 					</div>
 					<div class="form-group">
 						<form:button class="btn btn-success">
-							<spring:message code="log.in"/>
+							<spring:message code="form.log.in"/>
 						</form:button>
 					</div>
 				</form:form>
 			</div>
 		</div>
-		
+
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	</body>
 </html>
