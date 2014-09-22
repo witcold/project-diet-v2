@@ -5,6 +5,7 @@ package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dataart.spring.dao.UserDAO;
 import com.dataart.spring.model.User;
+import com.dataart.spring.utils.Gender;
 import com.dataart.spring.validators.SignUpValidator;
 
 /**
@@ -51,7 +54,8 @@ public class SignUpController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String greeting() {
+	public String greeting(Model model) {
+		model.addAttribute("genders", Gender.values());
 		return "signup";
 	}
 

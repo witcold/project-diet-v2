@@ -45,7 +45,10 @@
 					<div class="form-group">
 						<form:select path="gender" class="form-control" required="true">
 							<form:option value="" disabled="true"><spring:message code="signup.gender"/></form:option>
-							<form:options items="${gender}" itemLabel="description"/>
+							<c:forEach var="option" items="${genders}">
+								<spring:message code="${option.description}" var="label"/>
+								<form:option value="${option}" label="${label}"/>
+							</c:forEach>
 						</form:select>
 					</div>
 					<div class="form-group">
