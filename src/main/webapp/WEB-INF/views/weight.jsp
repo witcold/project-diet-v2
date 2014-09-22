@@ -8,7 +8,9 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><spring:message code="weight" /></title>
+		<title>
+			<spring:message code="label.weight"/>
+		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
 	</head>
@@ -16,7 +18,9 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1><spring:message code="weight" /></h1>
+				<h1>
+					<spring:message code="label.weight" />
+				</h1>
 				<div id="placeholder" class="center-block" style="min-width:600px;height:200px">
 				</div>
 				<div class="btn-group btn-group-justified">
@@ -44,10 +48,16 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-xs-1" style="width: 1px;"></th>
-							<th><spring:message code="date" /></th>
-							<th><spring:message code="weight.weight" /></th>
-							<th class="col-xs-1" style="width: 1px;"></th>
+							<th class="col-xs-1" style="width: 1px;">
+							</th>
+							<th>
+								<spring:message code="weight.date" />
+							</th>
+							<th>
+								<spring:message code="weight.weight" />
+							</th>
+							<th class="col-xs-1" style="width: 1px;">
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -58,8 +68,12 @@
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
-								<td><fmt:formatDate value="${weight.date}" pattern="dd MMMM yyyy"/></td>
-								<td><c:out value="${weight.weight}"/></td>
+								<td>
+									<fmt:formatDate value="${weight.date}" pattern="dd MMMM yyyy"/>
+								</td>
+								<td>
+									<c:out value="${weight.weight}"/>
+								</td>
 								<td class="text-right">
 									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
 									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
@@ -71,7 +85,7 @@
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
-					<spring:message code="weight.add" />
+					<spring:message code="weight.add"/>
 				</button>
 			</div>
 		</div>
@@ -81,14 +95,17 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title"><spring:message code="weight.add" /></h4>
+						<h4 class="modal-title">
+							<spring:message code="weight.add"/>
+						</h4>
 					</div>
 					<div class="modal-body">
 						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight">
 							<div class="form-group">
-								<spring:message code="date" var="date"/>
+								<spring:message code="weight.date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
 									<form:input readonly="true" path="date" placeholder="${date}" class="form-control"/>
 									<span class="input-group-addon">
@@ -96,14 +113,21 @@
 									</span>
 								</div>
 							</div>
-							<div class="form-group">
-								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true" />
+							<div class="form-group input-group">
+								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true"/>
+								<span class="input-group-addon">
+									<spring:message code="weight.weight.measure"/>
+								</span>
 							</div>
 						</form:form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
-						<button type="submit" class="btn btn-primary" form="weightForm"><spring:message code="form.save"/></button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<spring:message code="form.close"/>
+						</button>
+						<button type="submit" class="btn btn-primary" form="weightForm">
+							<spring:message code="form.save"/>
+						</button>
 					</div>
 				</div>
 			</div>
