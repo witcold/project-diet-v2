@@ -10,7 +10,8 @@
 		<form:password path="password" placeholder="${password}" class="form-control" required="true" />
 	</div>
 	<div class="form-group">
-		<spring:message code="log_in" var="log_in"/>
-		<form:button class="btn btn-success">${log_in}</form:button>
+		<form:button class="btn btn-success">
+			<spring:message code="log.in"/>
+		</form:button>
 	</div>
 </form:form>
