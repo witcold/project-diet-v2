@@ -8,7 +8,9 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -23,17 +25,27 @@ public class WeightDAO {
 
 	private JdbcTemplate template;
 
+	private class WeightResultSetExtractor implements ResultSetExtractor<Weight> {
+		public WeightResultSetExtractor() {
+		}
+
+		@Override
+		public Weight extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if (rs.next()) {
+				return getWeight(rs);
+			}
+			return null;
+		}
+		
+	}
+
 	private class WeightRowMapper implements RowMapper<Weight> {
 		public WeightRowMapper() {
 		}
 
 		@Override
 		public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Weight weight = new Weight();
-			weight.setUserId(rs.getLong(1));
-			weight.setDate(rs.getDate(2));
-			weight.setWeight(rs.getFloat(3));
-			return weight;
+			return getWeight(rs);
 		}
 	}
 
@@ -66,9 +78,26 @@ public class WeightDAO {
 		return template.query(sql, new WeightRowMapper(), userId, from, to);
 	}
 
+	public Weight selectLastByUserId(long userId) {
+		String sql = "SELECT user_id, date, weight"
+					+ " FROM weights"
+					+ " WHERE (user_id = ?)"
+					+ " ORDER BY date DESC"
+					+ " LIMIT 1;";
+		return template.query(sql, new WeightResultSetExtractor(), userId);
+	}
+
 	@Autowired
 	public void setDataSource(DataSource ds) {
 		this.template = new JdbcTemplate(ds);
+	}
+
+	public Weight getWeight(ResultSet rs) throws SQLException {
+		Weight weight = new Weight();
+		weight.setUserId(rs.getLong(1));
+		weight.setDate(rs.getDate(2));
+		weight.setWeight(rs.getFloat(3));
+		return weight;
 	}
 
 }

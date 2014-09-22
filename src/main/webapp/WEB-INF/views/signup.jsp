@@ -29,7 +29,7 @@
 						<spring:message code="label.signup"/>
 					</h2>
 					<div class="form-group">
-						<form:errors path="*" element="div" class="alert alert-danger" />
+						<form:errors path="*" element="div" class="alert alert-danger"/>
 					</div>
 					<div class="form-group input-group">
 						<spring:message code="user.login" var="login"/>
@@ -93,13 +93,18 @@
 						<span class="input-group-addon aligned">
 							<spring:message code="user.country"/>
 						</span>
-						<form:input path="countryId" placeholder="${country}" class="form-control" required="true" />
+						<form:select path="countryId" class="form-control" required="true">
+							<form:option value="" disabled="true" label="Select"/>
+							<form:option value="RU" label="RU"/>
+							<form:option value="GB" label="GB"/>
+							<form:option value="US" label="US"/>
+						</form:select>
 					</div>
 					<div class="form-group input-group">
 						<span class="input-group-addon aligned">
 							<spring:message code="user.height"/>
 						</span>
-						<form:input path="height" type="number" min="1" max="500" class="form-control" required="true" />
+						<form:input path="height" type="number" min="1" max="500" class="form-control" required="true"/>
 						<span class="input-group-addon">
 							<spring:message code="signup.height.measure"/>
 						</span>
@@ -108,7 +113,7 @@
 						<span class="input-group-addon aligned">
 							<spring:message code="user.activity"/>
 						</span>
-						<form:input path="activityLevel" type="number" min="1" step="0.01" max="3" value="1.50" class="form-control" required="true" />
+						<form:input path="activityLevel" type="number" min="1" step="0.01" max="3" value="1.50" class="form-control" required="true"/>
 						<span class="input-group-addon">
 							<input id="paeLevel"/>
 						</span>

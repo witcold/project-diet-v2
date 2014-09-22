@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,12 +19,164 @@
 				<h1>
 					<spring:message code="label.dashboard"/>
 				</h1>
+				<h3>
+					Hello, mr. ${account.firstName} ${account.lastName}!
+				</h3>
+				<h4>
+					Your height:
+					<small>${account.height} cm</small>
+				</h4>
+				<h4>
+					Your last weight:
+					<small>${lastWeight.weight} kg</small>
+				</h4>
+				<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
+				<h4>
+					Your age:
+					<small>${age} year</small>
+				</h4>
+				<p>Assuming this data, your basal methabolic rate is 1800 kcal.</p>
+				<h2>
+					Your current weight loss progress
+					<small>lose 5 kg in 3 month</small>
+				</h2>
+				<div id="weightPlaceholder" class="center-block" style="min-width:600px;height:200px">
+				</div>
+				<h2>
+					Your diary stats
+					<small>2340 / 2100 for last 7 days</small>
+				</h2>
+				<div id="diaryPlaceholder" class="center-block" style="min-width:600px;height:200px">
+				</div>
 			</div>
-			Hello, ${account.firstName} ${account.lastName}!
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="//code.highcharts.com/highcharts.js"></script>
+		<script type="text/javascript">
+			$(function plotWeight() {
+				$.ajax({
+					url: 'weight/raw',
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					type: 'GET',
+					success: function(result) {
+						var data = [];
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([+date, result[i]['weight']]);
+						}
+						Highcharts.setOptions({
+							global: {
+								useUTC: false
+							}
+						});
+						$('#weightPlaceholder').highcharts({
+							chart: {
+								backgroundColor: null
+							},
+							legend: {
+								enabled: false
+							},
+							title: {
+								text: null
+							},
+							subtitle: {
+								text: null
+							},
+							tooltip: {
+								valueSuffix: ' kg'
+							},
+							xAxis: {
+								type: 'datetime',
+								tickInterval: 24 * 3600 * 1000, // one day
+								gridLineWidth: 1,
+								dateTimeLabelFormats: {
+									day: '%e.%m',
+								}
+							},
+							yAxis: [{
+								title: {
+										text: null
+								}
+							}, {
+								linkedTo: 0,
+								opposite: true,
+								title: {
+										text: null
+								}
+							}],
+							series: [{
+								name: '<spring:message code="weight" />',
+								data: data,
+							}]
+						});
+					}
+				});
+			});
+
+			$(function plotDiary() {
+				$.ajax({
+					url: 'diary/aggregated',
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					type: 'GET',
+					success: function(result) {
+						var data = [];
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([+date, result[i]['calories']]);
+						}
+						Highcharts.setOptions({
+							global: {
+								useUTC: false
+							}
+						});
+						$('#diaryPlaceholder').highcharts({
+							chart: {
+								backgroundColor: null
+							},
+							legend: {
+								enabled: false
+							},
+							title: {
+								text: null
+							},
+							subtitle: {
+								text: null
+							},
+							tooltip: {
+								valueSuffix: ' kcal'
+							},
+							xAxis: {
+								type: 'datetime',
+								tickInterval: 24 * 3600 * 1000, // one day
+								gridLineWidth: 1,
+								dateTimeLabelFormats: {
+									day: '%e.%m',
+								}
+							},
+							yAxis: [{
+								title: {
+										text: null
+								}
+							}, {
+								linkedTo: 0,
+								opposite: true,
+								title: {
+										text: null
+								}
+							}],
+							series: [{
+								name: '<spring:message code="diary.total" />',
+								data: data,
+							}]
+						});
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
