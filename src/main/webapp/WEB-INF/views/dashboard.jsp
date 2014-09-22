@@ -15,7 +15,9 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>Dashboard</h1>
+				<h1>
+					<spring:message code="label.dashboard"/>
+				</h1>
 			</div>
 			Hello, ${account.firstName} ${account.lastName}!
 		</div>

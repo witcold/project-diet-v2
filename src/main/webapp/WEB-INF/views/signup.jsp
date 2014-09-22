@@ -12,6 +12,7 @@
 		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="resources/css/bootstrap-slider.css">
 		<style type="text/css">
 			.input-group-addon.aligned {
 				min-width:160px;
@@ -99,7 +100,6 @@
 							<spring:message code="user.height"/>
 						</span>
 						<form:input path="height" type="number" min="1" max="500" class="form-control" required="true" />
-						
 						<span class="input-group-addon">
 							<spring:message code="signup.height.measure"/>
 						</span>
@@ -109,6 +109,9 @@
 							<spring:message code="user.activity"/>
 						</span>
 						<form:input path="activityLevel" type="number" min="1" step="0.01" max="3" value="1.50" class="form-control" required="true" />
+						<span class="input-group-addon">
+							<input id="paeLevel"/>
+						</span>
 					</div>
 					<button type="submit" class="btn btn-success">
 						<spring:message code="form.sign.up"/>
@@ -122,12 +125,32 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
+		<script src="resources/js/bootstrap-slider.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
 				format: 'YYYY.MM.DD',
 				pickTime: false,
 				useStrict: true
+			});
+
+			var input = $('#activityLevel');
+
+			var slider = $('#paeLevel').slider({
+				min: 1,
+				max: 3,
+				precision: 2,
+				step: 0.1,
+				value: 1.50,
+				formatter: function(value) {
+					return value;
+				}
+			}).on('slide', function () {
+				input.val(slider.getValue());
+			}).data('slider');
+
+			input.on('change', function() {
+				slider.setValue(parseFloat(input.val()));
 			});
 		</script>
 	</body>
