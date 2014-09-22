@@ -45,7 +45,7 @@ public class FoodDAO {
 	}
 
 	public Map<Long, Food> selectByIds(List<Long> ids) {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates"
+		String sql = "SELECT food_id, category_id, name_en, name_ru, calories, proteins, fats, carbohydrates"
 					+ " FROM foods"
 					+ " WHERE food_id IN (:ids);";
 		Map<Long, Food> map = new HashMap<Long, Food>();
@@ -60,7 +60,7 @@ public class FoodDAO {
 	}
 
 	public List<Food> selectByCategoryId(Long categoryId) {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates"
+		String sql = "SELECT food_id, category_id, name_en, name_ru, calories, proteins, fats, carbohydrates"
 					+ " FROM foods"
 					+ " WHERE (category_id = :categoryId);";
 		return template.query(sql, new MapSqlParameterSource("categoryId", categoryId),
@@ -68,17 +68,16 @@ public class FoodDAO {
 	}
 
 	public List<Food> selectByName(String name) {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats,carbohydrates"
+		String sql = "SELECT food_id, category_id, name_en, name_ru, calories, proteins, fats,carbohydrates"
 					+ " FROM foods"
-					+ " WHERE (name ILIKE :name);";
+					+ " WHERE (name_en ILIKE :name) OR (name_ru ILIKE :name);";
 		return template.query(sql, new MapSqlParameterSource("name", '%' + name + '%'),
 				new FoodRowMapper());
 	}
 
 	public List<Food> selectAll() {
-		String sql = "SELECT food_id, category_id, name, calories, proteins, fats, carbohydrates"
-					+ " FROM foods"
-					+ " ORDER BY name ASC;";
+		String sql = "SELECT food_id, category_id, name_en, name_ru, calories, proteins, fats, carbohydrates"
+					+ " FROM foods";
 		return template.query(sql, new FoodRowMapper());
 	}
 

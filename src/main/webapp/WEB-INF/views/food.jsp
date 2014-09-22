@@ -20,7 +20,7 @@
 					<li class="active">
 						<c:choose>
 							<c:when test="${not empty currentCategory}">
-								<c:out value="${currentCategory.name}"></c:out>
+								<c:out value="${currentCategory.getName(lang)}"></c:out>
 							</c:when>
 							<c:otherwise>
 								<spring:message code="food.category.all" />
@@ -31,7 +31,7 @@
 				<div class="list-group col-md-2">
 					<c:forEach var="category" items="${categoryList}">
 						<a href="food?category=${category.id}" class="list-group-item">
-							<c:out value="${category.name}"></c:out>
+							<c:out value="${category.getName(lang)}"></c:out>
 						</a>
 					</c:forEach>
 				</div>
@@ -49,7 +49,7 @@
 						<tbody>
 							<c:forEach var="food" items="${foodList}">
 								<tr>
-									<td><c:out value="${food.name}"></c:out></td>
+									<td><c:out value="${food.getName(lang)}"></c:out></td>
 									<td><c:out value="${food.calories}"></c:out></td>
 									<td><c:out value="${food.proteins}"></c:out></td>
 									<td><c:out value="${food.fats}"></c:out></td>

@@ -55,7 +55,7 @@ public class CategoryDAO {
 	}
 
 	public List<Category> selectAll() {
-		String sql = "SELECT category_id, parent_id, name"
+		String sql = "SELECT category_id, parent_id, name_en, name_ru"
 					+ " FROM categories"
 					+ " WHERE (category_id > 0);";
 		return template.query(sql, new CategoryRowMapper());

@@ -1,7 +1,9 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="lang" value="${pageContext.response.locale.language}"/>
 <div class="dropdown navbar-form navbar-right">
 	<a data-toggle="dropdown" class="btn" role="button" href="#">
-		<img alt="${pageContext.response.locale.language}" src="resources/images/${pageContext.response.locale.language}.png">
-		${pageContext.response.locale.language}
+		<img alt="${lang}" src="resources/images/${lang}.png">
+			<c:out value="${lang}"/>
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu" role="menu">

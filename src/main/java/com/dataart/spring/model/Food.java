@@ -54,6 +54,14 @@ public class Food implements Serializable {
 		return null;
 	}
 
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public String getNameRu() {
+		return nameRu;
+	}
+
 	public void setNameEn(String nameEn) {
 		this.nameEn = nameEn;
 	}

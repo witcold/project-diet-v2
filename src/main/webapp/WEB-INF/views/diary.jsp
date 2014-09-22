@@ -58,12 +58,12 @@
 							<c:set var="food" value="${foodMap.get(diary.foodId)}"></c:set>
 							<tr>
 								<td>
-									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${food.id}, '${food.name}', ${diary.weight})">
+									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${food.id}, '${food.getName(lang)}', ${diary.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
 								<td><fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/></td>
-								<td><c:out value="${food.name}"/></td>
+								<td><c:out value="${food.getName(lang)}"/></td>
 								<td><c:out value="${diary.weight}"/></td>
 								<td><fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"></fmt:formatNumber></td>
 								<td class="text-right">
@@ -140,8 +140,11 @@
 				queryTokenizer: Bloodhound.tokenizers.whitespace
 			});
 			engine.initialize();
+			String.prototype.capitalize = function() {
+				return this.charAt(0).toUpperCase() + this.slice(1);
+			}
 			$('.typeahead').typeahead(null, {
-				displayKey: 'name',
+				displayKey: 'name' + '${lang}'.capitalize(),
 				source: engine.ttAdapter()
 			});
 			$('.typeahead').on('typeahead:selected typeahead:autocompleted', function(e, datum) {
