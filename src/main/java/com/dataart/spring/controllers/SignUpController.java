@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dataart.spring.dao.UserDAO;
+import com.dataart.spring.model.Gender;
 import com.dataart.spring.model.User;
-import com.dataart.spring.utils.Gender;
 import com.dataart.spring.validators.SignUpValidator;
 
 /**

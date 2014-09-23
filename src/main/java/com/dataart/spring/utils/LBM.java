@@ -9,10 +9,13 @@ public class LBM {
 	/**
 	 * Hume formula
 	 * 1966
+	 * @param isMale <code>true</code> for Male, <code>false</code> for Female
+	 * @param height in cm
+	 * @param weight in kg
 	 * @return lean body mass
 	 */
-	public static float calculate (boolean male, int height, float weight) {
-		if (male) {
+	public static float calculate (boolean isMale, int height, float weight) {
+		if (isMale) {
 			return (0.32810f * weight) + (0.33929f * height) - 29.5336f;
 		}
 		else {

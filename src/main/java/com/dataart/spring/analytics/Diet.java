@@ -6,22 +6,6 @@ package com.dataart.spring.analytics;
  */
 public class Diet {
 
-/*	public static int calculateBMR(User u) {
-		int h = u.getCurrentHeight();
-		float w = u.getCurrentWeight();
-		int a = 2014 - u.getYearOfBirth();
-		boolean s = (u.getSex() == Sex.Male);
-		float[] list = new float[5];
-		
-		list[0] = BMR.calculateHB(s, h, w, a);
-		list[1] = BMR.calculateHBR(s, h, w, a);
-		list[2] = BMR.calculateM(s, h, w, a);
-		list[3] = BMR.calculateKM(s, h, w, a);
-		list[4] = BMR.calculateC(s, h, w, a);
-		Arrays.sort(list);
-		return (int) list[2];
-	}*/
-
 /*	public static void method(User u) {
 		int daily = (int) (calculateBMR(u) * 1.7);
 		try {

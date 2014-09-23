@@ -3,8 +3,6 @@ package com.dataart.spring.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.dataart.spring.utils.Gender;
-
 /**
  * @author vmeshcheryakov
  *

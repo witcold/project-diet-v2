@@ -1,4 +1,4 @@
-package com.dataart.spring.utils;
+package com.dataart.spring.model;
 
 import java.util.HashMap;
 import java.util.Map;

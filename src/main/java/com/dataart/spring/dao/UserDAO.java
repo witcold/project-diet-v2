@@ -16,8 +16,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.dataart.spring.model.Gender;
 import com.dataart.spring.model.User;
-import com.dataart.spring.utils.Gender;
 import com.dataart.spring.utils.PasswordHashing;
 
 /**
