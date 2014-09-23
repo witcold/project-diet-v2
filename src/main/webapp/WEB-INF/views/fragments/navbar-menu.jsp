@@ -20,4 +20,9 @@
 			<spring:message code="label.diary"/>
 		</a>
 	</li>
+	<li class="${goalsActive}">
+		<a href="goals">
+			<spring:message code="label.goals"/>
+		</a>
+	</li>
 </ul>
