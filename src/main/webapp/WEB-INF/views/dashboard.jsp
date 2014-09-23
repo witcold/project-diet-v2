@@ -35,7 +35,9 @@
 					Your age:
 					<small>${age} year</small>
 				</h4>
-				<p>Assuming this data, your basal methabolic rate is 1800 kcal.</p>
+				<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
+				<c:set var="dailyCalories" value="${bmr*account.activityLevel}"/>
+				<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
 				<h2>
 					Your current weight loss progress
 					<small>lose 5 kg in 3 month</small>
@@ -44,7 +46,7 @@
 				</div>
 				<h2>
 					Your diary stats
-					<small>2340 / 2100 for last 7 days</small>
+					<small>2340 / ${dailyCalories} for last 7 days</small>
 				</h2>
 				<div id="diaryPlaceholder" class="center-block" style="min-width:600px;height:200px">
 				</div>
