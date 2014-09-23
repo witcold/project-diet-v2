@@ -8,6 +8,8 @@ public class BMI {
 	/**
 	 * Quetelet formula
 	 * 1869
+	 * @param height in cm
+	 * @param weight in kg
 	 * @return body mass index
 	 */
 	public static float calculate(int height, float weight) {

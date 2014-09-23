@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
+import com.dataart.spring.utils.BMI;
 import com.dataart.spring.utils.BMR;
 
 /**
@@ -42,6 +43,9 @@ public class DashboardController {
 
 		Weight weight = weightDAO.selectLastByUserId(user.getId());
 		model.addAttribute("lastWeight", weight);
+
+		float bmi = BMI.calculate(user.getHeight(), weight.getWeight());
+		model.addAttribute("bmi", bmi);
 
 		int age = Years.yearsBetween(new DateTime(user.getBirthDate().getTime()), new DateTime()).getYears();
 		model.addAttribute("age", age);

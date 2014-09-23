@@ -29,6 +29,8 @@
 				<h4>
 					Your last weight:
 					<small>${lastWeight.weight} kg</small>
+					BMI:
+					<small>${bmi}</small>
 				</h4>
 				<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
 				<h4>
@@ -39,7 +41,7 @@
 				<c:set var="dailyCalories" value="${bmr*account.activityLevel}"/>
 				<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
 				<h2>
-					Your current weight loss progress
+					Your current goal progress
 					<small>lose 5 kg in 3 month</small>
 				</h2>
 				<div id="weightPlaceholder" class="center-block" style="min-width:600px;height:200px">
