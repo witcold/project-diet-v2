@@ -57,7 +57,11 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
+		<script src="resources/js/highcharts-options.js"></script>
+
 		<script type="text/javascript">
+			$(Highcharts.setOptions(globalOptions));
+
 			$(function plotWeight() {
 				$.ajax({
 					url: 'weight/raw',
@@ -70,51 +74,15 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['weight']]);
 						}
-						Highcharts.setOptions({
-							global: {
-								useUTC: false
-							}
-						});
-						$('#weightPlaceholder').highcharts({
-							chart: {
-								backgroundColor: null
-							},
-							legend: {
-								enabled: false
-							},
-							title: {
-								text: null
-							},
-							subtitle: {
-								text: null
-							},
-							tooltip: {
+						var options = $.extend(true, defaultOptions);
+						options.tooltip = {
 								valueSuffix: ' kg'
-							},
-							xAxis: {
-								type: 'datetime',
-								tickInterval: 24 * 3600 * 1000, // one day
-								gridLineWidth: 1,
-								dateTimeLabelFormats: {
-									day: '%e.%m',
-								}
-							},
-							yAxis: [{
-								title: {
-										text: null
-								}
-							}, {
-								linkedTo: 0,
-								opposite: true,
-								title: {
-										text: null
-								}
-							}],
-							series: [{
-								name: '<spring:message code="weight" />',
-								data: data,
-							}]
-						});
+						};
+						options.series = [{
+							name: '<spring:message code="weight" />',
+							data: data
+						}];
+						$('#weightPlaceholder').highcharts(options);
 					}
 				});
 			});
@@ -131,51 +99,15 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['calories']]);
 						}
-						Highcharts.setOptions({
-							global: {
-								useUTC: false
-							}
-						});
-						$('#diaryPlaceholder').highcharts({
-							chart: {
-								backgroundColor: null
-							},
-							legend: {
-								enabled: false
-							},
-							title: {
-								text: null
-							},
-							subtitle: {
-								text: null
-							},
-							tooltip: {
-								valueSuffix: ' kcal'
-							},
-							xAxis: {
-								type: 'datetime',
-								tickInterval: 24 * 3600 * 1000, // one day
-								gridLineWidth: 1,
-								dateTimeLabelFormats: {
-									day: '%e.%m',
-								}
-							},
-							yAxis: [{
-								title: {
-										text: null
-								}
-							}, {
-								linkedTo: 0,
-								opposite: true,
-								title: {
-										text: null
-								}
-							}],
-							series: [{
-								name: '<spring:message code="diary.total" />',
-								data: data,
-							}]
-						});
+						var options = $.extend(true, defaultOptions);
+						options.tooltip = {
+							valueSuffix: ' kcal'
+						};
+						options.series = [{
+							name: '<spring:message code="diary.calories.total" />',
+							data: data,
+						}];
+						$('#diaryPlaceholder').highcharts(options);
 					}
 				});
 			});

@@ -159,6 +159,7 @@
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/typeahead.bundle.js"></script>
+		<script src="resources/js/highcharts-options.js"></script>
 
 		<script type="text/javascript">
 			var engine = new Bloodhound({
@@ -207,51 +208,16 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['calories']]);
 						}
-						Highcharts.setOptions({
-							global: {
-								useUTC: false
-							}
-						});
-						$('#placeholder').highcharts({
-							chart: {
-								backgroundColor: null
-							},
-							legend: {
-								enabled: false
-							},
-							title: {
-								text: null
-							},
-							subtitle: {
-								text: null
-							},
-							tooltip: {
-								valueSuffix: ' kcal'
-							},
-							xAxis: {
-								type: 'datetime',
-								tickInterval: 24 * 3600 * 1000, // one day
-								gridLineWidth: 1,
-								dateTimeLabelFormats: {
-									day: '%e.%m',
-								}
-							},
-							yAxis: [{
-								title: {
-										text: null
-								}
-							}, {
-								linkedTo: 0,
-								opposite: true,
-								title: {
-										text: null
-								}
-							}],
-							series: [{
-								name: '<spring:message code="diary.total" />',
-								data: data,
-							}]
-						});
+						Highcharts.setOptions(globalOptions)
+						var options = $.extend(true, defaultOptions);
+						options.tooltip = {
+							valueSuffix: ' kcal'
+						};
+						options.series = [{
+							name: '<spring:message code="diary.calories.total" />',
+							data: data,
+						}];
+						$('#placeholder').highcharts(options);
 					}
 				});
 			});
