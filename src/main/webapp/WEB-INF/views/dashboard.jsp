@@ -78,7 +78,7 @@
 						}
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-								valueSuffix: ' <spring:message code="weight.weight.measure"/>'
+								valueSuffix: ' <spring:message code="weight.measure"/>'
 						};
 						options.series = [{
 							name: '<spring:message code="label.weight"/>',
@@ -103,7 +103,7 @@
 						}
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-							valueSuffix: ' <spring:message code="food.calories.measure"/>'
+							valueSuffix: ' <spring:message code="calories.measure"/>'
 						};
 						options.series = [{
 							name: '<spring:message code="diary.calories.total"/>',

@@ -116,7 +116,7 @@
 							<div class="form-group input-group">
 								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true"/>
 								<span class="input-group-addon">
-									<spring:message code="weight.weight.measure"/>
+									<spring:message code="weight.measure"/>
 								</span>
 							</div>
 						</form:form>
@@ -168,7 +168,7 @@
 						Highcharts.setOptions(globalOptions);
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-								valueSuffix: ' <spring:message code="weight.weight.measure"/>'
+								valueSuffix: ' <spring:message code="weight.measure"/>'
 						};
 						options.series = [{
 							name: '<spring:message code="label.weight"/>',
@@ -194,7 +194,7 @@
 			function editForm(date, weight) {
 				weightform.attr('action', 'weight/update');
 				datetimepicker.setDate(new Date(date));
-				weightform.find('.input-group-addon').hide();
+				weightform.find('#datetimepicker .input-group-addon').hide();
 				weightform.find('.date').removeClass('input-group');
 				$('#weight').val(weight);
 				$('#weightModal').modal('show');

@@ -135,7 +135,7 @@
 							<div class="form-group input-group">
 								<form:input type="number" min="0.001" step="0.001" max="10" path="weight" class="form-control" required="true"/>
 								<span class="input-group-addon">
-									<spring:message code="diary.weight.measure"/>
+									<spring:message code="weight.measure"/>
 								</span>
 							</div>
 						</form:form>
@@ -211,7 +211,7 @@
 						Highcharts.setOptions(globalOptions)
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-							valueSuffix: ' <spring:message code="food.calories.measure"/>'
+							valueSuffix: ' <spring:message code="calories.measure"/>'
 						};
 						options.series = [{
 							name: '<spring:message code="diary.calories.total"/>',
@@ -237,7 +237,7 @@
 			function editForm(date, foodId, foodName, weight) {
 				diaryform.attr('action', 'diary/update');
 				datetimepicker.setDate(new Date(date));
-				diaryform.find('.input-group-addon').hide();
+				diaryform.find('#datetimepicker .input-group-addon').hide();
 				diaryform.find('.date').removeClass('input-group');
 				diaryform.find('#foodTypeahead').val(foodName);
 				diaryform.find('#foodId').val(foodId);

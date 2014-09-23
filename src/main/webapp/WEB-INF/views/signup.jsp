@@ -31,6 +31,9 @@
 					<div class="form-group">
 						<form:errors path="*" element="div" class="alert alert-danger"/>
 					</div>
+					<h4>
+						<spring:message code="signup.account"/>
+					</h4>
 					<div class="form-group input-group">
 						<spring:message code="user.login" var="login"/>
 						<span class="input-group-addon aligned">
@@ -52,6 +55,9 @@
 						</span>
 						<form:password path="passwordConfirm" placeholder="${passwordConfirm}" class="form-control" required="true"/>
 					</div>
+					<h4>
+						<spring:message code="signup.personal"/>
+					</h4>
 					<div class="form-group input-group">
 						<spring:message code="user.name.first" var="firstname"/>
 						<span class="input-group-addon aligned">
@@ -100,13 +106,25 @@
 							<form:option value="US" label="US"/>
 						</form:select>
 					</div>
+					<h4>
+						<spring:message code="signup.other"/>
+					</h4>
+					<div class="form-group input-group">
+						<span class="input-group-addon aligned">
+							<spring:message code="user.weight"/>
+						</span>
+						<input name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+						<span class="input-group-addon">
+							<spring:message code="weight.measure"/>
+						</span>
+					</div>
 					<div class="form-group input-group">
 						<span class="input-group-addon aligned">
 							<spring:message code="user.height"/>
 						</span>
 						<form:input path="height" type="number" min="1" max="500" class="form-control" required="true"/>
 						<span class="input-group-addon">
-							<spring:message code="signup.height.measure"/>
+							<spring:message code="height.measure"/>
 						</span>
 					</div>
 					<div class="form-group input-group">
