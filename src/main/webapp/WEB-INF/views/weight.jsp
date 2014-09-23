@@ -154,7 +154,9 @@
 			$(function plot() {
 				$.ajax({
 					url: 'weight/raw',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					data: {
+						from: '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'
+					},
 					type: 'GET',
 					success: function(result) {
 						var data = [];
@@ -166,10 +168,10 @@
 						Highcharts.setOptions(globalOptions);
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-								valueSuffix: ' kg'
+								valueSuffix: ' <spring:message code="weight.weight.measure"/>'
 						};
 						options.series = [{
-							name: '<spring:message code="weight" />',
+							name: '<spring:message code="label.weight"/>',
 							data: data
 						}];
 						$('#placeholder').highcharts(options);
@@ -178,7 +180,7 @@
 			});
 
 			function deleteWeight(date) {
-				if (confirm('<spring:message code="delete.confirm" />'))
+				if (confirm('<spring:message code="delete.confirm"/>'))
 					$.ajax({
 						url: 'weight/delete',
 						data: {'date': date},

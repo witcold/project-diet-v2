@@ -65,7 +65,7 @@
 			$(function plotWeight() {
 				$.ajax({
 					url: 'weight/raw',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
 					type: 'GET',
 					success: function(result) {
 						var data = [];
@@ -76,10 +76,10 @@
 						}
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-								valueSuffix: ' kg'
+								valueSuffix: ' <spring:message code="weight.weight.measure"/>'
 						};
 						options.series = [{
-							name: '<spring:message code="weight" />',
+							name: '<spring:message code="label.weight"/>',
 							data: data
 						}];
 						$('#weightPlaceholder').highcharts(options);
@@ -90,7 +90,7 @@
 			$(function plotDiary() {
 				$.ajax({
 					url: 'diary/aggregated',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
 					type: 'GET',
 					success: function(result) {
 						var data = [];
@@ -101,10 +101,10 @@
 						}
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-							valueSuffix: ' kcal'
+							valueSuffix: ' <spring:message code="food.calories.measure"/>'
 						};
 						options.series = [{
-							name: '<spring:message code="diary.calories.total" />',
+							name: '<spring:message code="diary.calories.total"/>',
 							data: data,
 						}];
 						$('#diaryPlaceholder').highcharts(options);

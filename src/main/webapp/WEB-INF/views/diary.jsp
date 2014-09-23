@@ -193,13 +193,13 @@
 			var diaryform = $('#diaryForm');
 
 			$(function() {
-				datetimepicker.setDate(new Date('<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'));
+				datetimepicker.setDate(new Date('<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'));
 			});
 
 			$(function plot() {
 				$.ajax({
 					url: 'diary/aggregated',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd" />'},
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
 					type: 'GET',
 					success: function(result) {
 						var data = [];
@@ -211,10 +211,10 @@
 						Highcharts.setOptions(globalOptions)
 						var options = $.extend(true, defaultOptions);
 						options.tooltip = {
-							valueSuffix: ' kcal'
+							valueSuffix: ' <spring:message code="food.calories.measure"/>'
 						};
 						options.series = [{
-							name: '<spring:message code="diary.calories.total" />',
+							name: '<spring:message code="diary.calories.total"/>',
 							data: data,
 						}];
 						$('#placeholder').highcharts(options);
