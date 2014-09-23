@@ -223,7 +223,7 @@
 			});
 
 			function deleteDiary(foodId, timestamp) {
-				if (confirm('<spring:message code="delete.confirm" />'))
+				if (confirm('<spring:message code="form.confirm" />'))
 					$.ajax({
 						url: 'diary/delete',
 						data: {'foodId': foodId, 'timestamp': timestamp},

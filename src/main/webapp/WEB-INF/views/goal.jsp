@@ -9,23 +9,20 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
-			<spring:message code="label.weight"/>
+			<spring:message code="label.goal"/>
 		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
 				<h1>
-					<spring:message code="label.weight" />
+					<spring:message code="label.goal"/>
 				</h1>
-				<div id="placeholder" class="center-block" style="min-width:600px;height:200px">
-				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
-					<a href="weight?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
+					<a href="goal?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
 						&larr;
 					</a>
 					<a class="btn btn-link navbar-btn disabled" role="button">
@@ -34,12 +31,12 @@
 					<c:choose>
 						<c:when test="${not empty nextDate}">
 							<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
-							<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
+							<a href="goal?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
 								&rarr;
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="weight" class="btn btn-default navbar-btn disabled" role="button">
+							<a href="goal" class="btn btn-default navbar-btn disabled" role="button">
 								&rarr;
 							</a>
 						</c:otherwise>
@@ -54,29 +51,29 @@
 								<spring:message code="date" />
 							</th>
 							<th>
-								<spring:message code="weight.weight" />
+								<spring:message code="goal.weight" />
 							</th>
 							<th class="col-xs-1" style="width: 1px;">
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="weight" items="${weightList}">
+						<c:forEach var="goal" items="${goalList}">
 							<tr>
 								<td>
-									<a style="cursor: pointer;" onclick="editForm('${weight.date}', ${weight.weight})">
+									<a style="cursor: pointer;" onclick="editForm('${goal.date}', ${goal.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
 								<td>
-									<fmt:formatDate value="${weight.date}" pattern="dd MMMM yyyy"/>
+									<fmt:formatDate value="${goal.date}" pattern="dd MMMM yyyy"/>
 								</td>
 								<td>
-									<c:out value="${weight.weight}"/>
+									<c:out value="${goal.weight}"/>
 								</td>
 								<td class="text-right">
-									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
-									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
+									<fmt:formatDate value="${goal.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
+									<a style="cursor: pointer;" onclick="deleteGoal('${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -84,13 +81,13 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
-					<spring:message code="weight.add"/>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#goalModal">
+					<spring:message code="goal.add"/>
 				</button>
 			</div>
 		</div>
 
-		<div class="modal fade" id="weightModal">
+		<div class="modal fade" id="goalModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -99,11 +96,11 @@
 							<span class="sr-only">Close</span>
 						</button>
 						<h4 class="modal-title">
-							<spring:message code="weight.add"/>
+							<spring:message code="goal.add"/>
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight">
+						<form:form id="goalForm" action="goal/add" accept-charset="UTF-8" method="post" modelAttribute="goal">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
@@ -125,7 +122,7 @@
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							<spring:message code="form.close"/>
 						</button>
-						<button type="submit" class="btn btn-primary" form="weightForm">
+						<button type="submit" class="btn btn-primary" form="goalForm">
 							<spring:message code="form.save"/>
 						</button>
 					</div>
@@ -138,8 +135,6 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
-		<script src="//code.highcharts.com/highcharts.js"></script>
-		<script src="resources/js/highcharts-options.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
@@ -149,40 +144,12 @@
 			});
 
 			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
-			var weightform = $('#weightForm');
+			var goalform = $('#goalForm');
 
-			$(function plot() {
-				$.ajax({
-					url: 'weight/raw',
-					data: {
-						from: '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'
-					},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['weight']]);
-						}
-						Highcharts.setOptions(globalOptions);
-						var options = $.extend(true, defaultOptions);
-						options.tooltip = {
-								valueSuffix: ' <spring:message code="weight.measure"/>'
-						};
-						options.series = [{
-							name: '<spring:message code="label.weight"/>',
-							data: data
-						}];
-						$('#placeholder').highcharts(options);
-					}
-				});
-			});
-
-			function deleteWeight(date) {
+			function deleteGoal(date) {
 				if (confirm('<spring:message code="form.confirm"/>'))
 					$.ajax({
-						url: 'weight/delete',
+						url: 'goal/delete',
 						data: {'date': date},
 						type: 'POST',
 						success: function(result) {
@@ -192,19 +159,19 @@
 			};
 
 			function editForm(date, weight) {
-				weightform.attr('action', 'weight/update');
+				goalform.attr('action', 'goal/update');
 				datetimepicker.setDate(new Date(date));
-				weightform.find('#datetimepicker .input-group-addon').hide();
-				weightform.find('.date').removeClass('input-group');
-				$('#weight').val(weight);
-				$('#weightModal').modal('show');
+				goalform.find('#datetimepicker .input-group-addon').hide();
+				goalform.find('.date').removeClass('input-group');
+				$('#goal').val(weight);
+				$('#goalModal').modal('show');
 			};
 
-			$('#weightModal').on('hidden.bs.modal', function (e) {
-				weightform.trigger('reset');
-				weightform.attr('action', 'weight/add');
-				weightform.find('.date').addClass('input-group');
-				weightform.find('.input-group-addon').show();
+			$('#goalModal').on('hidden.bs.modal', function (e) {
+				goalform.trigger('reset');
+				goalform.attr('action', 'goal/add');
+				goalform.find('.date').addClass('input-group');
+				goalform.find('.input-group-addon').show();
 			});
 		</script>
 	</body>

@@ -22,9 +22,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dataart.spring.dao.GoalDAO;
 import com.dataart.spring.dao.UserDAO;
+import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.Gender;
+import com.dataart.spring.model.Goal;
 import com.dataart.spring.model.User;
+import com.dataart.spring.model.Weight;
 import com.dataart.spring.validators.SignUpValidator;
 
 /**
@@ -39,6 +43,12 @@ public class SignUpController {
 	@Autowired
 	private UserDAO userDAO;
 
+	@Autowired
+	private WeightDAO weightDAO;
+
+	@Autowired
+	private GoalDAO goalDAO;
+
 	@ModelAttribute("user")
 	public User getUserBean() {
 		return new User();
@@ -46,8 +56,12 @@ public class SignUpController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.setValidator(new SignUpValidator());
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
+	}
+
+	@InitBinder("user")
+	public void initUserBinder(WebDataBinder binder) {
+		binder.setValidator(new SignUpValidator());
 	}
 
 	/**
@@ -62,6 +76,7 @@ public class SignUpController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signUp(
 			@Valid User user,
+			float weight,
 			BindingResult result,
 			HttpSession session) {
 		LOGGER.debug("Adding: \"{}\"", user);
@@ -71,6 +86,18 @@ public class SignUpController {
 				return "signup";
 			} else if (userDAO.insert(user)) {
 				session.setAttribute("account", user);
+
+				Weight currentWeight = new Weight();
+				currentWeight.setUserId(user.getId());
+				currentWeight.setDate(new Date());
+				currentWeight.setWeight(weight);
+				weightDAO.insert(currentWeight);
+
+				Goal currentGoal = new Goal();
+				currentGoal.setUserId(user.getId());
+				currentGoal.setDate(new Date());
+				currentGoal.setWeight(weight);
+				goalDAO.insert(currentGoal);
 			}
 			return "redirect:/";
 		} else {

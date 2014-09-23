@@ -21,8 +21,8 @@
 		</a>
 	</li>
 	<li class="${goalsActive}">
-		<a href="goals">
-			<spring:message code="label.goals"/>
+		<a href="goal">
+			<spring:message code="label.goal"/>
 		</a>
 	</li>
 </ul>

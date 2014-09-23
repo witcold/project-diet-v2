@@ -1,4 +1,4 @@
-﻿INSERT INTO categories
+INSERT INTO categories
 	(parent_id, name_en, name_ru)
 VALUES
 	(0, 'Vegetables', 'Овощи'),

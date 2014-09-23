@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS categories;
 
 DROP TABLE IF EXISTS weights;
 
+DROP TABLE IF EXISTS goals;
+
 DROP TABLE IF EXISTS users;
 
 DROP TABLE IF EXISTS countries;
@@ -41,6 +43,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE weights (
+	user_id			BIGINT NOT NULL,
+	date			DATE NOT NULL,
+	weight			FLOAT NOT NULL,
+	PRIMARY KEY (user_id, date),
+	FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE goals (
 	user_id			BIGINT NOT NULL,
 	date			DATE NOT NULL,
 	weight			FLOAT NOT NULL,

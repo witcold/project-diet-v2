@@ -100,7 +100,7 @@
 							<spring:message code="user.country"/>
 						</span>
 						<form:select path="countryId" class="form-control" required="true">
-							<form:option value="" disabled="true" label="Select"/>
+							<form:option value="" disabled="true" label=""/>
 							<form:option value="RU" label="RU"/>
 							<form:option value="GB" label="GB"/>
 							<form:option value="US" label="US"/>
