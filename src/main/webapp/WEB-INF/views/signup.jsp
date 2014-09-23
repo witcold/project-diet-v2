@@ -22,10 +22,10 @@
 	</head>
 	<body>
 		<%@ include file="fragments/menu-light.jsp" %>
-		<div class="container">
-			<div class="jumbotron">
+		<div class="jumbotron">
+			<div class="modal-dialog">
 				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="user">
-					<h2 class="form-signin-heading">
+					<h2 class="modal-header">
 						<spring:message code="label.signup"/>
 					</h2>
 					<div class="form-group">

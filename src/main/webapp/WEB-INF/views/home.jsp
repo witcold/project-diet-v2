@@ -18,6 +18,9 @@
 				<h1>
 					<spring:message code="welcome"/>
 				</h1>
+				<p>
+					<spring:message code="label.login"/>.
+				</p>
 			</div>
 		</div>
 
