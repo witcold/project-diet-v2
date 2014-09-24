@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dataart.spring.model.User;
+
 /**
  * @author vmeshcheryakov
  *
@@ -35,15 +37,20 @@ public class SessionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
+		String url = req.getRequestURL().toString();
 		String query = req.getQueryString();
-		LOGGER.debug("Session filter PRE-FILTER {}?{}", req.getRequestURL(), URLDecoder.decode(query == null? "" : query, "UTF-8"));
+		if (query != null) {
+			url += "?" + URLDecoder.decode(query, "UTF-8");
+		}
+		LOGGER.debug("PRE-FILTER {}", url);
 		HttpSession session = req.getSession();
 		if (session.getAttribute("account") == null) {
 			HttpServletResponse res = (HttpServletResponse) response;
 			LOGGER.debug("Redirecting...");
 			res.sendRedirect(req.getContextPath() + "/login");
 		} else {
-			LOGGER.info("Session: {}", session.getAttribute("account"));
+			User user = (User) session.getAttribute("account");
+			LOGGER.info("User: {}", user.getLogin());
 			chain.doFilter(request, response);
 		}
 	}
