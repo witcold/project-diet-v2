@@ -35,7 +35,8 @@ public class SessionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		LOGGER.debug("Session filter PRE-FILTER {}?{}", req.getRequestURL(), URLDecoder.decode(req.getQueryString(), "UTF-8"));
+		String query = req.getQueryString();
+		LOGGER.debug("Session filter PRE-FILTER {}?{}", req.getRequestURL(), URLDecoder.decode(query == null? "" : query, "UTF-8"));
 		HttpSession session = req.getSession();
 		if (session.getAttribute("account") == null) {
 			HttpServletResponse res = (HttpServletResponse) response;
