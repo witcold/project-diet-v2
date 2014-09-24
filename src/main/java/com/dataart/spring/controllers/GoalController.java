@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.GoalDAO;
@@ -67,7 +68,11 @@ public class GoalController {
 	public String add(Goal goal, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		goal.setUserId(user.getId());
-		goalDAO.insert(goal);
+		if (goalDAO.selectOne(goal.getUserId(), goal.getDate()) == null) {
+			goalDAO.insert(goal);
+		} else {
+			goalDAO.update(goal);
+		}
 		return "redirect:/goal";
 	}
 
@@ -80,7 +85,9 @@ public class GoalController {
 	}
 
 	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String delete(Date date, HttpSession session) {
+	public String delete(
+			@RequestParam("date") Date date,
+			HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		Goal goal = new Goal();
 		goal.setUserId(user.getId());

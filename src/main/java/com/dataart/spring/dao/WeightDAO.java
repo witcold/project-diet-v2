@@ -49,6 +49,13 @@ public class WeightDAO {
 		}
 	}
 
+	public Weight selectOne(long userId, Date date) {
+		String sql = "SELECT user_id, date, weight"
+					+ " FROM goals"
+					+ " WHERE (user_id = ?) AND (date = ?);";
+		return template.query(sql, new WeightResultSetExtractor(), userId, date);
+	}
+
 	public boolean insert(Weight weight) {
 		String sql = "INSERT INTO weights (user_id, date, weight)"
 					+ " VALUES (?, ?, ?);";
@@ -92,7 +99,7 @@ public class WeightDAO {
 		this.template = new JdbcTemplate(ds);
 	}
 
-	public Weight getWeight(ResultSet rs) throws SQLException {
+	Weight getWeight(ResultSet rs) throws SQLException {
 		Weight weight = new Weight();
 		weight.setUserId(rs.getLong(1));
 		weight.setDate(rs.getDate(2));

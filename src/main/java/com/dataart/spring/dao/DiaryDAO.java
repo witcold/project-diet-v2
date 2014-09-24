@@ -8,7 +8,9 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -31,13 +33,22 @@ public class DiaryDAO {
 
 		@Override
 		public Diary mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Diary diary = new Diary();
-			diary.setUserId(rs.getLong("user_id"));
-			diary.setFoodId(rs.getLong("food_id"));
-			diary.setTimestamp(rs.getTimestamp("timestamp"));
-			diary.setWeight(rs.getFloat("weight"));
-			return diary;
+			return getDiary(rs);
 		}
+	}
+
+	private class DiaryResultSetExtractor implements ResultSetExtractor<Diary> {
+		public DiaryResultSetExtractor() {
+		}
+
+		@Override
+		public Diary extractData(ResultSet rs) throws SQLException, DataAccessException {
+			if (rs.next()) {
+				return getDiary(rs);
+			}
+			return null;
+		}
+		
 	}
 
 	private class CaloriesRowMapper implements RowMapper<CaloriesDTO> {
@@ -53,6 +64,13 @@ public class DiaryDAO {
 		}
 	}
 
+	public Diary selectOne(long userId, long foodId, Date timestamp) {
+		String sql = "SELECT user_id, food_id, timestamp, weight"
+				+ " FROM diaries"
+				+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
+	return template.query(sql, new DiaryResultSetExtractor(), userId, foodId, timestamp);
+	}
+
 	public boolean insert(Diary diary) {
 		String sql = "INSERT INTO diaries (user_id, food_id, timestamp, weight)"
 					+ " VALUES (?, ?, ?, ?);";
@@ -62,7 +80,8 @@ public class DiaryDAO {
 	}
 
 	public boolean update(Diary diary) {
-		String sql = "UPDATE diaries" + " SET weight = ?"
+		String sql = "UPDATE diaries"
+					+ " SET weight = ?"
 					+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
 		int result = template.update(sql, diary.getWeight(), diary.getUserId(),
 				diary.getFoodId(), diary.getTimestamp());
@@ -110,6 +129,15 @@ public class DiaryDAO {
 	@Autowired
 	public void setDataSource(DataSource ds) {
 		this.template = new JdbcTemplate(ds);
+	}
+
+	Diary getDiary(ResultSet rs) throws SQLException {
+		Diary diary = new Diary();
+		diary.setUserId(rs.getLong("user_id"));
+		diary.setFoodId(rs.getLong("food_id"));
+		diary.setTimestamp(rs.getTimestamp("timestamp"));
+		diary.setWeight(rs.getFloat("weight"));
+		return diary;
 	}
 
 }

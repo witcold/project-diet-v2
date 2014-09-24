@@ -98,7 +98,11 @@ public class DiaryController {
 	public String add(Diary diary, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		diary.setUserId(user.getId());
-		diaryDAO.insert(diary);
+		if (diaryDAO.selectOne(diary.getUserId(), diary.getFoodId(), diary.getTimestamp()) == null) {
+			diaryDAO.insert(diary);
+		} else {
+			diaryDAO.update(diary);
+		}
 		return "redirect:/diary";
 	}
 

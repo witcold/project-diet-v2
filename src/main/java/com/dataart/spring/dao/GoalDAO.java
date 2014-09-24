@@ -49,6 +49,13 @@ public class GoalDAO {
 		}
 	}
 
+	public Goal selectOne(long userId, Date date) {
+		String sql = "SELECT user_id, date, weight"
+					+ " FROM goals"
+					+ " WHERE (user_id = ?) AND (date = ?);";
+		return template.query(sql, new GoalResultSetExtractor(), userId, date);
+	}
+
 	public boolean insert(Goal goal) {
 		String sql = "INSERT INTO goals (user_id, date, weight)"
 					+ " VALUES (?, ?, ?);";
