@@ -4,11 +4,14 @@
 package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.WeightDAO;
+import com.dataart.spring.dto.CaloriesDTO;
+import com.dataart.spring.model.Gender;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
+import com.dataart.spring.utils.BMR;
 import com.dataart.spring.utils.DateUtils;
 
 /**
@@ -123,6 +129,38 @@ public class WeightController {
 			to = DateUtils.getLastDayOfMonth(from);
 		}
 		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
+	}
+
+	@RequestMapping(value = "/bmr", method = RequestMethod.GET)
+	@ResponseBody
+	public List<CaloriesDTO> getBmr(
+			@RequestParam("from") Date from,
+			@RequestParam(value = "to", required = false) Date to,
+			HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		
+		Gender gender = user.getGender();
+		int age = Years.yearsBetween(new DateTime(user.getBirthDate().getTime()), new DateTime()).getYears();
+		int height = user.getHeight();
+
+		if (from == null) {
+			from = DateUtils.getFirstDayOfMonth(null);
+		}
+		if (to == null) {
+			to = DateUtils.getLastDayOfMonth(from);
+		}
+
+		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(),from, to);
+		List<CaloriesDTO> bmrList = new ArrayList<CaloriesDTO>();
+		if (list.size() > 0) {
+			for (Weight weight : list) {
+				CaloriesDTO bmr = new CaloriesDTO();
+				bmr.setDate(weight.getDate());
+				bmr.setCalories(BMR.calculate(gender, age, height, weight.getWeight()));
+				bmrList.add(bmr);
+			}
+		}
+		return bmrList;
 	}
 
 }

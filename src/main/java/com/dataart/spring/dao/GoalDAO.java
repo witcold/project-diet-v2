@@ -25,6 +25,16 @@ public class GoalDAO {
 
 	private JdbcTemplate template;
 
+	private class GoalRowMapper implements RowMapper<Goal> {
+		public GoalRowMapper() {
+		}
+
+		@Override
+		public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return getGoal(rs);
+		}
+	}
+
 	private class GoalResultSetExtractor implements ResultSetExtractor<Goal> {
 		public GoalResultSetExtractor() {
 		}
@@ -37,16 +47,6 @@ public class GoalDAO {
 			return null;
 		}
 		
-	}
-
-	private class GoalRowMapper implements RowMapper<Goal> {
-		public GoalRowMapper() {
-		}
-
-		@Override
-		public Goal mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return getGoal(rs);
-		}
 	}
 
 	public Goal selectOne(long userId, Date date) {

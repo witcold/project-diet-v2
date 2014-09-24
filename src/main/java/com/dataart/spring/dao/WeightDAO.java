@@ -25,6 +25,16 @@ public class WeightDAO {
 
 	private JdbcTemplate template;
 
+	private class WeightRowMapper implements RowMapper<Weight> {
+		public WeightRowMapper() {
+		}
+
+		@Override
+		public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return getWeight(rs);
+		}
+	}
+
 	private class WeightResultSetExtractor implements ResultSetExtractor<Weight> {
 		public WeightResultSetExtractor() {
 		}
@@ -37,16 +47,6 @@ public class WeightDAO {
 			return null;
 		}
 		
-	}
-
-	private class WeightRowMapper implements RowMapper<Weight> {
-		public WeightRowMapper() {
-		}
-
-		@Override
-		public Weight mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return getWeight(rs);
-		}
 	}
 
 	public Weight selectOne(long userId, Date date) {

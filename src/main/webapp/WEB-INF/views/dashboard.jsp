@@ -62,9 +62,21 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/highcharts-options.js"></script>
+		<script src="resources/js/highcharts-plot.js"></script>
 
 		<script type="text/javascript">
 			$(Highcharts.setOptions(globalOptions));
+
+			var weightChart = plotEmptyChart('#weightPlaceholder', {
+				tooltip: {
+					valueSuffix: ' <spring:message code="weight.measure"/>'
+				}
+			});
+			var diaryChart = plotEmptyChart('#diaryPlaceholder', {
+				tooltip: {
+					valueSuffix: ' <spring:message code="calories.measure"/>'
+				}
+			});
 
 			$(function plotWeight() {
 				$.ajax({
@@ -78,15 +90,11 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['weight']]);
 						}
-						var options = $.extend(true, defaultOptions);
-						options.tooltip = {
-								valueSuffix: ' <spring:message code="weight.measure"/>'
-						};
-						options.series = [{
+						weightChart.addSeries({
 							name: '<spring:message code="label.weight"/>',
+							index: 0,
 							data: data
-						}];
-						var chart = $('#weightPlaceholder').highcharts(options);
+						});
 					}
 				});
 				$.ajax({
@@ -99,7 +107,7 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['weight']]);
 						}
-						$('#weightPlaceholder').highcharts().addSeries({
+						weightChart.addSeries({
 							name: '<spring:message code="label.goal"/>',
 							data: data,
 							dashStyle: 'dot'
@@ -109,6 +117,7 @@
 			});
 
 			$(function plotDiary() {
+				var activityLevel = ${account.activityLevel};
 				$.ajax({
 					url: 'diary/aggregated',
 					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
@@ -120,15 +129,29 @@
 							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 							data.push([+date, result[i]['calories']]);
 						}
-						var options = $.extend(true, defaultOptions);
-						options.tooltip = {
-							valueSuffix: ' <spring:message code="calories.measure"/>'
-						};
-						options.series = [{
+						diaryChart.addSeries({
 							name: '<spring:message code="diary.calories.total"/>',
+							index: 0,
 							data: data
-						}];
-						$('#diaryPlaceholder').highcharts(options);
+						});
+					}
+				});
+				$.ajax({
+					url: 'weight/bmr',
+					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
+					type: 'GET',
+					success: function(result) {
+						var data = [];
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([+date, Math.round(activityLevel*result[i]['calories'])]);
+						}
+						diaryChart.addSeries({
+							name: '<spring:message code="label.goal"/>',
+							data: data,
+							dashStyle: 'dot'
+						});
 					}
 				});
 			});
