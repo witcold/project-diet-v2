@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.DiaryDAO;
@@ -117,9 +118,12 @@ public class DiaryController {
 		return "redirect:/diary";
 	}
 
-	@RequestMapping(value="/aggregated", method = RequestMethod.GET)
+	@RequestMapping(value = "/aggregated", method = RequestMethod.GET)
 	@ResponseBody
-	public List<CaloriesDTO> getData(Date from, Date to, HttpSession session) {
+	public List<CaloriesDTO> getData(
+			@RequestParam("from") Date from,
+			@RequestParam(value = "to", required = false) Date to,
+			HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		from = DateUtils.getFirstDayOfMonth(from);
 		if (to == null) {

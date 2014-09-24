@@ -1,9 +1,7 @@
-/**
- * 
- */
 package com.dataart.spring.filter;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -24,34 +22,33 @@ import org.slf4j.LoggerFactory;
  * @author vmeshcheryakov
  *
  */
-@WebFilter(filterName = "SessionFilter", urlPatterns = {"/dashboard", "/weight", "/diary"}, dispatcherTypes = {DispatcherType.REQUEST})
+@WebFilter(filterName = "SessionFilter", urlPatterns = {"/dashboard/*", "/weight/*", "/food/*", "/diary/*", "/goal/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SessionFilter implements Filter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionFilter.class);
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		LOGGER.debug(filterConfig.toString());
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		LOGGER.debug("Session filter PRE-FILTER");
 		HttpServletRequest req = (HttpServletRequest) request;
+		LOGGER.debug("Session filter PRE-FILTER {}?{}", req.getRequestURL(), URLDecoder.decode(req.getQueryString(), "UTF-8"));
 		HttpSession session = req.getSession();
 		if (session.getAttribute("account") == null) {
 			HttpServletResponse res = (HttpServletResponse) response;
-			res.sendRedirect("/login");
+			LOGGER.debug("Redirecting...");
+			res.sendRedirect(req.getContextPath() + "/login");
+		} else {
+			LOGGER.info("Session: {}", session.getAttribute("account"));
+			chain.doFilter(request, response);
 		}
-		chain.doFilter(request, response);
-		LOGGER.debug("Session filter POST-FILTER");
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.controllers;
 
 import java.util.List;
@@ -40,7 +37,9 @@ public class FoodController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String dashboard(@RequestParam(value = "category", required = false) Long categoryId, Model model) {
+	public String dashboard(
+			@RequestParam(value = "category", required = false) Long categoryId,
+			Model model) {
 		LOGGER.debug("Get categories list");
 		List<Category> categories = categoryDAO.selectAll();
 		model.addAttribute("categoryList", categories);
@@ -64,7 +63,8 @@ public class FoodController {
 
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Food> getData(String query) {
+	public List<Food> getData(
+			@RequestParam(value = "query", required = false) String query) {
 		if (query != null) {
 			return foodDAO.selectByName(query);
 		}

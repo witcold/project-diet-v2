@@ -6,6 +6,7 @@ package com.dataart.spring.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.WeightDAO;
@@ -105,7 +107,10 @@ public class WeightController {
 
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Weight> getData(Date from, Date to, HttpSession session) {
+	public List<Weight> getData(
+			@RequestParam("from") Date from,
+			@RequestParam(value = "to", required = false) Date to,
+			HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		if (from == null) {
 			from = DateUtils.getFirstDayOfMonth(null);
