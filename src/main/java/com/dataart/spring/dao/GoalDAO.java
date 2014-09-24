@@ -70,12 +70,12 @@ public class GoalDAO {
 		return result == 1;
 	}
 
-	public List<Goal> selectByUserIdWithRange(long userId, Date from, Date to) {
+	public List<Goal> selectAllByUserId(long userId) {
 		String sql = "SELECT user_id, date, weight"
 					+ " FROM goals"
-					+ " WHERE (user_id = ?) AND (date BETWEEN ? AND ?)"
+					+ " WHERE (user_id = ?)"
 					+ " ORDER BY date ASC;";
-		return template.query(sql, new GoalRowMapper(), userId, from, to);
+		return template.query(sql, new GoalRowMapper(), userId);
 	}
 
 	public Goal selectLastByUserId(long userId) {

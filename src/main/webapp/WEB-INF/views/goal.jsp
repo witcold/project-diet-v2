@@ -21,28 +21,6 @@
 				<h1>
 					<spring:message code="label.goal"/>
 				</h1>
-				<div class="btn-group btn-group-justified">
-					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
-					<a href="goal?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
-						&larr;
-					</a>
-					<a class="btn btn-link navbar-btn disabled" role="button">
-						<fmt:formatDate value="${currentDate}" pattern="MMMM yyyy"/>
-					</a>
-					<c:choose>
-						<c:when test="${not empty nextDate}">
-							<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
-							<a href="goal?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
-								&rarr;
-							</a>
-						</c:when>
-						<c:otherwise>
-							<a href="goal" class="btn btn-default navbar-btn disabled" role="button">
-								&rarr;
-							</a>
-						</c:otherwise>
-					</c:choose>
-				</div>
 				<table class="table table-hover">
 					<thead>
 						<tr>

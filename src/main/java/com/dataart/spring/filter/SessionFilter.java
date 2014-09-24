@@ -13,6 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +38,15 @@ public class SessionFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		LOGGER.debug("Pre-filter");
-		LOGGER.debug(request.toString());
-		LOGGER.debug(response.toString());
+		LOGGER.debug("Session filter PRE-FILTER");
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpSession session = req.getSession();
+		if (session.getAttribute("account") == null) {
+			HttpServletResponse res = (HttpServletResponse) response;
+			res.sendRedirect("/login");
+		}
 		chain.doFilter(request, response);
-		LOGGER.debug("Post-filter");
+		LOGGER.debug("Session filter POST-FILTER");
 	}
 
 	@Override

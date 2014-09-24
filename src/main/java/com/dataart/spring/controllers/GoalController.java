@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dataart.spring.dao.GoalDAO;
 import com.dataart.spring.model.Goal;
 import com.dataart.spring.model.User;
-import com.dataart.spring.utils.DateUtils;
 
 /**
  * @author vmeshcheryakov
@@ -54,25 +53,11 @@ public class GoalController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String goal(Date from, Date to, Model model, HttpSession session) {
-		from = DateUtils.getFirstDayOfMonth(from);
-		model.addAttribute("currentDate", from);
-
-		if (to == null) {
-			to = DateUtils.getLastDayOfMonth(from);
-		}
+	public String goal(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		LOGGER.debug("Get goal list for user {} ({} - {})", user.getId(), from, to);
-		List<Goal> list = goalDAO.selectByUserIdWithRange(user.getId(), from, to);
+		LOGGER.debug("Get goal list for user {}", user.getId());
+		List<Goal> list = goalDAO.selectAllByUserId(user.getId());
 		model.addAttribute("goalList", list);
-
-		Date prev = DateUtils.getPreviousMonth(from);
-		model.addAttribute("prevDate", prev);
-
-		if(!DateUtils.isCurrentMonth(from)) {
-			Date next = DateUtils.getNextMonth(from);
-			model.addAttribute("nextDate", next);
-		}
 
 		model.addAttribute("goalActive", "active");
 		return "goal";
@@ -106,15 +91,9 @@ public class GoalController {
 
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Goal> getData(Date from, Date to, HttpSession session) {
+	public List<Goal> getData(HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		if (from == null) {
-			from = DateUtils.getFirstDayOfMonth(null);
-		}
-		if (to == null) {
-			to = DateUtils.getLastDayOfMonth(from);
-		}
-		return goalDAO.selectByUserIdWithRange(user.getId(), from, to);
+		return goalDAO.selectAllByUserId(user.getId());
 	}
 
 }
