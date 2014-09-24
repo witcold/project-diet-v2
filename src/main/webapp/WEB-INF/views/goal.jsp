@@ -12,6 +12,7 @@
 			<spring:message code="label.goal"/>
 		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>

@@ -38,7 +38,7 @@
 					<small>${age} year</small>
 				</h4>
 				<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
-				<c:set var="dailyCalories" value="${bmr*account.activityLevel}"/>
+				<fmt:formatNumber var="dailyCalories" value="${bmr*account.activityLevel}" maxFractionDigits="0" groupingUsed=""/>
 				<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
 				<h2>
 					Your current goal progress
