@@ -30,7 +30,9 @@
 					Your last weight:
 					<small>${lastWeight.weight} kg</small>
 					BMI:
-					<small>${bmi}</small>
+					<small>
+						<fmt:formatNumber value="${bmi}" maxFractionDigits="2"/>
+					</small>
 				</h4>
 				<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
 				<h4>
@@ -44,13 +46,13 @@
 					Your current goal progress
 					<small>lose 5 kg in 3 month</small>
 				</h2>
-				<div id="weightPlaceholder" class="center-block" style="min-width:600px;height:200px">
+				<div id="weightPlaceholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
 				<h2>
 					Your diary stats
 					<small>2340 / ${dailyCalories} for last 7 days</small>
 				</h2>
-				<div id="diaryPlaceholder" class="center-block" style="min-width:600px;height:200px">
+				<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
 			</div>
 		</div>
@@ -84,7 +86,24 @@
 							name: '<spring:message code="label.weight"/>',
 							data: data
 						}];
-						$('#weightPlaceholder').highcharts(options);
+						var chart = $('#weightPlaceholder').highcharts(options);
+					}
+				});
+				$.ajax({
+					url: 'goal/raw',
+					type: 'GET',
+					success: function(result) {
+						var data = [];
+						for (var i = 0; i < result.length; i++) {
+							var dateParts = result[i]['date'].split("-");
+							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+							data.push([+date, result[i]['weight']]);
+						}
+						$('#weightPlaceholder').highcharts().addSeries({
+							name: '<spring:message code="label.goal"/>',
+							data: data,
+							dashStyle: 'dot'
+						});
 					}
 				});
 			});
@@ -107,7 +126,7 @@
 						};
 						options.series = [{
 							name: '<spring:message code="diary.calories.total"/>',
-							data: data,
+							data: data
 						}];
 						$('#diaryPlaceholder').highcharts(options);
 					}

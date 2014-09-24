@@ -142,7 +142,7 @@
 				datetimepicker.setDate(new Date(date));
 				goalform.find('#datetimepicker .input-group-addon').hide();
 				goalform.find('.date').removeClass('input-group');
-				$('#goal').val(weight);
+				$('#weight').val(weight);
 				$('#goalModal').modal('show');
 			};
 

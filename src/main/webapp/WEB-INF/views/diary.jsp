@@ -22,7 +22,7 @@
 				<h1>
 					<spring:message code="label.diary"/>
 				</h1>
-				<div id="placeholder" class="center-block" style="min-width:600px;height:200px">
+				<div id="placeholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
 				<div class="btn-group btn-group-justified">
 					<fmt:formatDate value="${prevDate}" var="prevDay" pattern="yyyy.MM.dd"/>

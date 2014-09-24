@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dataart.spring.dao.GoalDAO;
 import com.dataart.spring.dao.UserDAO;
@@ -76,7 +77,7 @@ public class SignUpController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signUp(
 			@Valid User user,
-			float weight,
+			@RequestParam("weight") float weight,
 			BindingResult result,
 			HttpSession session) {
 		LOGGER.debug("Adding: \"{}\"", user);

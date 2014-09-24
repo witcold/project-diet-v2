@@ -50,7 +50,7 @@ public class SessionFilter implements Filter {
 			res.sendRedirect(req.getContextPath() + "/login");
 		} else {
 			User user = (User) session.getAttribute("account");
-			LOGGER.info("User: {}", user.getLogin());
+			LOGGER.debug("User: {}", user.getLogin());
 			chain.doFilter(request, response);
 		}
 	}
