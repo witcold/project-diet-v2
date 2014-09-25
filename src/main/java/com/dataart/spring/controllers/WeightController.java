@@ -89,11 +89,7 @@ public class WeightController {
 	public String add(Weight weight, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		weight.setUserId(user.getId());
-		if (weightDAO.selectOne(weight.getUserId(), weight.getDate()) == null) {
-			weightDAO.insert(weight);
-		} else {
-			weightDAO.update(weight);
-		}
+		weightDAO.insertOrUpdate(weight);
 		return "redirect:/weight";
 	}
 

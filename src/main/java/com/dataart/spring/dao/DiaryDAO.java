@@ -64,6 +64,14 @@ public class DiaryDAO {
 		}
 	}
 
+	public boolean exists(Diary diary) {
+		String sql = "SELECT COUNT(*)"
+				+ " FROM diaries"
+				+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
+		int result = template.queryForObject(sql, int.class, diary.getUserId(), diary.getFoodId(), diary.getTimestamp());
+		return result == 1;
+	}
+
 	public Diary selectOne(long userId, long foodId, Date timestamp) {
 		String sql = "SELECT user_id, food_id, timestamp, weight"
 				+ " FROM diaries"
@@ -86,6 +94,14 @@ public class DiaryDAO {
 		int result = template.update(sql, diary.getWeight(), diary.getUserId(),
 				diary.getFoodId(), diary.getTimestamp());
 		return result == 1;
+	}
+
+	public void insertOrUpdate (Diary diary) {
+		if (exists(diary)) {
+			update(diary);
+		} else {
+			insert(diary);
+		}
 	}
 
 	public boolean delete(Diary diary) {

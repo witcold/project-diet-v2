@@ -49,6 +49,14 @@ public class GoalDAO {
 		
 	}
 
+	public boolean exists(Goal goal) {
+		String sql = "SELECT COUNT(*)"
+				+ " FROM goals"
+				+ " WHERE (user_id = ?) AND (date = ?);";
+		int result = template.queryForObject(sql, int.class, goal.getUserId(), goal.getDate());
+		return result == 1;
+	}
+
 	public Goal selectOne(long userId, Date date) {
 		String sql = "SELECT user_id, date, weight"
 					+ " FROM goals"
@@ -68,6 +76,14 @@ public class GoalDAO {
 					+ " WHERE (user_id = ?) AND (date = ?);";
 		int result = template.update(sql, goal.getWeight(), goal.getUserId(), goal.getDate());
 		return result == 1;
+	}
+
+	public void insertOrUpdate (Goal goal) {
+		if (exists(goal)) {
+			update(goal);
+		} else {
+			insert(goal);
+		}
 	}
 
 	public boolean delete(Goal goal) {

@@ -68,11 +68,7 @@ public class GoalController {
 	public String add(Goal goal, HttpSession session) {
 		User user = (User) session.getAttribute("account");
 		goal.setUserId(user.getId());
-		if (goalDAO.selectOne(goal.getUserId(), goal.getDate()) == null) {
-			goalDAO.insert(goal);
-		} else {
-			goalDAO.update(goal);
-		}
+		goalDAO.insertOrUpdate(goal);
 		return "redirect:/goal";
 	}
 

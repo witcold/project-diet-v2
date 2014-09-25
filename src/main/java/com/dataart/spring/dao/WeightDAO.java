@@ -49,9 +49,17 @@ public class WeightDAO {
 		
 	}
 
+	public boolean exists(Weight weight) {
+		String sql = "SELECT COUNT(*)"
+				+ " FROM weights"
+				+ " WHERE (user_id = ?) AND (date = ?);";
+		int result = template.queryForObject(sql, int.class, weight.getUserId(), weight.getDate());
+		return result == 1;
+	}
+
 	public Weight selectOne(long userId, Date date) {
 		String sql = "SELECT user_id, date, weight"
-					+ " FROM goals"
+					+ " FROM weights"
 					+ " WHERE (user_id = ?) AND (date = ?);";
 		return template.query(sql, new WeightResultSetExtractor(), userId, date);
 	}
@@ -68,6 +76,14 @@ public class WeightDAO {
 					+ " WHERE (user_id = ?) AND (date = ?);";
 		int result = template.update(sql, weight.getWeight(), weight.getUserId(), weight.getDate());
 		return result == 1;
+	}
+
+	public void insertOrUpdate (Weight weight) {
+		if (exists(weight)) {
+			update(weight);
+		} else {
+			insert(weight);
+		}
 	}
 
 	public boolean delete(Weight weight) {
