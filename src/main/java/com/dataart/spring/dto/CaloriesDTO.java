@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.dto;
 
 import java.util.Date;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.utils;
 
 import java.util.Calendar;

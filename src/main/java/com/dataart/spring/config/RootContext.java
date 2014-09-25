@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.config;
 
 import javax.sql.DataSource;

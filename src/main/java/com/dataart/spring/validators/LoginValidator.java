@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.validators;
 
 import org.hibernate.validator.internal.constraintvalidators.EmailValidator;

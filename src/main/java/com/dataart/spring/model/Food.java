@@ -6,7 +6,6 @@ import java.io.Serializable;
  * @author vmeshcheryakov
  *
  */
-@SuppressWarnings("serial")
 public class Food implements Serializable {
 
 	private long id;

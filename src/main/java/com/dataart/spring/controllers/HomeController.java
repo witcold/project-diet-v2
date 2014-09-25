@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.controllers;
 
 import javax.servlet.http.HttpServletRequest;

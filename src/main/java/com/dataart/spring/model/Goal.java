@@ -7,7 +7,6 @@ import java.util.Date;
  * @author vmeshcheryakov
  *
  */
-@SuppressWarnings("serial")
 public class Goal implements Serializable {
 
 	private long userId;

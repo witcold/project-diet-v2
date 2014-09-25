@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.status;
 
 import java.util.Date;

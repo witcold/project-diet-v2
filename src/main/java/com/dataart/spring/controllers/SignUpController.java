@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +34,7 @@ import com.dataart.spring.validators.SignUpValidator;
  *
  */
 @Controller
+@RequestMapping(value = "/signup")
 public class SignUpController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignUpController.class);
@@ -68,13 +66,13 @@ public class SignUpController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String greeting(Model model) {
 		model.addAttribute("genders", Gender.values());
 		return "signup";
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String signUp(
 			@Valid User user,
 			@RequestParam("weight") float weight,

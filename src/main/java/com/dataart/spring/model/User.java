@@ -7,7 +7,6 @@ import java.util.Date;
  * @author vmeshcheryakov
  *
  */
-@SuppressWarnings("serial")
 public class User implements Serializable {
 
 	private long id;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring.status;
 
 import java.io.IOException;
@@ -19,7 +16,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  */
 @WebServlet("/status")
-@SuppressWarnings("serial")
 public class WebPing extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)

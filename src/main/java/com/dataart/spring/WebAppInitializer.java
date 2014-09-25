@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dataart.spring;
 
 import javax.servlet.FilterRegistration;
