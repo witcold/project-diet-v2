@@ -28,7 +28,6 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@SuppressWarnings("boxing")
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpSession session) {
 		LOGGER.debug("Hi there! The client came in: {}:{}:{} ({})!",

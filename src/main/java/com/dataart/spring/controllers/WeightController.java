@@ -145,7 +145,7 @@ public class WeightController {
 
 		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(),from, to);
 		List<CaloriesDTO> bmrList = new ArrayList<CaloriesDTO>();
-		if (list.size() > 0) {
+		if (!list.isEmpty()) {
 			for (Weight weight : list) {
 				CaloriesDTO bmr = new CaloriesDTO();
 				bmr.setDate(weight.getDate());
