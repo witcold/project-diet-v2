@@ -117,7 +117,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary">
+						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary" onSubmit="return validateForm()">
 							<div class="form-group">
 								<spring:message code="diary.timestamp" var="timestamp"/>
 								<div class="input-group date" id="datetimepicker">
@@ -234,6 +234,14 @@
 				diaryform.find('.date').addClass('input-group');
 				diaryform.find('.input-group-addon').show();
 			});
+
+			function validateForm(event) {
+				var food = diaryform.find('#foodId').val();
+				if (!parseInt(food)) {
+					diaryform.find('#foodTypeahead').focus();
+					return false;
+				}
+			}
 		</script>
 	</body>
 </html>

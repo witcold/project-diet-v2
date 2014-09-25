@@ -79,7 +79,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="goalForm" action="goal/add" accept-charset="UTF-8" method="post" modelAttribute="goal">
+						<form:form id="goalForm" action="goal/add" accept-charset="UTF-8" method="post" modelAttribute="goal" onSubmit="return validateDate(event)">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
@@ -152,6 +152,14 @@
 				goalform.find('.date').addClass('input-group');
 				goalform.find('.input-group-addon').show();
 			});
+
+			function validateDate(event) {
+				var date = goalform.find('#datetimepicker input').val();
+				if (!date) {
+					datetimepicker.show(event);
+					return false;
+				}
+			}
 		</script>
 	</body>
 </html>

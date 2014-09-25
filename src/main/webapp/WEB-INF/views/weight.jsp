@@ -103,18 +103,18 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight">
+						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight" onSubmit="return validateDate(event)">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input readonly="true" path="date" placeholder="${date}" class="form-control"/>
+									<form:input path="date" readonly="true" placeholder="${date}" class="form-control"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
 							</div>
 							<div class="form-group input-group">
-								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true"/>
+								<form:input path="weight" type="number" min="1" step="0.001" max="999" class="form-control" required="true"/>
 								<span class="input-group-addon">
 									<spring:message code="weight.measure"/>
 								</span>
@@ -187,6 +187,14 @@
 				weightform.find('.date').addClass('input-group');
 				weightform.find('.input-group-addon').show();
 			});
+
+			function validateDate(event) {
+				var date = weightform.find('#datetimepicker input').val();
+				if (!date) {
+					datetimepicker.show(event);
+					return false;
+				}
+			}
 		</script>
 	</body>
 </html>
