@@ -68,7 +68,7 @@ public class DiaryDAO {
 		String sql = "SELECT COUNT(*)"
 				+ " FROM diaries"
 				+ " WHERE (user_id = ?) AND (food_id = ?) AND (timestamp = ?);";
-		int result = template.queryForObject(sql, int.class, diary.getUserId(), diary.getFoodId(), diary.getTimestamp());
+		int result = template.queryForObject(sql, Integer.class, diary.getUserId(), diary.getFoodId(), diary.getTimestamp());
 		return result == 1;
 	}
 

@@ -53,7 +53,7 @@ public class WeightDAO {
 		String sql = "SELECT COUNT(*)"
 				+ " FROM weights"
 				+ " WHERE (user_id = ?) AND (date = ?);";
-		int result = template.queryForObject(sql, int.class, weight.getUserId(), weight.getDate());
+		int result = template.queryForObject(sql, Integer.class, weight.getUserId(), weight.getDate());
 		return result == 1;
 	}
 

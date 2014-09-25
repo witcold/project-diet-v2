@@ -53,7 +53,7 @@ public class GoalDAO {
 		String sql = "SELECT COUNT(*)"
 				+ " FROM goals"
 				+ " WHERE (user_id = ?) AND (date = ?);";
-		int result = template.queryForObject(sql, int.class, goal.getUserId(), goal.getDate());
+		int result = template.queryForObject(sql, Integer.class, goal.getUserId(), goal.getDate());
 		return result == 1;
 	}
 
