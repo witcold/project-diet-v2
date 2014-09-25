@@ -159,7 +159,7 @@
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/typeahead.bundle.js"></script>
-		<script src="resources/js/highcharts-options.js"></script>
+		<script src="resources/js/highcharts-utils.js"></script>
 
 		<script type="text/javascript">
 			var engine = new Bloodhound({
@@ -197,40 +197,23 @@
 			});
 
 			$(function plot() {
-				$.ajax({
-					url: 'diary/aggregated',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['calories']]);
-						}
-						Highcharts.setOptions(globalOptions)
-						var options = $.extend(true, defaultOptions);
-						options.tooltip = {
-							valueSuffix: ' <spring:message code="calories.measure"/>'
-						};
-						options.series = [{
-							name: '<spring:message code="diary.calories.total"/>',
-							data: data,
-						}];
-						$('#placeholder').highcharts(options);
+				var diaryChart = plotEmptyChart('#placeholder', {
+					tooltip: {
+						valueSuffix: ' <spring:message code="calories.measure"/>'
 					}
+				});
+				$.get('diary/aggregated', function(result) {
+					diaryChart.addSeries({
+						name: '<spring:message code="diary.calories.total"/>',
+						data: process(result, 'date', 'calories')
+					});
 				});
 			});
 
 			function deleteDiary(foodId, timestamp) {
 				if (confirm('<spring:message code="form.confirm" />'))
-					$.ajax({
-						url: 'diary/delete',
-						data: {'foodId': foodId, 'timestamp': timestamp},
-						type: 'POST',
-						success: function(result) {
-							location.reload();
-						}
+					$.post('diary/delete', {'foodId': foodId, 'timestamp': timestamp}, function(result) {
+						location.reload();
 					});
 			};
 

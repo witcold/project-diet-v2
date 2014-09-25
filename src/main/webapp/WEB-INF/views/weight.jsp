@@ -139,7 +139,7 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
-		<script src="resources/js/highcharts-options.js"></script>
+		<script src="resources/js/highcharts-utils.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
@@ -152,42 +152,23 @@
 			var weightform = $('#weightForm');
 
 			$(function plot() {
-				$.ajax({
-					url: 'weight/raw',
-					data: {
-						from: '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'
-					},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['weight']]);
-						}
-						Highcharts.setOptions(globalOptions);
-						var options = $.extend(true, defaultOptions);
-						options.tooltip = {
-								valueSuffix: ' <spring:message code="weight.measure"/>'
-						};
-						options.series = [{
-							name: '<spring:message code="label.weight"/>',
-							data: data
-						}];
-						$('#placeholder').highcharts(options);
+				var weightChart = plotEmptyChart('#placeholder', {
+					tooltip: {
+						valueSuffix: ' <spring:message code="weight.measure"/>'
 					}
+				});
+				$.get('weight/raw', function(result) {
+					weightChart.addSeries({
+						name: '<spring:message code="label.weight"/>',
+						data: process(result, 'date', 'weight')
+					});
 				});
 			});
 
 			function deleteWeight(date) {
 				if (confirm('<spring:message code="form.confirm"/>'))
-					$.ajax({
-						url: 'weight/delete',
-						data: {'date': date},
-						type: 'POST',
-						success: function(result) {
-							location.reload();
-						}
+					$.post('weight/delete', {'date': date}, function(result) {
+						location.reload();
 					});
 			};
 

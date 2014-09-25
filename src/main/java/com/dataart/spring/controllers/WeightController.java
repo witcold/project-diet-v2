@@ -118,7 +118,7 @@ public class WeightController {
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Weight> getData(
-			@RequestParam("from") Date from,
+			@RequestParam(value = "from", required = false) Date from,
 			@RequestParam(value = "to", required = false) Date to,
 			HttpSession session) {
 		User user = (User) session.getAttribute("account");
@@ -134,7 +134,7 @@ public class WeightController {
 	@RequestMapping(value = "/bmr", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CaloriesDTO> getBmr(
-			@RequestParam("from") Date from,
+			@RequestParam(value = "from", required = false) Date from,
 			@RequestParam(value = "to", required = false) Date to,
 			HttpSession session) {
 		User user = (User) session.getAttribute("account");
@@ -156,7 +156,7 @@ public class WeightController {
 			for (Weight weight : list) {
 				CaloriesDTO bmr = new CaloriesDTO();
 				bmr.setDate(weight.getDate());
-				bmr.setCalories(BMR.calculate(gender, age, height, weight.getWeight()));
+				bmr.setCalories((int) (user.getActivityLevel()*BMR.calculate(gender, age, height, weight.getWeight())));
 				bmrList.add(bmr);
 			}
 		}

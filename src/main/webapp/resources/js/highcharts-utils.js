@@ -40,3 +40,22 @@ var defaultOptions = {
 		}
 	],
 };
+
+function getMillis(date) {
+	var dateParts = date.split("-");
+	return +new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+}
+
+function process(data, x, y) {
+	var result = [];
+	for (var i = 0; i < data.length; i++) {
+		result.push([getMillis(data[i][x]), data[i][y]]);
+	}
+	return result;
+}
+
+function plotEmptyChart(selector, options) {
+	var settings = $.extend(true, {}, defaultOptions, options);
+	var element = $(selector).highcharts(settings);
+	return element.highcharts();
+}

@@ -50,7 +50,7 @@
 				</div>
 				<h2>
 					Your diary stats
-					<small>2340 / ${dailyCalories} for last 7 days</small>
+					<small>2340 / ${dailyCalories} kcal for last 7 days</small>
 				</h2>
 				<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
@@ -61,8 +61,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
-		<script src="resources/js/highcharts-options.js"></script>
-		<script src="resources/js/highcharts-plot.js"></script>
+		<script src="resources/js/highcharts-utils.js"></script>
 
 		<script type="text/javascript">
 			$(Highcharts.setOptions(globalOptions));
@@ -79,80 +78,34 @@
 			});
 
 			$(function plotWeight() {
-				$.ajax({
-					url: 'weight/raw',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['weight']]);
-						}
-						weightChart.addSeries({
-							name: '<spring:message code="label.weight"/>',
-							index: 0,
-							data: data
-						});
-					}
-				});
-				$.ajax({
-					url: 'goal/raw',
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['weight']]);
-						}
+				$.get('weight/raw', function(result) {
+					weightChart.addSeries({
+						name: '<spring:message code="label.weight"/>',
+						data: process(result, 'date', 'weight')
+					});
+					$.get('goal/raw', function(result) {
 						weightChart.addSeries({
 							name: '<spring:message code="label.goal"/>',
-							data: data,
-							dashStyle: 'dot'
+							dashStyle: 'dot',
+							data: process(result, 'date', 'weight')
 						});
-					}
+					});
 				});
 			});
 
 			$(function plotDiary() {
-				var activityLevel = ${account.activityLevel};
-				$.ajax({
-					url: 'diary/aggregated',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, result[i]['calories']]);
-						}
-						diaryChart.addSeries({
-							name: '<spring:message code="diary.calories.total"/>',
-							index: 0,
-							data: data
-						});
-					}
-				});
-				$.ajax({
-					url: 'weight/bmr',
-					data: {'from': '<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'},
-					type: 'GET',
-					success: function(result) {
-						var data = [];
-						for (var i = 0; i < result.length; i++) {
-							var dateParts = result[i]['date'].split("-");
-							var date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-							data.push([+date, Math.round(activityLevel*result[i]['calories'])]);
-						}
+				$.get('diary/aggregated', function(result) {
+					diaryChart.addSeries({
+						name: '<spring:message code="diary.calories.total"/>',
+						data: process(result, 'date', 'calories')
+					});
+					$.get('weight/bmr', function(result) {
 						diaryChart.addSeries({
 							name: '<spring:message code="label.goal"/>',
-							data: data,
-							dashStyle: 'dot'
+							dashStyle: 'dot',
+							data: process(result, 'date', 'calories')
 						});
-					}
+					});
 				});
 			});
 		</script>

@@ -125,7 +125,7 @@ public class DiaryController {
 	@RequestMapping(value = "/aggregated", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CaloriesDTO> getData(
-			@RequestParam("from") Date from,
+			@RequestParam(value = "from", required = false) Date from,
 			@RequestParam(value = "to", required = false) Date to,
 			HttpSession session) {
 		User user = (User) session.getAttribute("account");
