@@ -27,7 +27,7 @@ public class DiaryDAO {
 
 	private JdbcTemplate template;
 
-	private class DiaryRowMapper implements RowMapper<Diary> {
+	private static final class DiaryRowMapper implements RowMapper<Diary> {
 		public DiaryRowMapper() {
 		}
 
@@ -37,7 +37,7 @@ public class DiaryDAO {
 		}
 	}
 
-	private class DiaryResultSetExtractor implements ResultSetExtractor<Diary> {
+	private static final class DiaryResultSetExtractor implements ResultSetExtractor<Diary> {
 		public DiaryResultSetExtractor() {
 		}
 
@@ -147,7 +147,7 @@ public class DiaryDAO {
 		this.template = new JdbcTemplate(ds);
 	}
 
-	Diary getDiary(ResultSet rs) throws SQLException {
+	static Diary getDiary(ResultSet rs) throws SQLException {
 		Diary diary = new Diary();
 		diary.setUserId(rs.getLong("user_id"));
 		diary.setFoodId(rs.getLong("food_id"));

@@ -25,7 +25,7 @@ public class GoalDAO {
 
 	private JdbcTemplate template;
 
-	private class GoalRowMapper implements RowMapper<Goal> {
+	private static final class GoalRowMapper implements RowMapper<Goal> {
 		public GoalRowMapper() {
 		}
 
@@ -35,7 +35,7 @@ public class GoalDAO {
 		}
 	}
 
-	private class GoalResultSetExtractor implements ResultSetExtractor<Goal> {
+	private static final class GoalResultSetExtractor implements ResultSetExtractor<Goal> {
 		public GoalResultSetExtractor() {
 		}
 
@@ -115,7 +115,7 @@ public class GoalDAO {
 		this.template = new JdbcTemplate(ds);
 	}
 
-	public Goal getGoal(ResultSet rs) throws SQLException {
+	static Goal getGoal(ResultSet rs) throws SQLException {
 		Goal goal = new Goal();
 		goal.setUserId(rs.getLong(1));
 		goal.setDate(rs.getDate(2));

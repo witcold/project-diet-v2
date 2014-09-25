@@ -25,7 +25,7 @@ public class WeightDAO {
 
 	private JdbcTemplate template;
 
-	private class WeightRowMapper implements RowMapper<Weight> {
+	private static final class WeightRowMapper implements RowMapper<Weight> {
 		public WeightRowMapper() {
 		}
 
@@ -35,7 +35,7 @@ public class WeightDAO {
 		}
 	}
 
-	private class WeightResultSetExtractor implements ResultSetExtractor<Weight> {
+	private static final class WeightResultSetExtractor implements ResultSetExtractor<Weight> {
 		public WeightResultSetExtractor() {
 		}
 
@@ -115,7 +115,7 @@ public class WeightDAO {
 		this.template = new JdbcTemplate(ds);
 	}
 
-	Weight getWeight(ResultSet rs) throws SQLException {
+	static Weight getWeight(ResultSet rs) throws SQLException {
 		Weight weight = new Weight();
 		weight.setUserId(rs.getLong(1));
 		weight.setDate(rs.getDate(2));
