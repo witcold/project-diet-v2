@@ -42,6 +42,7 @@ public class HomeController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.removeAttribute("account");
+		session.invalidate();
 		return "redirect:/";
 	}
 
