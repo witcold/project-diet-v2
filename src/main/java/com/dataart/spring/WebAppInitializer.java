@@ -23,12 +23,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.setConfigLocation("com.dataart.spring.config.RootContext");
 		servletContext.addListener(new ContextLoaderListener(rootContext));
+		rootContext.close();
 
 		XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 		appContext.setConfigLocation("/WEB-INF/spring/appServlet/servlet-context.xml");
 		ServletRegistration.Dynamic appServlet = servletContext.addServlet("appServlet", new DispatcherServlet(appContext));
 		appServlet.setLoadOnStartup(1);
 		appServlet.addMapping("/");
+		appContext.close();
 
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding("UTF-8");
@@ -36,7 +38,5 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encodingFilter", filter);
 		encodingFilter.addMappingForUrlPatterns(null, false, "/*"); //TODO there is another method,  may be it is better?
 	}
-
-	
 
 }
