@@ -40,7 +40,10 @@ public class RootContext {
 
 	@Bean
 	public SessionFactory getSessionFactory() {
-		return new LocalSessionFactoryBuilder(getDataSource()).buildSessionFactory();
+		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(getDataSource());
+		builder.setProperty("hibernate.show_sql", "true");
+		builder.setProperty("hibernate.dialect", "org.hibernate.dialect.ProgressDialect");
+		return builder.buildSessionFactory();
 	}
 
 	@Bean
