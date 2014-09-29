@@ -3,9 +3,15 @@ package com.dataart.spring.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
 
 /**
  * @author vmeshcheryakov
@@ -15,6 +21,7 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User implements Serializable {
 
+	@Column(name = "user_id")
 	@Id
 	private long id;
 
@@ -22,20 +29,27 @@ public class User implements Serializable {
 
 	private String password;
 
+	@Transient
 	private String passwordConfirm;
 
+	@Column(name = "first_name")
 	private String firstName;
 
+	@Column(name = "last_name")
 	private String lastName;
 
+	@Type(type = "com.dataart.spring.utils.GenderType")
 	private Gender gender;
 
+	@Column(name = "birth_date")
 	private Date birthDate;
 
+	@Column(name = "country_id")
 	private String countryId;
 
 	private int height;
 
+	@Column(name = "activity_level")
 	private float activityLevel;
 
 	public User() {

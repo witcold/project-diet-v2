@@ -43,6 +43,7 @@ public class RootContext {
 		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(getDataSource());
 		builder.setProperty("hibernate.show_sql", "true");
 		builder.setProperty("hibernate.dialect", "org.hibernate.dialect.ProgressDialect");
+		builder.scanPackages("com.dataart.spring.model");
 		return builder.buildSessionFactory();
 	}
 

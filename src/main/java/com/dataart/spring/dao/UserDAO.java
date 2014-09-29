@@ -1,8 +1,5 @@
 package com.dataart.spring.dao;
 
-import java.util.List;
-
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -35,8 +32,8 @@ public class UserDAO {
 //					+ " FROM users"
 //					+ " WHERE (login = ?)";
 		Session session = sessionFactory.getCurrentSession();
-		List<User> list = session.createCriteria(User.class).add(Restrictions.eq("login", login)).list();
-		return list.get(0);
+		User user = (User) session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
+		return user;
 	}
 
 	public boolean authenticate(User user) {
