@@ -27,8 +27,9 @@ public class UserDAO {
 
 	public User selectByLogin(String login) {
 		Session session = sessionFactory.getCurrentSession();
-		User user = (User) session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
-		return user;
+		return (User) session.createCriteria(User.class)
+				.add(Restrictions.eq("login", login))
+				.uniqueResult();
 	}
 
 	public User authenticate(User user) {
