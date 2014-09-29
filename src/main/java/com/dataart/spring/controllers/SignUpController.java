@@ -76,6 +76,7 @@ public class SignUpController {
 	public String signUp(
 			@Valid SignUpDTO signUpDTO,
 			BindingResult result,
+			Model model,
 			HttpSession session) {
 		LOGGER.debug("Adding: \"{}\"", signUpDTO);
 		if (!result.hasErrors()) {
@@ -103,6 +104,7 @@ public class SignUpController {
 			}
 		} else {
 			result.reject("notvalid");
+			model.addAttribute("genders", Gender.values());
 			return "signup";
 		}
 	}
