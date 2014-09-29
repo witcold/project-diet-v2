@@ -2,18 +2,30 @@ package com.dataart.spring.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author vmeshcheryakov
  *
  */
+@Entity
+@Table(name = "categories")
 public class Category implements Serializable {
 
+	@Column(name = "category_id")
+	@Id
 	private long id;
 
+	@Column(name = "parent_id")
 	private long parentId;
 
+	@Column(name = "name_en")
 	private String nameEn;
 
+	@Column(name = "name_ru")
 	private String nameRu;
 
 	public Category() {

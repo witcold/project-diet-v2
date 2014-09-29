@@ -3,18 +3,32 @@ package com.dataart.spring.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author vmeshcheryakov
  *
  */
+@Entity
+@Table(name = "diaries")
 public class Diary implements Serializable {
 
+	@Column(name = "user_id")
+	@Id
 	private long userId;
 
+	@Column(name = "food_id")
+	@Id
 	private long foodId;
 
+	@Column(name = "timestamp")
+	@Id
 	private Date timestamp;
 
+	@Column(name = "weight")
 	private float weight;
 
 	public Diary() {

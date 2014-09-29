@@ -3,16 +3,28 @@ package com.dataart.spring.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author vmeshcheryakov
  *
  */
+@Entity
+@Table(name = "goals")
 public class Goal implements Serializable {
 
+	@Column(name = "user_id")
+	@Id
 	private long userId;
 
+	@Column(name = "date")
+	@Id
 	private Date date;
 
+	@Column(name = "weight")
 	private float weight;
 
 	public Goal() {

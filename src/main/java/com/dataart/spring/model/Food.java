@@ -2,26 +2,42 @@ package com.dataart.spring.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author vmeshcheryakov
  *
  */
+@Entity
+@Table(name = "foods")
 public class Food implements Serializable {
 
+	@Column(name = "food_id")
+	@Id
 	private long id;
 
+	@Column(name = "category_id")
 	private long categoryId;
 
+	@Column(name = "name_en")
 	private String nameEn;
 
+	@Column(name = "name_ru")
 	private String nameRu;
 
+	@Column(name = "calories")
 	private int calories;
 
+	@Column(name = "proteins")
 	private int proteins;
 
+	@Column(name = "fats")
 	private int fats;
 
+	@Column(name = "carbohydrates")
 	private int carbohydrates;
 
 	public Food() {
