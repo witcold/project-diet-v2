@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
+import com.dataart.spring.utils.PasswordHashing;
+
 /**
  * @author vmeshcheryakov
  *
@@ -77,7 +79,7 @@ public class User implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = PasswordHashing.encode(password);
 	}
 
 	public String getPasswordConfirm() {
@@ -85,7 +87,7 @@ public class User implements Serializable {
 	}
 
 	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+		this.passwordConfirm = PasswordHashing.encode(passwordConfirm);
 	}
 
 	public String getFirstName() {

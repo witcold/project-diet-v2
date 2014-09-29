@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dataart.spring.model.User;
-import com.dataart.spring.utils.PasswordHashing;
 
 /**
  * @author vmeshcheryakov
@@ -36,7 +35,7 @@ public class UserDAO {
 	public boolean authenticate(User user) {
 		User dbUser = selectByLogin(user.getLogin());
 		if (dbUser != null
-				&& dbUser.getPassword().equals(PasswordHashing.encode(user.getPassword()))) {
+				&& dbUser.getPassword().equals(user.getPassword())) {
 			user.clone(dbUser);
 			return true;
 		}
