@@ -42,7 +42,7 @@ public class RootContext {
 	public SessionFactory getSessionFactory() {
 		LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(getDataSource());
 		builder.setProperty("hibernate.show_sql", "true");
-		builder.setProperty("hibernate.dialect", "org.hibernate.dialect.ProgressDialect");
+		builder.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
 		builder.scanPackages("com.dataart.spring.model");
 		return builder.buildSessionFactory();
 	}
