@@ -31,14 +31,12 @@ public class UserDAO {
 		return user;
 	}
 
-	public boolean authenticate(User user) {
+	public User authenticate(User user) {
 		User dbUser = selectByLogin(user.getLogin());
-		if (dbUser != null
-				&& dbUser.getPassword().equals(user.getPassword())) {
-			user.clone(dbUser);
-			return true;
+		if (dbUser != null && dbUser.getPassword().equals(user.getPassword())) {
+			return dbUser;
 		}
-		return false;
+		return null;
 	}
 
 }

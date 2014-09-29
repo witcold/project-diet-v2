@@ -55,8 +55,9 @@ public class LoginController {
 			BindingResult result,
 			HttpSession session) {
 		LOGGER.debug("Login: \"{}\"", user.getLogin());
-		if (!result.hasErrors() && userDAO.authenticate(user)) {
-			session.setAttribute("account", user);
+		User account = userDAO.authenticate(user);
+		if (!result.hasErrors() && account != null) {
+			session.setAttribute("account", account);
 			return "redirect:/";
 		} else {
 			result.reject("notvalid");

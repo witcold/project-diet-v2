@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
@@ -44,6 +46,7 @@ public class User implements Serializable {
 	private Gender gender;
 
 	@Column(name = "birth_date")
+	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 
 	@Column(name = "country_id")
@@ -145,19 +148,6 @@ public class User implements Serializable {
 				+ ", gender=" + gender + ", birthDate=" + birthDate
 				+ ", countryId=" + countryId + ", height=" + height
 				+ ", activityLevel=" + activityLevel + "]";
-	}
-
-	public void clone(User object) {
-		this.id = object.id;
-		this.login = object.login;
-		this.password = object.password;
-		this.firstName = object.firstName;
-		this.lastName = object.lastName;
-		this.gender = object.gender;
-		this.birthDate = object.birthDate;
-		this.countryId = object.countryId;
-		this.height = object.height;
-		this.activityLevel = object.activityLevel;
 	}
 
 }
