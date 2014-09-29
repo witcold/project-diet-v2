@@ -36,7 +36,7 @@ public class LoginController {
 		return new User();
 	}
 
-	@InitBinder
+	@InitBinder("user")
 	public void initBinder(WebDataBinder binder) {
 		binder.setValidator(new LoginValidator());
 	}

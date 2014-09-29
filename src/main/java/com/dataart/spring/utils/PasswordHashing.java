@@ -19,7 +19,11 @@ public class PasswordHashing {
 			md = MessageDigest.getInstance("SHA-1");
 		} catch (NoSuchAlgorithmException e) {
 		}
-		return new String(Hex.encodeHex(md.digest((data + SALT_STRING).getBytes())));
+		if (data != null && !data.isEmpty()) {
+			return new String(Hex.encodeHex(md.digest((data + SALT_STRING).getBytes())));
+		} else {
+			return "";
+		}
 	}
 
 	public static boolean check(String data, String hash) {
