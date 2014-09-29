@@ -20,10 +20,9 @@ public class UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public boolean insert(final User user) {
+	public void insert(final User user) {
 		Session session = sessionFactory.getCurrentSession();
-		long id = (long) session.save(user);
-		return id != 0;
+		session.save(user);
 	}
 
 	public User selectByLogin(String login) {

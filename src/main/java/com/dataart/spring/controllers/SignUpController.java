@@ -83,7 +83,8 @@ public class SignUpController {
 			if (userDAO.selectByLogin(user.getLogin()) != null) {
 				result.rejectValue("login", "login.existed", "Login already registered, please choose another one");
 				return "signup";
-			} else if (userDAO.insert(user)) {
+			} else {
+				userDAO.insert(user);
 				session.setAttribute("account", user);
 
 				Weight currentWeight = new Weight();
@@ -97,8 +98,9 @@ public class SignUpController {
 				currentGoal.setDate(new Date());
 				currentGoal.setWeight(weight);
 				goalDAO.insert(currentGoal);
+
+				return "redirect:/";
 			}
-			return "redirect:/";
 		} else {
 			result.reject("notvalid", "Please ensure your data is valid");
 			return "signup";
