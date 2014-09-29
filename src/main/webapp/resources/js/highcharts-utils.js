@@ -42,6 +42,9 @@ var defaultOptions = {
 };
 
 function getMillis(date) {
+	if (typeof date == "number") {
+		return date;
+	}
 	var dateParts = date.split("-");
 	return +new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 }
