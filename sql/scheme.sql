@@ -36,7 +36,7 @@ CREATE TABLE users (
 	birth_date		DATE NOT NULL,
 	country_id		CHAR(2) NOT NULL,
 	height			SMALLINT NOT NULL,
-	activity_level	FLOAT,
+	activity_level	FLOAT NOT NULL,
 	PRIMARY KEY (user_id),
 	FOREIGN KEY (country_id) REFERENCES countries (country_id),
 	CONSTRAINT users_gender_check CHECK (gender IN ('M', 'F', 'U'))
