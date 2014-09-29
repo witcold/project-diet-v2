@@ -63,7 +63,7 @@ public class GenderType implements UserType {
 		if (null == value) {
 			st.setNull(index, Types.CHAR);
 		} else {
-			st.setString(index, ((Enum<?>) value).name());
+			st.setString(index, String.valueOf(((Gender) value).getValue()));
 		}
 	}
 

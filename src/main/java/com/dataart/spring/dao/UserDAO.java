@@ -22,15 +22,12 @@ public class UserDAO {
 	private SessionFactory sessionFactory;
 
 	public boolean insert(final User user) {
-		//long id = (long) template.save(user);
-		//user.setId(id);
-		return true;
+		Session session = sessionFactory.getCurrentSession();
+		long id = (long) session.save(user);
+		return id != 0;
 	}
 
 	public User selectByLogin(String login) {
-//		String sql = "SELECT login, user_id, password, first_name, last_name, gender, birth_date, country_id, height, activity_level"
-//					+ " FROM users"
-//					+ " WHERE (login = ?)";
 		Session session = sessionFactory.getCurrentSession();
 		User user = (User) session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
 		return user;
