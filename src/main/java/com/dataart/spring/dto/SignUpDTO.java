@@ -1,61 +1,42 @@
-package com.dataart.spring.model;
+package com.dataart.spring.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-
-import com.dataart.spring.utils.PasswordHashing;
+import com.dataart.spring.model.Gender;
+import com.dataart.spring.model.User;
 
 /**
  * @author vmeshcheryakov
  *
  */
-@Entity
-@Table(name = "users")
-public class User implements Serializable {
+public class SignUpDTO implements Serializable {
 
-	@Column(name = "user_id")
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "login")
 	private String login;
 
-	@Column(name = "password")
 	private String password;
 
-	@Column(name = "first_name")
+	private String passwordConfirm;
+
 	private String firstName;
 
-	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "gender")
-	@Type(type = "com.dataart.spring.utils.GenderType")
 	private Gender gender;
 
-	@Column(name = "birth_date")
 	private Date birthDate;
 
-	@Column(name = "country_id")
 	private String countryId;
 
-	@Column(name = "height")
 	private int height;
 
-	@Column(name = "activity_level")
+	private float weight;
+
 	private float activityLevel;
 
-	public User() {
+	public SignUpDTO() {
 	}
 
 	public long getId() {
@@ -79,7 +60,15 @@ public class User implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = PasswordHashing.encode(password);
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 	public String getFirstName() {
@@ -130,6 +119,14 @@ public class User implements Serializable {
 		this.height = height;
 	}
 
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
 	public float getActivityLevel() {
 		return activityLevel;
 	}
@@ -138,26 +135,19 @@ public class User implements Serializable {
 		this.activityLevel = activityLevel;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password
-				+ ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", gender=" + gender + ", birthDate=" + birthDate
-				+ ", countryId=" + countryId + ", height=" + height
-				+ ", activityLevel=" + activityLevel + "]";
-	}
-
-	public void clone(User object) {
-		this.id = object.id;
-		this.login = object.login;
-		this.password = object.password;
-		this.firstName = object.firstName;
-		this.lastName = object.lastName;
-		this.gender = object.gender;
-		this.birthDate = object.birthDate;
-		this.countryId = object.countryId;
-		this.height = object.height;
-		this.activityLevel = object.activityLevel;
+	public User getUser() {
+		User user = new User();
+		user.setId(id);
+		user.setLogin(login);
+		user.setPassword(password);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setGender(gender);
+		user.setBirthDate(birthDate);
+		user.setCountryId(countryId);
+		user.setHeight(height);
+		user.setActivityLevel(activityLevel);
+		return user;
 	}
 
 }

@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dataart.spring.dao.GoalDAO;
 import com.dataart.spring.dao.UserDAO;
 import com.dataart.spring.dao.WeightDAO;
+import com.dataart.spring.dto.SignUpDTO;
 import com.dataart.spring.model.Gender;
 import com.dataart.spring.model.Goal;
 import com.dataart.spring.model.User;
@@ -48,9 +48,9 @@ public class SignUpController {
 	@Autowired
 	private GoalDAO goalDAO;
 
-	@ModelAttribute("user")
-	public User getUserBean() {
-		return new User();
+	@ModelAttribute("signUpDTO")
+	public SignUpDTO getSignUpDTO() {
+		return new SignUpDTO();
 	}
 
 	@InitBinder
@@ -58,7 +58,7 @@ public class SignUpController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd"), true));
 	}
 
-	@InitBinder("user")
+	@InitBinder("signUpDTO")
 	public void initUserBinder(WebDataBinder binder) {
 		binder.setValidator(new SignUpValidator());
 	}
@@ -74,35 +74,35 @@ public class SignUpController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String signUp(
-			@Valid User user,
-			@RequestParam("weight") float weight,
+			@Valid SignUpDTO signUpDTO,
 			BindingResult result,
 			HttpSession session) {
-		LOGGER.debug("Adding: \"{}\"", user);
+		LOGGER.debug("Adding: \"{}\"", signUpDTO);
 		if (!result.hasErrors()) {
-			if (userDAO.selectByLogin(user.getLogin()) != null) {
+			if (userDAO.selectByLogin(signUpDTO.getLogin()) != null) {
 				result.rejectValue("login", "login.existed", "Login already registered, please choose another one");
 				return "signup";
 			} else {
+				User user = signUpDTO.getUser();
 				userDAO.insert(user);
 				session.setAttribute("account", user);
 
 				Weight currentWeight = new Weight();
 				currentWeight.setUserId(user.getId());
 				currentWeight.setDate(new Date());
-				currentWeight.setWeight(weight);
+				currentWeight.setWeight(signUpDTO.getWeight());
 				weightDAO.insert(currentWeight);
 
 				Goal currentGoal = new Goal();
 				currentGoal.setUserId(user.getId());
 				currentGoal.setDate(new Date());
-				currentGoal.setWeight(weight);
+				currentGoal.setWeight(signUpDTO.getWeight());
 				goalDAO.insert(currentGoal);
 
 				return "redirect:/";
 			}
 		} else {
-			result.reject("notvalid", "Please ensure your data is valid");
+			result.reject("notvalid");
 			return "signup";
 		}
 	}

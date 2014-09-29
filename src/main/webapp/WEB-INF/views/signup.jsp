@@ -24,13 +24,11 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="jumbotron">
 			<div class="modal-dialog">
-				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="user">
+				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="signUpDTO">
 					<h2 class="modal-header">
 						<spring:message code="label.signup"/>
 					</h2>
-					<div class="form-group">
-						<form:errors path="*" element="div" class="alert alert-danger"/>
-					</div>
+					<form:errors path="*" element="div" class="alert alert-danger"/>
 					<h4>
 						<spring:message code="signup.account"/>
 					</h4>
