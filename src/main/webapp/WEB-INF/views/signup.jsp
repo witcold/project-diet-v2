@@ -111,7 +111,7 @@
 						<span class="input-group-addon aligned">
 							<spring:message code="user.weight"/>
 						</span>
-						<input name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+						<form:input path="weight" type="number" min="1" step="0.001" max="999" class="form-control" required="true"/>
 						<span class="input-group-addon">
 							<spring:message code="weight.measure"/>
 						</span>
