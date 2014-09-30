@@ -33,6 +33,8 @@
 
 	<logger name="com.dataart" level="ALL" />
 
+	<logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+
 	<root>
 		<level value="WARN" />
 		<appender-ref ref="STDOUT" />

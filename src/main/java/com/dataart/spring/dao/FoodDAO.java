@@ -48,7 +48,9 @@ public class FoodDAO {
 	public List<Food> selectByName(String name) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Food.class)
-				.add(Restrictions.or(Restrictions.ilike("nameEn", name), Restrictions.ilike("nameRu", name)))
+				.add(Restrictions.or(
+						Restrictions.ilike("nameEn", '%' + name + '%'),
+						Restrictions.ilike("nameRu", '%' + name + '%')))
 				.list();
 	}
 

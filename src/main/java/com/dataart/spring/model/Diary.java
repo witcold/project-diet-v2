@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,9 +22,10 @@ public class Diary implements Serializable {
 	@Id
 	private long userId;
 
-	@Column(name = "food_id")
+	@JoinColumn(name = "food_id")
 	@Id
-	private long foodId;
+	@ManyToOne
+	private Food food;
 
 	@Column(name = "timestamp")
 	@Id
@@ -42,12 +45,12 @@ public class Diary implements Serializable {
 		this.userId = userId;
 	}
 
-	public long getFoodId() {
-		return foodId;
+	public Food getFood() {
+		return food;
 	}
 
-	public void setFoodId(long foodId) {
-		this.foodId = foodId;
+	public void setFood(Food food) {
+		this.food = food;
 	}
 
 	public Date getTimestamp() {

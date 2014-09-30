@@ -69,10 +69,9 @@
 					</thead>
 					<tbody>
 						<c:forEach var="diary" items="${diaryList}">
-							<c:set var="food" value="${foodMap.get(diary.foodId)}"/>
 							<tr>
 								<td>
-									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${food.id}, '${food.getName(lang)}', ${diary.weight})">
+									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${diary.food.id}, '${diary.food.getName(lang)}', ${diary.weight})">
 										<span class="glyphicon glyphicon-pencil"></span>
 									</a>
 								</td>
@@ -80,17 +79,17 @@
 									<fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/>
 								</td>
 								<td>
-									<c:out value="${food.getName(lang)}"/>
+									<c:out value="${diary.food.getName(lang)}"/>
 								</td>
 								<td>
 									<c:out value="${diary.weight}"/>
 								</td>
 								<td>
-									<fmt:formatNumber value="${food.calories*diary.weight*10}" maxFractionDigits="0"/>
+									<fmt:formatNumber value="${diary.food.calories*diary.weight*10}" maxFractionDigits="0"/>
 								</td>
 								<td class="text-right">
 									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd HH:mm"/>
-									<a style="cursor: pointer;" onclick="deleteDiary(${food.id}, '${dateToDelete}')" class="text-danger">
+									<a style="cursor: pointer;" onclick="deleteDiary(${diary.food.id}, '${dateToDelete}')" class="text-danger">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -130,7 +129,7 @@
 							<div class="form-group">
 								<spring:message code="diary.food" var="food"/>
 								<input type="text" id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
-								<form:input type="hidden" path="foodId"/>
+								<form:input type="hidden" path="food.id"/>
 							</div>
 							<div class="form-group input-group">
 								<form:input type="number" min="0.001" step="0.001" max="10" path="weight" class="form-control" required="true"/>

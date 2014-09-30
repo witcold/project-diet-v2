@@ -1,11 +1,8 @@
 package com.dataart.spring.controllers;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.DiaryDAO;
-import com.dataart.spring.dao.FoodDAO;
 import com.dataart.spring.dto.CaloriesDTO;
 import com.dataart.spring.model.Diary;
-import com.dataart.spring.model.Food;
 import com.dataart.spring.model.User;
 import com.dataart.spring.utils.DateUtils;
 
@@ -42,9 +37,6 @@ public class DiaryController {
 
 	@Autowired
 	private DiaryDAO diaryDAO;
-
-	@Autowired
-	private FoodDAO foodDAO;
 
 	@ModelAttribute("diary")
 	public Diary getDiary() {
@@ -71,13 +63,6 @@ public class DiaryController {
 		LOGGER.debug("Get diary for user {} on {}", user.getId(), date);
 		List<Diary> diaries = diaryDAO.selectByUserIdForDate(user.getId(), date);
 		model.addAttribute("diaryList", diaries);
-
-		List<Long> ids = new ArrayList<Long>();
-		for (Diary diary : diaries) {
-			ids.add(diary.getFoodId());
-		}
-		Map<Long, Food> foods = foodDAO.selectByIds(ids);
-		model.addAttribute("foodMap", foods);
 
 		Date prev = DateUtils.getPreviousDay(date);
 		model.addAttribute("prevDate", prev);

@@ -1,24 +1,12 @@
 package com.dataart.spring.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.expression.spel.ast.Projection;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,19 +24,6 @@ public class DiaryDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	private class CaloriesRowMapper implements RowMapper<CaloriesDTO> {
-		public CaloriesRowMapper() {
-		}
-
-		@Override
-		public CaloriesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			CaloriesDTO caloriesDTO = new CaloriesDTO();
-			caloriesDTO.setDate(rs.getDate(1));
-			caloriesDTO.setCalories(rs.getInt(2));
-			return caloriesDTO;
-		}
-	}
 
 	public void insert(Diary diary) {
 		Session session = sessionFactory.getCurrentSession();
@@ -73,7 +48,7 @@ public class DiaryDAO {
 	private List<Diary> selectByUserIdForInterval(long userId, Date from, Date to) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Diary.class)
-				.add(Restrictions.eq("id", userId))
+				.add(Restrictions.eq("userId", userId))
 				.add(Restrictions.between("timestamp", from, to))
 				.list();
 	}
