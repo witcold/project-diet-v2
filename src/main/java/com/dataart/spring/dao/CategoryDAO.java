@@ -1,7 +1,6 @@
 package com.dataart.spring.dao;
 
-import java.util.List;
-
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -26,15 +25,9 @@ public class CategoryDAO {
 		Session session = sessionFactory.getCurrentSession();
 		Category category = (Category) session.createCriteria(Category.class)
 				.add(Restrictions.eq("id", categoryId))
+				.setFetchMode("subcategories", FetchMode.JOIN)
 				.uniqueResult();
 		return category;
-	}
-
-	public List<Category> selectAll() {
-		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Category.class)
-				.add(Restrictions.gt("id", 0L))
-				.list();
 	}
 
 }

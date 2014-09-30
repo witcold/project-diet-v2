@@ -41,8 +41,8 @@ public class FoodController {
 			@RequestParam(value = "category", required = false) Long categoryId,
 			Model model) {
 		LOGGER.debug("Get categories list");
-		List<Category> categories = categoryDAO.selectAll();
-		model.addAttribute("categoryList", categories);
+		Category rootCategory = categoryDAO.selectById(0);
+		model.addAttribute("categoryList", rootCategory.getSubcategories());
 
 		List<Food> foods;
 		if (categoryId == null) {

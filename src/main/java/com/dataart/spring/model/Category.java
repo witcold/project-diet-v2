@@ -1,10 +1,12 @@
 package com.dataart.spring.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +29,9 @@ public class Category implements Serializable {
 
 	@Column(name = "name_ru")
 	private String nameRu;
+
+	@OneToMany(mappedBy = "id")
+	private List<Category> subcategories;
 
 	public Category() {
 	}
@@ -63,6 +68,14 @@ public class Category implements Serializable {
 
 	public void setNameRu(String nameRu) {
 		this.nameRu = nameRu;
+	}
+
+	public List<Category> getSubcategories() {
+		return subcategories;
+	}
+
+	public void setSubcategories(List<Category> subcategories) {
+		this.subcategories = subcategories;
 	}
 
 }
