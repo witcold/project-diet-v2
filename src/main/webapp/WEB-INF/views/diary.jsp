@@ -129,7 +129,7 @@
 							<div class="form-group">
 								<spring:message code="diary.food" var="food"/>
 								<input type="text" id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
-								<form:input type="hidden" path="food.id"/>
+								<form:input id="foodId" type="hidden" path="food.id"/>
 							</div>
 							<div class="form-group input-group">
 								<form:input type="number" min="0.001" step="0.001" max="10" path="weight" class="form-control" required="true"/>

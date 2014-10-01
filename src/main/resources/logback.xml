@@ -33,7 +33,7 @@
 
 	<logger name="com.dataart" level="ALL" />
 
-	<logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 
 	<root>
 		<level value="WARN" />
