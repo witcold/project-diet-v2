@@ -15,6 +15,11 @@ public class CaloriesDTO {
 	public CaloriesDTO() {
 	}
 
+	public CaloriesDTO(Date date, int calories) {
+		this.date = date;
+		this.calories = calories;
+	}
+
 	public Date getDate() {
 		return date;
 	}
