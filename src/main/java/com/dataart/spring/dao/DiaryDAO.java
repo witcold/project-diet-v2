@@ -75,8 +75,8 @@ public class DiaryDAO {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createSQLQuery(sql)
 				.setLong("userId", userId)
-				.setTimestamp("from", from)
-				.setTimestamp("to", to)
+				.setDate("from", from)
+				.setDate("to", to)
 				.list();
 	}
 
