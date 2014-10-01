@@ -204,7 +204,7 @@
 				$.get('diary/aggregated', function(result) {
 					diaryChart.addSeries({
 						name: '<spring:message code="diary.calories.total"/>',
-						data: process(result, 'date', 'calories')
+						data: process(result, 0, 1)
 					});
 				});
 			});
