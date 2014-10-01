@@ -15,9 +15,9 @@ public class CaloriesDTO {
 	public CaloriesDTO() {
 	}
 
-	public CaloriesDTO(Date date, int calories) {
+	public CaloriesDTO(Date date, double calories) {
 		this.date = date;
-		this.calories = calories;
+		this.calories = (int) calories;
 	}
 
 	public Date getDate() {

@@ -66,12 +66,11 @@ public class DiaryDAO {
 	}
 
 	public List<CaloriesDTO> getAggregatedInfo(long userId, Date from, Date to) {
-		//new com.dataart.spring.dto.CaloriesDTO( ... )
-		String hql = "SELECT day(d.timestamp) as date, SUM(d.weight*d.food.calories*10)"
+		String hql = "SELECT new com.dataart.spring.dto.CaloriesDTO(date_trunc('day', d.timestamp) as _date, SUM(d.weight*d.food.calories*10))"
 					+ " FROM Diary as d"
-					+ " WHERE (d.id = :userId) AND (d.timestamp BETWEEN :from AND :to)"
-					+ " GROUP BY date"
-					+ " ORDER BY date ASC";
+					+ " WHERE (d.userId = :userId) AND (d.timestamp BETWEEN :from AND :to)"
+					+ " GROUP BY date_trunc('day', d.timestamp)"
+					+ " ORDER BY _date ASC";
 		Session session = sessionFactory.getCurrentSession();
 		return session.createQuery(hql)
 				.setLong("userId", userId)
