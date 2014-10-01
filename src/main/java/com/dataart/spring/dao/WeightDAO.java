@@ -48,6 +48,7 @@ public class WeightDAO {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Weight.class)
 				.add(Restrictions.eq("userId", userId))
+				.add(Restrictions.between("date", from, to))
 				.addOrder(Order.asc("date"))
 				.list();
 	}

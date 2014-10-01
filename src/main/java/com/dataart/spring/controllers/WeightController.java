@@ -143,7 +143,7 @@ public class WeightController {
 			to = DateUtils.getLastDayOfMonth(from);
 		}
 
-		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(),from, to);
+		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 		List<CaloriesDTO> bmrList = new ArrayList<CaloriesDTO>();
 		if (!list.isEmpty()) {
 			for (Weight weight : list) {
