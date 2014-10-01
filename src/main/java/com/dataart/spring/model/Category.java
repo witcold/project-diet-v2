@@ -30,7 +30,7 @@ public class Category implements Serializable {
 	@Column(name = "name_ru")
 	private String nameRu;
 
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "parentId")
 	private List<Category> subcategories;
 
 	public Category() {

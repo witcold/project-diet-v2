@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,7 +42,7 @@ public class FoodDAO {
 	public List<Food> selectByCategoryId(Long categoryId) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Food.class)
-				.add(Restrictions.eq("id", categoryId))
+				.add(Restrictions.eq("categoryId", categoryId))
 				.list();
 	}
 
@@ -49,8 +50,8 @@ public class FoodDAO {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Food.class)
 				.add(Restrictions.or(
-						Restrictions.ilike("nameEn", '%' + name + '%'),
-						Restrictions.ilike("nameRu", '%' + name + '%')))
+						Restrictions.ilike("nameEn", name, MatchMode.ANYWHERE),
+						Restrictions.ilike("nameRu", name, MatchMode.ANYWHERE)))
 				.list();
 	}
 
