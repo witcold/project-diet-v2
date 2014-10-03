@@ -65,10 +65,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/highcharts-utils.js"></script>
-		<script src="resources/js/underscore.js"></script>
-		<script src="resources/js/backbone.js"></script>
-		<script src="resources/js/backbone-utils.js"></script>
-
 		<script type="text/javascript">
 			$(Highcharts.setOptions(globalOptions));
 
@@ -114,5 +110,8 @@
 				});
 			}
 		</script>
+		<script src="resources/js/underscore.js"></script>
+		<script src="resources/js/backbone.js"></script>
+		<script src="resources/js/backbone-utils.js"></script>
 	</body>
 </html>

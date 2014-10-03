@@ -100,6 +100,8 @@
 		render: function () {
 			var state = this.model.get("state");
 			$(this.el).html(this.templates[state](this.model.toJSON()));
+			plotWeight();
+			plotDiary();
 			return this;
 		}
 	});
