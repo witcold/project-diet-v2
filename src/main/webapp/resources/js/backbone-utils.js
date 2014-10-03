@@ -78,7 +78,7 @@
 
 	var Controller = Backbone.Router.extend({
 		routes: {
-			"*": "dashboard"
+			"": "dashboard"
 		},
 		dashboard: function() {
 			appState.set({
@@ -99,7 +99,7 @@
 		},
 		render: function () {
 			var state = this.model.get("state");
-			this.el.html(this.templates[state](this.model.toJSON()));
+			$(this.el).html(this.templates[state](this.model.toJSON()));
 			return this;
 		}
 	});

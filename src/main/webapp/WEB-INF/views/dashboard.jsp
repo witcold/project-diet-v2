@@ -72,18 +72,12 @@
 		<script type="text/javascript">
 			$(Highcharts.setOptions(globalOptions));
 
-			var weightChart = plotEmptyChart('#weightPlaceholder', {
-				tooltip: {
-					valueSuffix: ' <spring:message code="weight.measure"/>'
-				}
-			});
-			var diaryChart = plotEmptyChart('#diaryPlaceholder', {
-				tooltip: {
-					valueSuffix: ' <spring:message code="calories.measure"/>'
-				}
-			});
-
-			$(function plotWeight() {
+			function plotWeight() {
+				var weightChart = plotEmptyChart('#weightPlaceholder', {
+					tooltip: {
+						valueSuffix: ' <spring:message code="weight.measure"/>'
+					}
+				});
 				$.get('weight/raw', function(result) {
 					weightChart.addSeries({
 						name: '<spring:message code="label.weight"/>',
@@ -97,9 +91,14 @@
 						});
 					});
 				});
-			});
+			}
 
-			$(function plotDiary() {
+			function plotDiary() {
+				var diaryChart = plotEmptyChart('#diaryPlaceholder', {
+					tooltip: {
+						valueSuffix: ' <spring:message code="calories.measure"/>'
+					}
+				});
 				$.get('diary/aggregated', function(result) {
 					diaryChart.addSeries({
 						name: '<spring:message code="diary.calories.total"/>',
@@ -113,7 +112,7 @@
 						});
 					});
 				});
-			});
+			}
 		</script>
 	</body>
 </html>
