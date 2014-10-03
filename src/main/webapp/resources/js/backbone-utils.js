@@ -19,10 +19,18 @@ $(function () {
 		weight : undefined
 	});
 
+	var WeightList = Backbone.Collection.extend({
+		model: WeightModel
+	});
+
 	var GoalModel = Backbone.Model.extend({
 		userId : undefined,
 		date : undefined,
 		weight : undefined
+	});
+
+	var GoalList = Backbone.Collection.extend({
+		model: GoalModel
 	});
 
 	var CategoryModel = Backbone.Model.extend({
@@ -31,6 +39,8 @@ $(function () {
 		name: undefined,
 		subcategories: []
 	});
+
+	var 
 
 	var FoodModel = Backbone.Model.extend({
 		id: undefined,
@@ -42,11 +52,25 @@ $(function () {
 		carbohydrates: undefined
 	});
 
+	var FoodList = Backbone.Collection.extend({
+		model: FoodModel
+	});
+
 	var DiaryModel = Backbone.Model.extend({
 		userId : undefined,
 		food : undefined,
 		timestamp : undefined,
 		weight : undefined
 	});
+
+	var Controller = Backbone.Router.extend({
+		routes: {
+			
+		}
+	});
+
+	var controller = new Controller();
+
+	Backbone.history.start();
 
 });
