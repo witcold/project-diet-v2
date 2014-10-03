@@ -40,7 +40,9 @@ $(function () {
 		subcategories: []
 	});
 
-	var 
+	var CategoryList = Backbone.Collection.extend({
+		model: CategoryModel
+	});
 
 	var FoodModel = Backbone.Model.extend({
 		id: undefined,
@@ -61,6 +63,10 @@ $(function () {
 		food : undefined,
 		timestamp : undefined,
 		weight : undefined
+	});
+
+	var DiaryList = Backbone.Collection.extend({
+		model: DiaryModel
 	});
 
 	var Controller = Backbone.Router.extend({
