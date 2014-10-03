@@ -100,6 +100,10 @@
 		render: function () {
 			var state = this.model.get("state");
 			$(this.el).html(this.templates[state](this.model.toJSON()));
+			$.get('user', function (result) {
+				appState.account = new UserModel(result);
+				$(view.el).html(view.templates[view.model.get("state")](result));
+			});
 			plotWeight();
 			plotDiary();
 			return this;

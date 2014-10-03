@@ -24,7 +24,7 @@
 				<spring:message code="label.dashboard"/>
 			</h1>
 			<h3>
-				Hello, mr. ${account.firstName} ${account.lastName}!
+				Hello, {{ id }}mr. ${account.firstName} ${account.lastName}!
 			</h3>
 			<h4>
 				Your height:
