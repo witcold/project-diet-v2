@@ -1,5 +1,3 @@
-$(function () {
-
 	var UserModel = Backbone.Model.extend({
 		id: undefined,
 		login: undefined,
@@ -69,14 +67,47 @@ $(function () {
 		model: DiaryModel
 	});
 
+	var AppState = Backbone.Model.extend({
+		defaults: {
+			account: UserModel,
+			state: "dashboard"
+		}
+	});
+
+	var appState = new AppState();
+
 	var Controller = Backbone.Router.extend({
 		routes: {
-			
+			"*": "dashboard"
+		},
+		dashboard: function() {
+			appState.set({
+				state: "dashboard"
+			});
 		}
 	});
 
 	var controller = new Controller();
 
-	Backbone.history.start();
+	var View = Backbone.View.extend({
+		el: $(".container"),
+		templates: {
+			"dashboard": _.template($("#template").html())
+		},
+		initialize: function () {
+			this.model.bind("change", this.render, this);
+		},
+		render: function () {
+			var state = this.model.get("state");
+			this.el.html(this.templates[state](this.model.toJSON()));
+			return this;
+		}
+	});
 
-});
+	var view = new View({
+		model: appState
+	});
+
+	appState.trigger("change");
+
+	Backbone.history.start();

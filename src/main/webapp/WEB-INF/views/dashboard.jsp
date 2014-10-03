@@ -16,46 +16,49 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>
-					<spring:message code="label.dashboard"/>
-				</h1>
-				<h3>
-					Hello, mr. ${account.firstName} ${account.lastName}!
-				</h3>
-				<h4>
-					Your height:
-					<small>${account.height} cm</small>
-				</h4>
-				<h4>
-					Your last weight:
-					<small>${lastWeight.weight} kg</small>
-					BMI:
-					<small>
-						<fmt:formatNumber value="${bmi}" maxFractionDigits="2"/>
-					</small>
-				</h4>
-				<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
-				<h4>
-					Your age:
-					<small>${age} year</small>
-				</h4>
-				<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
-				<fmt:formatNumber var="dailyCalories" value="${bmr*account.activityLevel}" maxFractionDigits="0" groupingUsed=""/>
-				<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
-				<h2>
-					Your current goal progress
-					<small>lose 5 kg in 3 month</small>
-				</h2>
-				<div id="weightPlaceholder" class="center-block" style="min-width:900px;height:200px">
-				</div>
-				<h2>
-					Your diary stats
-					<small>2340 / ${dailyCalories} kcal for last 7 days</small>
-				</h2>
-				<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
-				</div>
 			</div>
 		</div>
+
+		<script type="text/template" id="template">
+			<h1>
+				<spring:message code="label.dashboard"/>
+			</h1>
+			<h3>
+				Hello, mr. ${account.firstName} ${account.lastName}!
+			</h3>
+			<h4>
+				Your height:
+				<small>${account.height} cm</small>
+			</h4>
+			<h4>
+				Your last weight:
+				<small>${lastWeight.weight} kg</small>
+				BMI:
+				<small>
+					<fmt:formatNumber value="${bmi}" maxFractionDigits="2"/>
+				</small>
+			</h4>
+			<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
+			<h4>
+				Your age:
+				<small>${age} year</small>
+			</h4>
+			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
+			<fmt:formatNumber var="dailyCalories" value="${bmr*account.activityLevel}" maxFractionDigits="0" groupingUsed=""/>
+			<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
+			<h2>
+				Your current goal progress
+				<small>lose 5 kg in 3 month</small>
+			</h2>
+			<div id="weightPlaceholder" class="center-block" style="min-width:900px;height:200px">
+			</div>
+			<h2>
+				Your diary stats
+				<small>2340 / ${dailyCalories} kcal for last 7 days</small>
+			</h2>
+			<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
+			</div>
+		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
