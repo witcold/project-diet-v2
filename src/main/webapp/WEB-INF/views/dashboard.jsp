@@ -110,8 +110,8 @@
 				});
 			}
 		</script>
-		<script src="resources/js/underscore.js"></script>
-		<script src="resources/js/backbone.js"></script>
+		<script src="resources/js/3rdparty/underscore.js"></script>
+		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone-utils.js"></script>
 	</body>
 </html>

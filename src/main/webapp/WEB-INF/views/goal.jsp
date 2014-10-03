@@ -113,7 +113,7 @@
 		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="resources/js/bootstrap-datetimepicker.js"></script>
+		<script src="resources/js/3rdparty/bootstrap-datetimepicker.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
