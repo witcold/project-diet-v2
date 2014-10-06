@@ -10,7 +10,7 @@
 		<title>
 			<spring:message code="label.dashboard"/>
 		</title>
-		<link rel="stylesheet" href="resources/css/3rdparty/bootstrap.css">
+		<link rel="stylesheet" href="resources/css/bootstrap.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>

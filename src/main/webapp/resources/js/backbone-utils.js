@@ -99,9 +99,9 @@
 			var self = this;
 			$.get('user', function (result) {
 				self.$el.html(self.template(result));
+				plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
+				plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
 			});
-			//plotWeight();
-			//plotDiary();
 			return this;
 		}
 	});
