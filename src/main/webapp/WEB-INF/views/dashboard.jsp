@@ -10,7 +10,7 @@
 		<title>
 			<spring:message code="label.dashboard"/>
 		</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="resources/css/3rdparty/bootstrap.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
@@ -59,55 +59,21 @@
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			var weightPath = '#weightPlaceholder';
+			var weightValueSuffix = ' <spring:message code="weight.measure"/>';
+			var weightChartName = '<spring:message code="label.weight"/>';
+			var goalWeightChartName = '<spring:message code="label.goal"/>';
+
+			var diaryPath = '#diaryPlaceholder';
+			var diaryValueSuffix = ' <spring:message code="calories.measure"/>';
+			var diaryChartName = '<spring:message code="diary.calories.total"/>';
+			var goalDiaryChartName = '<spring:message code="label.goal"/>';
+		</script>
+		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
+		<script src="resources/js/3rdparty/bootstrap.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/highcharts-utils.js"></script>
-		<script type="text/javascript">
-			$(Highcharts.setOptions(globalOptions));
-
-			function plotWeight() {
-				var weightChart = plotEmptyChart('#weightPlaceholder', {
-					tooltip: {
-						valueSuffix: ' <spring:message code="weight.measure"/>'
-					}
-				});
-				$.get('weight/raw', function(result) {
-					weightChart.addSeries({
-						name: '<spring:message code="label.weight"/>',
-						data: process(result, 'date', 'weight')
-					});
-					$.get('goal/raw', function(result) {
-						weightChart.addSeries({
-							name: '<spring:message code="label.goal"/>',
-							dashStyle: 'dot',
-							data: process(result, 'date', 'weight')
-						});
-					});
-				});
-			}
-
-			function plotDiary() {
-				var diaryChart = plotEmptyChart('#diaryPlaceholder', {
-					tooltip: {
-						valueSuffix: ' <spring:message code="calories.measure"/>'
-					}
-				});
-				$.get('diary/aggregated', function(result) {
-					diaryChart.addSeries({
-						name: '<spring:message code="diary.calories.total"/>',
-						data: process(result, 'date', 'calories')
-					});
-					$.get('weight/bmr', function(result) {
-						diaryChart.addSeries({
-							name: '<spring:message code="label.goal"/>',
-							dashStyle: 'dot',
-							data: process(result, 'date', 'calories')
-						});
-					});
-				});
-			}
-		</script>
 		<script src="resources/js/3rdparty/underscore.js"></script>
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone-utils.js"></script>

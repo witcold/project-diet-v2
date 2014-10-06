@@ -62,3 +62,48 @@ function plotEmptyChart(selector, options) {
 	var element = $(selector).highcharts(settings);
 	return element.highcharts();
 }
+
+
+$(Highcharts.setOptions(globalOptions));
+
+function plotWeight(weightPath, weightValueSuffix, weightChartName, goalChartName) {
+	var weightChart = plotEmptyChart(weightPath, {
+		tooltip: {
+			valueSuffix: weightValueSuffix
+		}
+	});
+	$.get('weight/raw', function(result) {
+		weightChart.addSeries({
+			name: weightChartName,
+			data: process(result, 'date', 'weight')
+		});
+		$.get('goal/raw', function(result) {
+			weightChart.addSeries({
+				name: goalChartName,
+				dashStyle: 'dot',
+				data: process(result, 'date', 'weight')
+			});
+		});
+	});
+}
+
+function plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalChartName) {
+	var diaryChart = plotEmptyChart(diaryPath, {
+		tooltip: {
+			valueSuffix: diaryValueSuffix
+		}
+	});
+	$.get('diary/aggregated', function(result) {
+		diaryChart.addSeries({
+			name: diaryChartName,
+			data: process(result, 'date', 'calories')
+		});
+		$.get('weight/bmr', function(result) {
+			diaryChart.addSeries({
+				name: goalDiaryChartName,
+				dashStyle: 'dot',
+				data: process(result, 'date', 'calories')
+			});
+		});
+	});
+}
