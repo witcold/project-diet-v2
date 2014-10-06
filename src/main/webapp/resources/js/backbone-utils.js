@@ -69,8 +69,7 @@
 
 	var AppState = Backbone.Model.extend({
 		defaults: {
-			account: UserModel,
-			state: "dashboard"
+			account: UserModel
 		}
 	});
 
@@ -81,40 +80,25 @@
 			"": "dashboard"
 		},
 		dashboard: function() {
-			appState.set({
-				state: "dashboard"
-			});
 		}
 	});
 
 	var controller = new Controller();
 
-//	_.templateSettings = {
-//		interpolate: /\{\{(.+?)\}\}/g
-//	};
+	_.templateSettings = {
+		interpolate: /\{\{(.+?)\}\}/g
+	};
 
 	var View = Backbone.View.extend({
 		el: $(".container"),
-//		template:  _.template($("#template").html()),
+		template:  _.template($("#template").html()),
 		initialize: function () {
-			//this.model.bind("change", this.render, this);
-			var self = this;
-			$.get('resources/templates/dashboard.htm', function (result) {
-				self.template = _.template(result);
-				self.render();
-			});
-//			this.render();
+			this.render();
 		},
 		render: function () {
 			var self = this;
-			//var state = this.model.get("state");
-			//$(this.el).html(this.templates[state](this.model.toJSON()));
 			$.get('user', function (result) {
 				self.$el.html(self.template(result));
-				//appState.account = new UserModel(result);
-				//self.$el.html(self.model.attributes);
-				//self.$el.html(result);
-				//$(view.el).html(view.templates[view.model.get("state")](result));
 			});
 			//plotWeight();
 			//plotDiary();
@@ -122,11 +106,6 @@
 		}
 	});
 
-//	var view = new View({
-//		model: appState
-//	});
 	var view = new View();
-
-	//appState.trigger("change");
 
 	Backbone.history.start();

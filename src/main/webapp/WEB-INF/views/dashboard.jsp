@@ -24,29 +24,26 @@
 				<spring:message code="label.dashboard"/>
 			</h1>
 			<h3>
-				{{ id }}
-				Hello, mr. ${account.firstName} ${account.lastName}!
+				Hello, mr. {{ firstName }} {{ lastName }}!
 			</h3>
 			<h4>
 				Your height:
-				<small>${account.height} cm</small>
+				<small>{{ height }} cm</small>
 			</h4>
 			<h4>
 				Your last weight:
 				<small>${lastWeight.weight} kg</small>
 				BMI:
 				<small>
-					<fmt:formatNumber value="${bmi}" maxFractionDigits="2"/>
+					${bmi}
 				</small>
 			</h4>
-			<fmt:formatDate pattern="dd/MM/yyyy" value='${CURRDATE}' />
 			<h4>
 				Your age:
 				<small>${age} year</small>
 			</h4>
 			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
-			<fmt:formatNumber var="dailyCalories" value="${bmr*account.activityLevel}" maxFractionDigits="0" groupingUsed=""/>
-			<p>Your physical activity level set to ${account.activityLevel}, so you need ${dailyCalories} kcal to spend every day.</p>
+			<p>Your physical activity level set to {{ activityLevel }}, so you need ${bmr*activityLevel} kcal to spend every day.</p>
 			<h2>
 				Your current goal progress
 				<small>lose 5 kg in 3 month</small>
