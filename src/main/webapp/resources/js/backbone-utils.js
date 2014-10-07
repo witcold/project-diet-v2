@@ -98,6 +98,7 @@
 		render: function () {
 			var self = this;
 			$.get('user', function (result) {
+				result.age = Math.floor((Date.now() - getMillis(result.birthDate)) / (1000 * 60 *60 * 24 * 365.25));
 				self.$el.html(self.template(result));
 				plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
 				plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);

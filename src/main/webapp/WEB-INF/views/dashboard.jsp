@@ -40,7 +40,7 @@
 			</h4>
 			<h4>
 				Your age:
-				<small>${age} year</small>
+				<small>{{ age }} year</small>
 			</h4>
 			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
 			<p>Your physical activity level set to {{ activityLevel }}, so you need ${bmr*activityLevel} kcal to spend every day.</p>
