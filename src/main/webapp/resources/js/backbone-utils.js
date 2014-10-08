@@ -12,14 +12,14 @@
 	});
 
 	var WeightModel = Backbone.Model.extend({
-		userId : undefined,
-		date : undefined,
-		weight : undefined
 	});
 
 	var WeightList = Backbone.Collection.extend({
-		model: WeightModel
+		model: WeightModel,
+		url: 'weight/raw'
 	});
+
+	var weights = new WeightList();
 
 	var GoalModel = Backbone.Model.extend({
 		userId : undefined,
@@ -96,12 +96,13 @@
 			this.render();
 		},
 		render: function () {
+			weights.fetch();
 			var self = this;
 			$.get('user', function (result) {
 				result.age = Math.floor((Date.now() - getMillis(result.birthDate)) / (1000 * 60 *60 * 24 * 365.25));
 				self.$el.html(self.template(result));
-				plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
-				plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
+				//plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
+				//plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
 			});
 			return this;
 		}
