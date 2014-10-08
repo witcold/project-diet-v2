@@ -96,7 +96,15 @@
 			this.render();
 		},
 		render: function () {
-			weights.fetch();
+			weights.fetch({
+				success: function(collection, response, options) {console.log('ok' + response)},
+				error: function() {console.log('error')},
+				}).done(function(data) {
+					console.log(data);
+					weights.each(function (item) { JSON.stringify(item); } );
+					weights.toJSON();
+				});
+
 			var self = this;
 			$.get('user', function (result) {
 				result.age = Math.floor((Date.now() - getMillis(result.birthDate)) / (1000 * 60 *60 * 24 * 365.25));
