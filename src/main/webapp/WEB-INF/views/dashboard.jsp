@@ -16,6 +16,18 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
+				<div class="personal">
+				</div>
+				<h2>
+					Your current goal progress
+				</h2>
+				<div id="weightPlaceholder" class="center-block" style="min-width:900px;height:200px">
+				</div>
+				<h2>
+					Your diary stats
+				</h2>
+				<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
+				</div>
 			</div>
 		</div>
 
@@ -35,7 +47,7 @@
 				<small>${lastWeight.weight} kg</small>
 				BMI:
 				<small>
-					${bmi}
+					{{ height / 200 }}
 				</small>
 			</h4>
 			<h4>
@@ -44,18 +56,7 @@
 			</h4>
 			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
 			<p>Your physical activity level set to {{ activityLevel }}, so you need ${bmr*activityLevel} kcal to spend every day.</p>
-			<h2>
-				Your current goal progress
-				<small>lose 5 kg in 3 month</small>
-			</h2>
-			<div id="weightPlaceholder" class="center-block" style="min-width:900px;height:200px">
-			</div>
-			<h2>
-				Your diary stats
-				<small>2340 / ${dailyCalories} kcal for last 7 days</small>
-			</h2>
-			<div id="diaryPlaceholder" class="center-block" style="min-width:900px;height:200px">
-			</div>
+			
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

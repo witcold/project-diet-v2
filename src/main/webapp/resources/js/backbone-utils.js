@@ -83,11 +83,8 @@
 	};
 
 	var View = Backbone.View.extend({
-		el: $(".container"),
+		el: $(".personal"),
 		template:  _.template($("#template").html()),
-		initialize: function () {
-			this.render();
-		},
 		render: function () {
 			var self = this;
 			weights.fetch({
@@ -111,5 +108,16 @@
 	});
 
 	var view = new View();
+
+	var AppRouter = Backbone.Router.extend({
+		routes: {
+			"": "dashboard"
+		},
+		dashboard: function () {
+			view.render();
+		}
+	});
+
+	var app = new AppRouter();
 
 	Backbone.history.start();
