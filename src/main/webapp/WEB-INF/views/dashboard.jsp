@@ -20,6 +20,8 @@
 				</div>
 				<div class="weight">
 				</div>
+				<div class="calories">
+				</div>
 				<h2>
 					Your current goal progress
 				</h2>
@@ -59,9 +61,9 @@
 				</small>
 			</h4>
 		</script>
-		<script type="text/template" id="diary-template">
-			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
-			<p>Your physical activity level set to {{ activityLevel }}, so you need ${bmr*activityLevel} kcal to spend every day.</p>
+		<script type="text/template" id="calories-template">
+			<p>Assuming this data, your basal methabolic rate is {{ bmr }} kcal.</p>
+			<p>Your physical activity level set to {{ activityLevel }}, so you need {{ bmr * activityLevel }} kcal to spend every day.</p>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

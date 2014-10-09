@@ -121,6 +121,18 @@
 
 	var weightView = new WeightView();
 
+	var CaloriestView = Backbone.View.extend({
+		el: $(".calories"),
+		template:  _.template($("#calories-template").html()),
+		render: function () {
+			var self = this;
+			self.$el.html(self.template(user.get("activityLevel")));
+			return this;
+		}
+	});
+
+	var caloriesView = new CaloriestView();
+
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			"": "dashboard"
@@ -128,6 +140,7 @@
 		dashboard: function () {
 			userView.render();
 			weightView.render();
+			caloriesView.render();
 		}
 	});
 
