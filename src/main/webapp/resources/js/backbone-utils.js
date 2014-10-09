@@ -1,15 +1,8 @@
 	var UserModel = Backbone.Model.extend({
-		id: undefined,
-		login: undefined,
-		password: undefined,
-		firstName: undefined,
-		lastName: undefined,
-		gender: undefined,
-		birthDate: undefined,
-		countryId: undefined,
-		height: undefined,
-		activityLevel: undefined
+		urlRoot: 'users'
 	});
+
+	var user = new UserModel();
 
 	var WeightModel = Backbone.Model.extend({
 	});
@@ -96,22 +89,23 @@
 			this.render();
 		},
 		render: function () {
-			weights.fetch({
-				success: function(collection, response, options) {console.log('ok' + response)},
-				error: function() {console.log('error')},
-				}).done(function(data) {
-					console.log(data);
-					weights.each(function (item) { JSON.stringify(item); } );
-					weights.toJSON();
-				});
-
 			var self = this;
-			$.get('user', function (result) {
-				result.age = Math.floor((Date.now() - getMillis(result.birthDate)) / (1000 * 60 *60 * 24 * 365.25));
-				self.$el.html(self.template(result));
-				//plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
-				//plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
-			});
+			weights.fetch({
+				success: function (collection) {
+					console.log(collection);
+					user.set("id", "user@domain");
+					user.fetch({
+						success: function (model) {
+							console.log(model);
+							model.set("age", Math.floor((Date.now() - getMillis(model.get("birthDate"))) / (1000 * 60 *60 * 24 * 365.25)));
+							self.$el.html(self.template(model.attributes));
+							//plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
+							//plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
+							
+						}
+					});
+				}
+				});
 			return this;
 		}
 	});
