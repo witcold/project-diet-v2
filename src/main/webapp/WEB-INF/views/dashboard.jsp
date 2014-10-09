@@ -18,6 +18,8 @@
 			<div class="container">
 				<div class="personal">
 				</div>
+				<div class="weight">
+				</div>
 				<h2>
 					Your current goal progress
 				</h2>
@@ -31,7 +33,7 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="template">
+		<script type="text/template" id="personal-template">
 			<h1>
 				<spring:message code="label.dashboard"/>
 			</h1>
@@ -43,20 +45,23 @@
 				<small>{{ height }} cm</small>
 			</h4>
 			<h4>
-				Your last weight:
-				<small>${lastWeight.weight} kg</small>
-				BMI:
-				<small>
-					{{ height / 200 }}
-				</small>
-			</h4>
-			<h4>
 				Your age:
 				<small>{{ age }} year</small>
 			</h4>
+		</script>
+		<script type="text/template" id="weight-template">
+			<h4>
+				Your last weight:
+				<small>{{ weight }} kg</small>
+				BMI:
+				<small>
+					{{ bmi }}
+				</small>
+			</h4>
+		</script>
+		<script type="text/template" id="diary-template">
 			<p>Assuming this data, your basal methabolic rate is ${bmr} kcal.</p>
 			<p>Your physical activity level set to {{ activityLevel }}, so you need ${bmr*activityLevel} kcal to spend every day.</p>
-			
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

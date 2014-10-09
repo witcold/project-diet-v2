@@ -82,39 +82,52 @@
 		interpolate: /\{\{(.+?)\}\}/g
 	};
 
-	var View = Backbone.View.extend({
+	var UserView = Backbone.View.extend({
 		el: $(".personal"),
-		template:  _.template($("#template").html()),
+		template:  _.template($("#personal-template").html()),
+		render: function () {
+			var self = this;
+			user.set("id", "user@domain");
+			user.fetch({
+				success: function (model) {
+					console.log(model);
+					model.set("age", Math.floor((Date.now() - getMillis(model.get("birthDate"))) / (1000 * 60 *60 * 24 * 365.25)));
+					self.$el.html(self.template(model.attributes));
+					
+				}
+			});
+			return this;
+		}
+	});
+
+	var userView = new UserView();
+
+	var WeightView = Backbone.View.extend({
+		el: $(".weight"),
+		template:  _.template($("#weight-template").html()),
 		render: function () {
 			var self = this;
 			weights.fetch({
 				success: function (collection) {
 					console.log(collection);
-					user.set("id", "user@domain");
-					user.fetch({
-						success: function (model) {
-							console.log(model);
-							model.set("age", Math.floor((Date.now() - getMillis(model.get("birthDate"))) / (1000 * 60 *60 * 24 * 365.25)));
-							self.$el.html(self.template(model.attributes));
-							//plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
-							//plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
-							
-						}
-					});
+					var lastWeight = collection.at(collection.length - 1);
+					lastWeight.set("bmi", lastWeight.get("weight") / Math.pow(user.get("height")/100, 2) );
+					self.$el.html(self.template(lastWeight.attributes));
 				}
-				});
+			});
 			return this;
 		}
 	});
 
-	var view = new View();
+	var weightView = new WeightView();
 
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			"": "dashboard"
 		},
 		dashboard: function () {
-			view.render();
+			userView.render();
+			weightView.render();
 		}
 	});
 

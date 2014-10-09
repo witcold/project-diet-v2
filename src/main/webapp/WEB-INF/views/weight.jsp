@@ -139,7 +139,7 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/3rdparty/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
-		<script src="resources/js/3rdparty/highcharts-utils.js"></script>
+		<script src="resources/js/highcharts-utils.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({
