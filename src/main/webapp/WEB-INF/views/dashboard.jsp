@@ -57,13 +57,13 @@
 				<small>{{ weight }} kg</small>
 				BMI:
 				<small>
-					{{ bmi }}
+					{{ bmi.toFixed(2) }}
 				</small>
 			</h4>
 		</script>
 		<script type="text/template" id="calories-template">
-			<p>Assuming this data, your basal methabolic rate is {{ bmr }} kcal.</p>
-			<p>Your physical activity level set to {{ activityLevel }}, so you need {{ bmr * activityLevel }} kcal to spend every day.</p>
+			<p>Assuming this data, your basal methabolic rate is {{ Math.round(calories / activityLevel) }} kcal.</p>
+			<p>Your physical activity level set to {{ activityLevel }}, so you need {{ calories }} kcal to spend every day.</p>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

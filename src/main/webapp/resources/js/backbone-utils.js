@@ -15,9 +15,6 @@
 	var weights = new WeightList();
 
 	var GoalModel = Backbone.Model.extend({
-		userId : undefined,
-		date : undefined,
-		weight : undefined
 	});
 
 	var GoalList = Backbone.Collection.extend({
@@ -25,10 +22,6 @@
 	});
 
 	var CategoryModel = Backbone.Model.extend({
-		id: undefined,
-		parentId: undefined,
-		name: undefined,
-		subcategories: []
 	});
 
 	var CategoryList = Backbone.Collection.extend({
@@ -36,13 +29,6 @@
 	});
 
 	var FoodModel = Backbone.Model.extend({
-		id: undefined,
-		categoryId: undefined,
-		name: undefined,
-		calories: undefined,
-		proteins: undefined,
-		fats: undefined,
-		carbohydrates: undefined
 	});
 
 	var FoodList = Backbone.Collection.extend({
@@ -50,15 +36,21 @@
 	});
 
 	var DiaryModel = Backbone.Model.extend({
-		userId : undefined,
-		food : undefined,
-		timestamp : undefined,
-		weight : undefined
 	});
 
 	var DiaryList = Backbone.Collection.extend({
 		model: DiaryModel
 	});
+
+	var BMRModel = Backbone.Model.extend({
+	});
+
+	var BMRList = Backbone.Collection.extend({
+		model: BMRModel,
+		url: 'weight/bmr'
+	});
+
+	var bmrs = new BMRList();
 
 	var AppState = Backbone.Model.extend({
 		defaults: {
@@ -126,7 +118,14 @@
 		template:  _.template($("#calories-template").html()),
 		render: function () {
 			var self = this;
-			self.$el.html(self.template(user.get("activityLevel")));
+			bmrs.fetch({
+				success: function (collection) {
+					console.log(collection);
+					var lastBmr = collection.at(collection.length - 1);
+					lastBmr.set("activityLevel", user.get("activityLevel"));
+					self.$el.html(self.template(lastBmr.attributes));
+				}
+			});
 			return this;
 		}
 	});
@@ -141,6 +140,8 @@
 			userView.render();
 			weightView.render();
 			caloriesView.render();
+			plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
+			plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
 		}
 	});
 
