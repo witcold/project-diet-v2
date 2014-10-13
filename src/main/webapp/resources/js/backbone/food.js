@@ -27,8 +27,7 @@ var CategoriesLisItemtVeiw = Backbone.View.extend({
 	tagName: 'a',
 	className: 'list-group-item',
 	render: function () {
-		this.$el.html(this.model.get("id"));
-		return this;
+		this.$el.html(this.model.get("name"));
 	}
 })
 
