@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 
 import com.dataart.spring.utils.PasswordHashing;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author vmeshcheryakov
@@ -32,6 +33,7 @@ public class User implements Serializable {
 	@Column(name = "login")
 	private String login;
 
+	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 

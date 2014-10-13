@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author vmeshcheryakov
  *
@@ -30,6 +32,7 @@ public class Category implements Serializable {
 	@Column(name = "name_ru")
 	private String nameRu;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "parentId")
 	private List<Category> subcategories;
 

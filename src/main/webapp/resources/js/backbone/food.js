@@ -9,8 +9,10 @@ var CategoriesListVeiw = Backbone.View.extend({
 		this.collection.fetch();
 	},
 	render: function () {
+		var self = this;
 		_.each(this.collection.models, function (category) {
-			this.$el.append(new CategoriesLisItemtVeiw({model: category}).render().el);
+			var view = new CategoriesLisItemtVeiw({model: category});
+			self.$el.append(view.el);
 		})
 	}
 });
@@ -24,6 +26,7 @@ var CategoriesLisItemtVeiw = Backbone.View.extend({
 	className: 'list-group-item',
 	render: function () {
 		this.$el.html(this.model.get("name"));
+		return this;
 	}
 })
 
