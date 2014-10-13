@@ -85,6 +85,6 @@
 		<script src="resources/js/3rdparty/underscore.js"></script>
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
-		<script src="resources/js/backbone-utils.js"></script>
+		<script src="resources/js/backbone/dashboard.js"></script>
 	</body>
 </html>

@@ -28,7 +28,7 @@ var WeightView = Backbone.View.extend({
 	},
 	render: function () {
 		var lastWeight = this.collection.at(this.collection.length - 1);
-		lastWeight.set("bmi", lastWeight.get("weight") / Math.pow(user.get("height")/100, 2) );
+		lastWeight.set("bmi", lastWeight.get("weight") / Math.pow(user.get("height") / 100, 2));
 		this.$el.html(this.template(lastWeight.attributes));
 	}
 });
@@ -54,14 +54,6 @@ var CaloriestView = Backbone.View.extend({
 var caloriesView = new CaloriestView({
 	collection: bmrs
 });
-
-var AppState = Backbone.Model.extend({
-	defaults: {
-		account: UserModel
-	}
-});
-
-var appState = new AppState();
 
 var AppRouter = Backbone.Router.extend({
 	routes: {

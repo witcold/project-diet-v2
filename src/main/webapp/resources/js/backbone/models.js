@@ -29,8 +29,11 @@ var CategoryModel = Backbone.Model.extend({
 });
 
 var CategoryList = Backbone.Collection.extend({
-	model: CategoryModel
+	model: CategoryModel,
+	url: 'categories'
 });
+
+var categories = new CategoryList();
 
 var FoodModel = Backbone.Model.extend({
 });
