@@ -6,8 +6,8 @@ var UserView = Backbone.View.extend({
 	el: $(".personal"),
 	template:  _.template($("#personal-template").html()),
 	initialize: function () {
-		this.listenTo(this.model,'change', this.render);
 		this.model.set("id", "user@domain");
+		this.listenTo(this.model, 'change', this.render);
 		this.model.fetch();
 	},
 	render: function () {
@@ -22,40 +22,38 @@ var userView = new UserView({
 var WeightView = Backbone.View.extend({
 	el: $(".weight"),
 	template:  _.template($("#weight-template").html()),
+	initialize: function () {
+		this.listenTo(this.collection, 'add remove reset', this.render);
+		this.collection.fetch();
+	},
 	render: function () {
-		var self = this;
-		weights.fetch({
-			success: function (collection) {
-				console.log(collection);
-				var lastWeight = collection.at(collection.length - 1);
-				lastWeight.set("bmi", lastWeight.get("weight") / Math.pow(user.get("height")/100, 2) );
-				self.$el.html(self.template(lastWeight.attributes));
-			}
-		});
-		return this;
+		var lastWeight = this.collection.at(this.collection.length - 1);
+		lastWeight.set("bmi", lastWeight.get("weight") / Math.pow(user.get("height")/100, 2) );
+		this.$el.html(this.template(lastWeight.attributes));
 	}
 });
 
-var weightView = new WeightView();
+var weightView = new WeightView({
+	collection: weights
+});
 
 var CaloriestView = Backbone.View.extend({
 	el: $(".calories"),
 	template:  _.template($("#calories-template").html()),
+	initialize: function () {
+		this.listenTo(this.collection, 'add remove reset', this.render);
+		this.collection.fetch();
+	},
 	render: function () {
-		var self = this;
-		bmrs.fetch({
-			success: function (collection) {
-				console.log(collection);
-				var lastBmr = collection.at(collection.length - 1);
-				lastBmr.set("activityLevel", user.get("activityLevel"));
-				self.$el.html(self.template(lastBmr.attributes));
-			}
-		});
-		return this;
+		var lastBmr = this.collection.at(this.collection.length - 1);
+		lastBmr.set("activityLevel", user.get("activityLevel"));
+		this.$el.html(this.template(lastBmr.attributes));
 	}
 });
 
-var caloriesView = new CaloriestView();
+var caloriesView = new CaloriestView({
+	collection: bmrs
+});
 
 var AppState = Backbone.Model.extend({
 	defaults: {
@@ -70,9 +68,6 @@ var AppRouter = Backbone.Router.extend({
 		"": "dashboard"
 	},
 	dashboard: function () {
-		userView.render();
-		weightView.render();
-		caloriesView.render();
 		plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
 		plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
 	}
