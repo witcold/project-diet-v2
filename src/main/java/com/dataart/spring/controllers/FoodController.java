@@ -40,10 +40,6 @@ public class FoodController {
 	public String dashboard(
 			@RequestParam(value = "category", required = false) Long categoryId,
 			Model model) {
-		LOGGER.debug("Get categories list");
-		Category rootCategory = categoryDAO.selectById(0);
-		model.addAttribute("categoryList", rootCategory.getSubcategories());
-
 		List<Food> foods;
 		if (categoryId == null) {
 			LOGGER.debug("Get all foods list");
