@@ -14,6 +14,7 @@ var CategoriesListVeiw = Backbone.View.extend({
 		_.each(this.collection.models, function (category) {
 			var view = new CategoriesLisItemtVeiw({model: category});
 			self.$el.append(view.el);
+			view.render();
 		})
 	}
 });
