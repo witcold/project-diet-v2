@@ -4,7 +4,7 @@ _.templateSettings = {
 
 var UserView = Backbone.View.extend({
 	el: $(".personal"),
-	template:  _.template($("#personal-template").html()),
+	template: _.template($("#personal-template").html()),
 	initialize: function () {
 		this.model.set("id", "user@domain");
 		this.listenTo(this.model, 'change', this.render);
@@ -21,7 +21,7 @@ var userView = new UserView({
 
 var WeightView = Backbone.View.extend({
 	el: $(".weight"),
-	template:  _.template($("#weight-template").html()),
+	template: _.template($("#weight-template").html()),
 	initialize: function () {
 		this.listenTo(this.collection, 'add remove reset', this.render);
 		this.collection.fetch();
@@ -39,7 +39,7 @@ var weightView = new WeightView({
 
 var CaloriestView = Backbone.View.extend({
 	el: $(".calories"),
-	template:  _.template($("#calories-template").html()),
+	template: _.template($("#calories-template").html()),
 	initialize: function () {
 		this.listenTo(this.collection, 'add remove reset', this.render);
 		this.collection.fetch();

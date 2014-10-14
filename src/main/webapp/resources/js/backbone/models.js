@@ -39,7 +39,8 @@ var FoodModel = Backbone.Model.extend({
 });
 
 var FoodList = Backbone.Collection.extend({
-	model: FoodModel
+	model: FoodModel,
+	url: 'food/raw'
 });
 
 var DiaryModel = Backbone.Model.extend({
