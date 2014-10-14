@@ -27,7 +27,7 @@ var CategoriesLisItemtVeiw = Backbone.View.extend({
 	tagName: 'a',
 	className: 'list-group-item',
 	attributes: function () {
-		return { href: 'food?category=' + this.model.get("id") };
+		return { href: 'food#category/' + this.model.get("id") };
 	},
 	render: function () {
 		this.$el.html(this.model.get("name"));
@@ -63,12 +63,16 @@ var FoodsListItemView = Backbone.View.extend({
 
 var AppRouter = Backbone.Router.extend({
 	routes: {
-		"": "food"
+		"": "all",
+		"category/:id": "category"
 	},
-	food: function () {
+	all: function () {
 		var foods = new FoodList();
 		foods.fetch();
 		var foodsListView = new FoodsListView({ collection: foods });
+	},
+	category: function (id) {
+		alert(id);
 	}
 });
 

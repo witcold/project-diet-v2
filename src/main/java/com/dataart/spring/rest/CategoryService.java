@@ -24,7 +24,6 @@ public class CategoryService {
 	private CategoryDAO categoryDAO;
 
 	@RequestMapping(method = RequestMethod.GET)
-	//@CookieValue("lang") String language
 	public List<CategoryDTO> get(Locale locale) {
 		List<Category> categories = categoryDAO.selectById(0).getSubcategories();
 		List<CategoryDTO> result = new ArrayList<CategoryDTO>(categories.size());
@@ -34,4 +33,5 @@ public class CategoryService {
 		}
 		return result;
 	}
+
 }
