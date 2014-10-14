@@ -43,7 +43,7 @@ var FoodsListView = Backbone.View.extend({
 		var self = this;
 		this.$el.empty();
 		_.each(this.collection.models, function (food) {
-			var view = new FoodsListView({model: food});
+			var view = new FoodsListItemView({model: food});
 			self.$el.append(view.el);
 			view.render();
 		});
