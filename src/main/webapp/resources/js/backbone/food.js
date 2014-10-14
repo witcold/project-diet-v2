@@ -26,6 +26,9 @@ var categories = new CategoriesListVeiw({
 var CategoriesLisItemtVeiw = Backbone.View.extend({
 	tagName: 'a',
 	className: 'list-group-item',
+	attributes: function () {
+		return { href: 'food?category=' + this.model.get("id")};
+	},
 	render: function () {
 		this.$el.html(this.model.get("name"));
 	}

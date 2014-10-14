@@ -37,7 +37,7 @@ public class FoodController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String dashboard(
+	public String food(
 			@RequestParam(value = "category", required = false) Long categoryId,
 			Model model) {
 		List<Food> foods;
