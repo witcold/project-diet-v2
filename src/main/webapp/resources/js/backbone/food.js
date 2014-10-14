@@ -72,7 +72,10 @@ var AppRouter = Backbone.Router.extend({
 		var foodsListView = new FoodsListView({ collection: foods });
 	},
 	category: function (id) {
-		alert(id);
+		//TODO fix it
+		var foods = new FoodList({ category: id });
+		foods.fetch();
+		var foodsListView = new FoodsListView({ collection: foods });
 	}
 });
 

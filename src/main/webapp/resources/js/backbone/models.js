@@ -40,7 +40,12 @@ var FoodModel = Backbone.Model.extend({
 
 var FoodList = Backbone.Collection.extend({
 	model: FoodModel,
-	url: 'foods'
+	url: function() {
+		if (this.category) {
+			return 'foods/category' + this.category;
+		}
+		return 'foods';
+	}
 });
 
 var DiaryModel = Backbone.Model.extend({
