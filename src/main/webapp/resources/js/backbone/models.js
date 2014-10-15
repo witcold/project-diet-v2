@@ -42,7 +42,7 @@ var FoodList = Backbone.Collection.extend({
 	model: FoodModel,
 	url: function() {
 		if (this.category) {
-			return 'foods/category' + this.category;
+			return 'foods/category/' + this.category;
 		}
 		return 'foods';
 	}
