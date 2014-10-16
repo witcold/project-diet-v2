@@ -31,19 +31,9 @@
 					<a class="btn btn-link navbar-btn disabled" role="button">
 						<fmt:formatDate value="${currentDate}" pattern="MMMM yyyy"/>
 					</a>
-					<c:choose>
-						<c:when test="${not empty nextDate}">
-							<fmt:formatDate value="${nextDate}" var="nextMonth" pattern="yyyy.MM.dd"/>
-							<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
-								&rarr;
-							</a>
-						</c:when>
-						<c:otherwise>
-							<a href="weight" class="btn btn-default navbar-btn disabled" role="button">
-								&rarr;
-							</a>
-						</c:otherwise>
-					</c:choose>
+					<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
+						&rarr;
+					</a>
 				</div>
 				<table class="table table-hover">
 					<thead>
@@ -60,28 +50,7 @@
 							</th>
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach var="weight" items="${weightList}">
-							<tr>
-								<td>
-									<a style="cursor: pointer;" onclick="editForm('${weight.date}', ${weight.weight})">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</a>
-								</td>
-								<td>
-									<fmt:formatDate value="${weight.date}" pattern="dd MMMM yyyy"/>
-								</td>
-								<td>
-									<c:out value="${weight.weight}"/>
-								</td>
-								<td class="text-right">
-									<fmt:formatDate value="${weight.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
-									<a style="cursor: pointer;" onclick="deleteWeight('${dateToDelete}')" class="text-danger">
-										<span class="glyphicon glyphicon-remove"></span>
-									</a>
-								</td>
-							</tr>
-						</c:forEach>
+					<tbody id="weight-table">
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#weightModal">
@@ -133,13 +102,25 @@
 			</div>
 		</div>
 
+
+		<script type="text/template" id="weight-tr-template">
+			<td><a style="cursor: pointer;" onclick="editForm('{{date}}', {{ weight }})"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>{{ date}}</td>
+			<td>{{ weight }}</td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('{{ date }}')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</script>
+
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="resources/js/3rdparty/bootstrap.js"></script>
 		<script src="resources/js/3rdparty/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/highcharts-utils.js"></script>
+		<script src="resources/js/3rdparty/underscore.js"></script>
+		<script src="resources/js/3rdparty/backbone.js"></script>
+		<script src="resources/js/backbone/models.js"></script>
+		<script src="resources/js/backbone/weight.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({

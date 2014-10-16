@@ -9,8 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.Years;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -39,8 +37,6 @@ import com.dataart.spring.utils.DateUtils;
 @RequestMapping(value = "/weight")
 public class WeightController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WeightController.class);
-
 	@Autowired
 	private WeightDAO weightDAO;
 
@@ -61,14 +57,6 @@ public class WeightController {
 	public String weight(Date from, Date to, Model model, HttpSession session) {
 		from = DateUtils.getFirstDayOfMonth(from);
 		model.addAttribute("currentDate", from);
-
-		if (to == null) {
-			to = DateUtils.getLastDayOfMonth(from);
-		}
-		User user = (User) session.getAttribute("account");
-		LOGGER.debug("Get weight list for user {} ({} - {})", user.getId(), from, to);
-		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
-		model.addAttribute("weightList", list);
 
 		Date prev = DateUtils.getPreviousMonth(from);
 		model.addAttribute("prevDate", prev);

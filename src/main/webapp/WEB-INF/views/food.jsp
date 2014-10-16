@@ -56,7 +56,7 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="food-tr-template">.
+		<script type="text/template" id="food-tr-template">
 			<td>{{ name }}</td>
 			<td>{{ calories }}</td>
 			<td>{{ proteins }}</td>
