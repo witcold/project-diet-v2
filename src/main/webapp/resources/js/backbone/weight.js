@@ -2,6 +2,19 @@ _.templateSettings = {
 	interpolate: /\{\{(.+?)\}\}/g
 };
 
+var DateView = Backbone.View.extend({
+	el: $('#date'),
+	template: _.template($("#date-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template({}));
+	}
+});
+
+var dateView = new DateView();
+
 var WeightListVeiw = Backbone.View.extend({
 	el: $("#weight-table"),
 	initialize: function () {

@@ -23,10 +23,7 @@
 				</h1>
 				<div id="placeholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
-				<div class="btn-group btn-group-justified">
-					<a href="weight/#{{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
-					<a class="btn btn-link navbar-btn disabled" role="button">{{ Date.now() }}</a>
-					<a href="weight/#{{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+				<div id="date" class="btn-group btn-group-justified">
 				</div>
 				<table class="table table-hover">
 					<thead>
@@ -89,6 +86,12 @@
 			</div>
 		</div>
 
+		<!-- TODO  #{} is prohibited -->
+		<script type="text/template" id="date-template">
+			<a href="weight/# {{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">{{ Date.now() }}</a>
+			<a href="weight/# {{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+		</script>
 
 		<script type="text/template" id="weight-tr-template">
 			<td><a style="cursor: pointer;" onclick="editForm('{{date}}', {{ weight }})"><span class="glyphicon glyphicon-pencil"></span></a></td>
