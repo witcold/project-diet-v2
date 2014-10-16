@@ -24,30 +24,17 @@
 				<div id="placeholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
 				<div class="btn-group btn-group-justified">
-					<fmt:formatDate value="${prevDate}" var="prevMonth" pattern="yyyy.MM.dd"/>
-					<a href="weight?from=${prevMonth}" class="btn btn-default navbar-btn" role="button">
-						&larr;
-					</a>
-					<a class="btn btn-link navbar-btn disabled" role="button">
-						<fmt:formatDate value="${currentDate}" pattern="MMMM yyyy"/>
-					</a>
-					<a href="weight?from=${nextMonth}" class="btn btn-default navbar-btn" role="button">
-						&rarr;
-					</a>
+					<a href="weight/#{{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
+					<a class="btn btn-link navbar-btn disabled" role="button">{{ Date.now() }}</a>
+					<a href="weight/#{{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
 				</div>
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
-							<th>
-								<spring:message code="date" />
-							</th>
-							<th>
-								<spring:message code="weight.weight" />
-							</th>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
+							<th class="col-xs-1" style="width: 1px;"></th>
+							<th><spring:message code="date" /></th>
+							<th><spring:message code="weight.weight" /></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 						</tr>
 					</thead>
 					<tbody id="weight-table">

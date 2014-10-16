@@ -55,17 +55,6 @@ public class WeightController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String weight(Date from, Date to, Model model, HttpSession session) {
-		from = DateUtils.getFirstDayOfMonth(from);
-		model.addAttribute("currentDate", from);
-
-		Date prev = DateUtils.getPreviousMonth(from);
-		model.addAttribute("prevDate", prev);
-
-		if(!DateUtils.isCurrentMonth(from)) {
-			Date next = DateUtils.getNextMonth(from);
-			model.addAttribute("nextDate", next);
-		}
-
 		model.addAttribute("weightActive", "active");
 		return "weight";
 	}

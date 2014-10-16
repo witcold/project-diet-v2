@@ -13,7 +13,9 @@ var WeightModel = Backbone.Model.extend({
 
 var WeightList = Backbone.Collection.extend({
 	model: WeightModel,
-	url: 'weight/raw'
+	url: function() {
+		return 'weights/' + this.fromDate + '/' + this.toDate;
+	}
 });
 
 var weights = new WeightList();

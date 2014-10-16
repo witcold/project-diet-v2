@@ -32,16 +32,17 @@ var WeightListItemView = Backbone.View.extend({
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "current",
-		":month": "month"
+		":fromDate/:toDate": "month"
 	},
 	current: function () {
 		var weights = new WeightList();
 		weights.fetch();
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	},
-	month: function (month) {
+	month: function (fromDate, toDate) {
 		var weights = new WeightList();
-		weights.month = month;
+		weights.fromDate = fromDate;
+		weights.toDate = toDate;
 		weights.fetch({ reset: true });
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	}
