@@ -9,11 +9,9 @@ var DateView = Backbone.View.extend({
 		this.render();
 	},
 	render: function () {
-		this.$el.html(this.template({}));
+		this.$el.html(this.template(this.model));
 	}
 });
-
-var dateView = new DateView();
 
 var WeightListVeiw = Backbone.View.extend({
 	el: $("#weight-table"),
@@ -48,11 +46,38 @@ var AppRouter = Backbone.Router.extend({
 		":fromDate/:toDate": "month"
 	},
 	current: function () {
+		var now = new Date();
+		now.setHours(0,0,0,0);
+		now.setDate(1);
+		var prevFrom = new Date(now);
+		prevFrom.setMonth(now.getMonth() - 1);
+		var nextFrom = new Date(now);
+		nextFrom.setMonth(now.getMonth() + 1);
+		var nextTo = new Date(now);
+		nextTo.setMonth(now.getMonth() + 2);
+		var dateView = new DateView({
+			model: {
+				prevFrom: prevFrom,
+				prevTo: now,
+				nextFrom: nextFrom,
+				nextTo: nextTo
+			}
+		});
 		var weights = new WeightList();
+		weights.fromDate = now;
+		weights.toDate = nextFrom;
 		weights.fetch();
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	},
 	month: function (fromDate, toDate) {
+		var dateView = new DateView({
+			model: {
+				prevFrom: null,
+				prevTo: null,
+				nextFrom: null,
+				nextTo: null
+			}
+		});
 		var weights = new WeightList();
 		weights.fromDate = fromDate;
 		weights.toDate = toDate;

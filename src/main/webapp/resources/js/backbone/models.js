@@ -11,10 +11,14 @@ var user = new UserModel();
 var WeightModel = Backbone.Model.extend({
 });
 
+function formatDate(date) {
+	return date.getFullYear() + '-' date.getMonth() + '-' date.getDate();
+}
+
 var WeightList = Backbone.Collection.extend({
 	model: WeightModel,
 	url: function() {
-		return 'weights/' + this.fromDate + '/' + this.toDate;
+		return 'weights/' + formatDate(this.fromDate) + '/' + formatDate(this.toDate);
 	}
 });
 

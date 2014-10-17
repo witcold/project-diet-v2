@@ -86,10 +86,10 @@
 			</div>
 		</div>
 
-		<!-- TODO  #{} is prohibited -->
+		<!-- TODO  # {} is prohibited -->
 		<script type="text/template" id="date-template">
 			<a href="weight/# {{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
-			<a class="btn btn-link navbar-btn disabled" role="button">{{ Date.now() }}</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">{{ Date.now().toString() }}</a>
 			<a href="weight/# {{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
 		</script>
 
