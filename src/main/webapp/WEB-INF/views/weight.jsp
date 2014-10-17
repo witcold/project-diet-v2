@@ -88,9 +88,9 @@
 
 		<!-- TODO  # {} is prohibited -->
 		<script type="text/template" id="date-template">
-			<a href="weight/# {{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
-			<a class="btn btn-link navbar-btn disabled" role="button">{{ new Date() }}</a>
-			<a href="weight/# {{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+			<a href="weight# {{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">{{ now }}</a>
+			<a href="weight# {{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
 		</script>
 
 		<script type="text/template" id="weight-tr-template">
