@@ -24,6 +24,13 @@ var WeightView = Backbone.View.extend({
 	template: _.template($("#weight-template").html()),
 	initialize: function () {
 		this.listenTo(this.collection, 'add remove reset', this.render);
+		var now = new Date();
+		now.setHours(0,0,0,0);
+		now.setDate(1);
+		var nextFrom = new Date(now);
+		nextFrom.setMonth(now.getMonth() + 1);
+		this.collection.fromDate = now;
+		this.collection.toDate = nextFrom;
 		this.collection.fetch();
 	},
 	render: function () {
