@@ -59,4 +59,35 @@ public class Weight implements Serializable {
 		return "Weight [userId=" + userId + ", date=" + date + ", weight=" + weight + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + (int) (userId ^ (userId >>> 32));
+		result = prime * result + Float.floatToIntBits(weight);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Weight other = (Weight) obj;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (userId != other.userId)
+			return false;
+		if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight))
+			return false;
+		return true;
+	}
+
 }
