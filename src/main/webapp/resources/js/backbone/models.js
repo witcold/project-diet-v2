@@ -30,7 +30,8 @@ var GoalModel = Backbone.Model.extend({
 });
 
 var GoalList = Backbone.Collection.extend({
-	model: GoalModel
+	model: GoalModel,
+	url: 'goal/raw'
 });
 
 var CategoryModel = Backbone.Model.extend({

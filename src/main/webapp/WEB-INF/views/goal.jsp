@@ -24,40 +24,13 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
-							<th>
-								<spring:message code="date" />
-							</th>
-							<th>
-								<spring:message code="goal.weight" />
-							</th>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
+							<th class="col-xs-1" style="width: 1px;"></th>
+							<th><spring:message code="date"/></th>
+							<th><spring:message code="goal.weight"/></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach var="goal" items="${goalList}">
-							<tr>
-								<td>
-									<a style="cursor: pointer;" onclick="editForm('${goal.date}', ${goal.weight})">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</a>
-								</td>
-								<td>
-									<fmt:formatDate value="${goal.date}" pattern="dd MMMM yyyy"/>
-								</td>
-								<td>
-									<c:out value="${goal.weight}"/>
-								</td>
-								<td class="text-right">
-									<fmt:formatDate value="${goal.date}" var="dateToDelete" pattern="yyyy.MM.dd"/>
-									<a style="cursor: pointer;" onclick="deleteGoal('${dateToDelete}')" class="text-danger">
-										<span class="glyphicon glyphicon-remove"></span>
-									</a>
-								</td>
-							</tr>
-						</c:forEach>
+					<tbody id="goal-table">
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#goalModal">
@@ -109,11 +82,22 @@
 			</div>
 		</div>
 
+		<script type="text/template" id="goal-tr-template">
+			<td><a style="cursor: pointer;" onclick="editForm('(@= formatDate(new Date(date)) @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= new Date(date).toLocaleDateString() @)</td>
+			<td>(@= weight @)</td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= date @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</script>
+
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="resources/js/3rdparty/bootstrap-datetimepicker.js"></script>
+		<script src="resources/js/3rdparty/underscore.js"></script>
+		<script src="resources/js/3rdparty/backbone.js"></script>
+		<script src="resources/js/backbone/models.js"></script>
+		<script src="resources/js/backbone/goal.js"></script>
 
 		<script type="text/javascript">
 			$('#datetimepicker').datetimepicker({

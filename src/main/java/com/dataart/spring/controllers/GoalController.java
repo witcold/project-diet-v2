@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -32,8 +30,6 @@ import com.dataart.spring.model.User;
 @RequestMapping(value = "/goal")
 public class GoalController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(GoalController.class);
-
 	@Autowired
 	private GoalDAO goalDAO;
 
@@ -51,12 +47,7 @@ public class GoalController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String goal(Model model, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		LOGGER.debug("Get goal list for user {}", user.getId());
-		List<Goal> list = goalDAO.selectAllByUserId(user.getId());
-		model.addAttribute("goalList", list);
-
+	public String goal(Model model) {
 		model.addAttribute("goalActive", "active");
 		return "goal";
 	}
