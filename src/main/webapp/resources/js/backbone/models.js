@@ -60,7 +60,10 @@ var DiaryModel = Backbone.Model.extend({
 });
 
 var DiaryList = Backbone.Collection.extend({
-	model: DiaryModel
+	model: DiaryModel,
+	url: function() {
+		return 'diaries/' + formatDate(this.date);
+	}
 });
 
 var BMRModel = Backbone.Model.extend({
