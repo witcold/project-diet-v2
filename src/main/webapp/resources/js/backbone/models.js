@@ -12,7 +12,9 @@ var WeightModel = Backbone.Model.extend({
 });
 
 function formatDate(date) {
-	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+	if (date instanceof Date) {
+		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+	}
 }
 
 var WeightList = Backbone.Collection.extend({

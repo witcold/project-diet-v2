@@ -88,8 +88,8 @@
 		<%@ include file="templates/weight-month-pager.html" %>
 
 		<script type="text/template" id="weight-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@= date @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
-			<td>(@= date @)</td>
+			<td><a style="cursor: pointer;" onclick="editForm('(@= formatDate(new Date(date)) @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= new Date(date).toLocaleDateString() @)</td>
 			<td>(@= weight @)</td>
 			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= date @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
