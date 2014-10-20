@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dataart.spring.dao.WeightDAO;
 import com.dataart.spring.model.User;
 import com.dataart.spring.model.Weight;
-import com.dataart.spring.utils.DateUtils;
 
 /**
  * @author vmeshcheryakov
@@ -42,9 +41,7 @@ public class WeightRestController {
 			@PathVariable("todate") Date to,
 			HttpSession session) {
 		User user = (User) session.getAttribute("account");
-		return weightDAO.selectByUserIdWithRange(user.getId(),
-				DateUtils.getFirstDayOfMonth(from),
-				DateUtils.getLastDayOfMonth(to));
+		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 	}
 
 }

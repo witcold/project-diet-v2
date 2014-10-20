@@ -92,8 +92,8 @@ var AppRouter = Backbone.Router.extend({
 			}
 		});
 		var weights = new WeightList();
-		weights.fromDate = fromDate;
-		weights.toDate = toDate;
+		weights.fromDate = new Date(Date.parse(fromDate));
+		weights.toDate = new Date(Date.parse(toDate)-1);
 		weights.fetch({ reset: true });
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	}
