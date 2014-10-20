@@ -1,10 +1,12 @@
 _.templateSettings = {
-	interpolate: /\{\{(.+?)\}\}/g
+	evaluate: /\(@([\s\S]+?)@\)/g,
+	interpolate: /\(@=(.+?)@\)/g,
+	escape: /\(@-([\s\S]+?)@\)/g
 };
 
 var DateView = Backbone.View.extend({
 	el: $('#date'),
-	template: _.template($("#date-template").html()),
+	template: _.template($("#weight-month-pager-template").html()),
 	initialize: function () {
 		this.render();
 	},

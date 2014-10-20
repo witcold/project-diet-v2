@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
@@ -86,18 +85,13 @@
 			</div>
 		</div>
 
-		<!-- TODO  # {} is prohibited -->
-		<script type="text/template" id="date-template">
-			<a href="weight# {{ prevFrom }}/{{ prevTo }}" class="btn btn-default navbar-btn" role="button">&larr;</a>
-			<a class="btn btn-link navbar-btn disabled" role="button">{{ now }}</a>
-			<a href="weight# {{ nextFrom }}/{{ nextTo }}" class="btn btn-default navbar-btn" role="button">&rarr;</a>
-		</script>
+		<%@ include file="templates/weight-month-pager.html" %>
 
 		<script type="text/template" id="weight-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('{{date}}', {{ weight }})"><span class="glyphicon glyphicon-pencil"></span></a></td>
-			<td>{{ date}}</td>
-			<td>{{ weight }}</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('{{ date }}')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td><a style="cursor: pointer;" onclick="editForm('(@= date @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= date @)</td>
+			<td>(@= weight @)</td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= date @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
