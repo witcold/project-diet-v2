@@ -24,77 +24,20 @@
 				</h1>
 				<div id="placeholder" class="center-block" style="min-width:900px;height:200px">
 				</div>
-				<div class="btn-group btn-group-justified">
-					<fmt:formatDate value="${prevDate}" var="prevDay" pattern="yyyy.MM.dd"/>
-					<a href="diary?date=${prevDay}" class="btn btn-default navbar-btn" role="button">
-						&larr;
-					</a>
-					<a class="btn btn-link navbar-btn disabled" role="button">
-						<fmt:formatDate value="${currentDate}" pattern="dd MMMM yyyy"/>
-					</a>
-					<c:choose>
-						<c:when test="${not empty nextDate}">
-							<fmt:formatDate value="${nextDate}" var="nextDay" pattern="yyyy.MM.dd"/>
-							<a href="diary?date=${nextDay}" class="btn btn-default navbar-btn" role="button">
-								&rarr;
-							</a>
-						</c:when>
-						<c:otherwise>
-							<a href="diary" class="btn btn-default navbar-btn disabled" role="button">
-								&rarr;
-							</a>
-						</c:otherwise>
-					</c:choose>
+				<div id="date" class="btn-group btn-group-justified">
 				</div>
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
-							<th class="col-xs-2">
-								<spring:message code="diary.timestamp"/>
-							</th>
-							<th>
-								<spring:message code="diary.food"/>
-							</th>
-							<th class="col-xs-2">
-								<spring:message code="diary.weight"/>
-							</th>
-							<th class="col-xs-3">
-								<spring:message code="diary.calories"/>
-							</th>
-							<th class="col-xs-1" style="width: 1px;">
-							</th>
+							<th class="col-xs-1" style="width: 1px;"></th>
+							<th class="col-xs-2"><spring:message code="diary.timestamp"/></th>
+							<th><spring:message code="diary.food"/></th>
+							<th class="col-xs-2"><spring:message code="diary.weight"/></th>
+							<th class="col-xs-3"><spring:message code="diary.calories"/></th>
+							<th class="col-xs-1" style="width: 1px;"></th>
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach var="diary" items="${diaryList}">
-							<tr>
-								<td>
-									<a style="cursor: pointer;" onclick="editForm('${diary.timestamp}', ${diary.food.id}, '${diary.food.getName(lang)}', ${diary.weight})">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</a>
-								</td>
-								<td>
-									<fmt:formatDate value="${diary.timestamp}" pattern="dd.MM.yyyy HH:mm"/>
-								</td>
-								<td>
-									<c:out value="${diary.food.getName(lang)}"/>
-								</td>
-								<td>
-									<c:out value="${diary.weight}"/>
-								</td>
-								<td>
-									<fmt:formatNumber value="${diary.food.calories*diary.weight*10}" maxFractionDigits="0"/>
-								</td>
-								<td class="text-right">
-									<fmt:formatDate value="${diary.timestamp}" var="dateToDelete" pattern="yyyy.MM.dd HH:mm"/>
-									<a style="cursor: pointer;" onclick="deleteDiary(${diary.food.id}, '${dateToDelete}')" class="text-danger">
-										<span class="glyphicon glyphicon-remove"></span>
-									</a>
-								</td>
-							</tr>
-						</c:forEach>
+					<tbody id="diary-table">
 					</tbody>
 				</table>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diaryModal">
@@ -151,6 +94,17 @@
 			</div>
 		</div>
 
+		<%@ include file="templates/diary-day-pager.html" %>
+
+		<script type="text/template" id="diary-tr-template">
+			<td><a style="cursor: pointer;" onclick="editForm('(@ formatDate(new Date(timestamp)) @)', (@= food.id @), '(@= food.name @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= new Date(timestamp).toLocaleDateString() @)</td>
+			<td>(@= food.name @)</td>
+			<td>(@= weight @)</td>
+			<td>(@= Math.round(food.calories*weight*10) @)</td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteDiary((@= food.id @), '(@= timestamp @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</script>
+
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
@@ -159,6 +113,10 @@
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/3rdparty/typeahead.bundle.js"></script>
 		<script src="resources/js/highcharts-utils.js"></script>
+		<script src="resources/js/3rdparty/underscore.js"></script>
+		<script src="resources/js/3rdparty/backbone.js"></script>
+		<script src="resources/js/backbone/models.js"></script>
+		<script src="resources/js/backbone/diary.js"></script>
 
 		<script type="text/javascript">
 			var engine = new Bloodhound({
