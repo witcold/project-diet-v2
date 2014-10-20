@@ -26,7 +26,7 @@ import com.dataart.spring.utils.DateUtils;
  */
 @RestController
 @RequestMapping("/weights")
-public class WeightService {
+public class WeightRestController {
 
 	@Autowired
 	private WeightDAO weightDAO;

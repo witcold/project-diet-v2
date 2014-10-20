@@ -20,7 +20,7 @@ import com.dataart.spring.model.Food;
  */
 @RestController
 @RequestMapping("/foods")
-public class FoodService {
+public class FoodRestController {
 
 	@Autowired
 	private FoodDAO foodDAO;

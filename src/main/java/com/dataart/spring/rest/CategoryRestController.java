@@ -18,7 +18,7 @@ import com.dataart.spring.model.Category;
  */
 @RestController
 @RequestMapping("/categories")
-public class CategoryService {
+public class CategoryRestController {
 
 	@Autowired
 	private CategoryDAO categoryDAO;

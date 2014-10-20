@@ -15,7 +15,7 @@ import com.dataart.spring.model.User;
  */
 @RestController
 @RequestMapping("/users")
-public class UserService {
+public class UserRestController {
 
 	@Autowired
 	private UserDAO userDAO;
