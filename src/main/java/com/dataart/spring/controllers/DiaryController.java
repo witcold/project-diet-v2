@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -33,8 +31,6 @@ import com.dataart.spring.utils.DateUtils;
 @RequestMapping(value = "/diary")
 public class DiaryController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DiaryController.class);
-
 	@Autowired
 	private DiaryDAO diaryDAO;
 
@@ -53,25 +49,7 @@ public class DiaryController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String diary(Date date, Model model, HttpSession session) {
-		if (date == null) {
-			date = new Date();
-		}
-		model.addAttribute("currentDate", date);
-
-		User user = (User) session.getAttribute("account");
-		LOGGER.debug("Get diary for user {} on {}", user.getId(), date);
-		List<Diary> diaries = diaryDAO.selectByUserIdForDate(user.getId(), date);
-		model.addAttribute("diaryList", diaries);
-
-		Date prev = DateUtils.getPreviousDay(date);
-		model.addAttribute("prevDate", prev);
-
-		if (!DateUtils.isCurrentDay(date)) {
-			Date next = DateUtils.getNextDay(date);
-			model.addAttribute("nextDate", next);
-		}
-
+	public String diary(Model model) {
 		model.addAttribute("diaryActive", "active");
 		return "diary";
 	}

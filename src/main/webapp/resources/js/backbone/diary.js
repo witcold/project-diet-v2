@@ -81,7 +81,7 @@ var AppRouter = Backbone.Router.extend({
 			}
 		});
 		var diaries = new DiaryList();
-		weights.date = now;
+		diaries.date = now;
 		diaries.fetch({ reset: true });
 		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
 	}
