@@ -74,7 +74,7 @@ var DiaryModel = Backbone.Model.extend({
 var DiaryList = Backbone.Collection.extend({
 	model: DiaryModel,
 	url: function() {
-		return 'diaries/' + formatDate(this.date);
+		return 'diaries/' + this.date.toLocaleFormat("%Y-%m-%d");
 	}
 });
 

@@ -83,10 +83,10 @@
 		</div>
 
 		<script type="text/template" id="goal-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@= formatDate(new Date(date)) @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
-			<td>(@= new Date(date).toLocaleDateString() @)</td>
+			<td><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
 			<td>(@= weight @)</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= date @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

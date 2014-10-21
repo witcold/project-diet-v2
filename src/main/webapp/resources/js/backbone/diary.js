@@ -57,8 +57,8 @@ var AppRouter = Backbone.Router.extend({
 		var dateView = new DateView({
 			model: {
 				now: now,
-				prev: formatDate(prev),
-				next: formatDate(next),
+				prev: prev.toLocaleFormat("%Y-%m-%d"),
+				next: next.toLocaleFormat("%Y-%m-%d"),
 			}
 		});
 		var diaries = new DiaryList();
@@ -76,8 +76,8 @@ var AppRouter = Backbone.Router.extend({
 		var dateView = new DateView({
 			model: {
 				now: now,
-				prev: formatDate(prev),
-				next: formatDate(next),
+				prev: prev.toLocaleFormat("%Y-%m-%d"),
+				next: next.toLocaleFormat("%Y-%m-%d"),
 			}
 		});
 		var diaries = new DiaryList();
