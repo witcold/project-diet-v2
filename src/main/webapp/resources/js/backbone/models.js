@@ -1,3 +1,20 @@
+if(!Date.prototype.toLocaleFormat){
+	Date.prototype.toLocaleFormat = function(format) {
+		var f = {
+			Y: this.getFullYear(),
+			y: this.getFullYear() - (this.getFullYear() >= 2000? 2000 : 1900),
+			m: this.getMonth() + 1,
+			d: this.getDate(),
+			H: this.getHours(),
+			M: this.getMinutes(),
+			S: this.getSeconds()
+		}, k;
+		for(k in f)
+			format = format.replace('%' + k, f[k] < 10 ? "0" + f[k] : f[k]);
+		return format;
+	}
+};
+
 var UserModel = Backbone.Model.extend({
 	urlRoot: 'users',
 	parse: function (response, options) {
@@ -11,16 +28,10 @@ var user = new UserModel();
 var WeightModel = Backbone.Model.extend({
 });
 
-function formatDate(date) {
-	if (date instanceof Date) {
-		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-	}
-}
-
 var WeightList = Backbone.Collection.extend({
 	model: WeightModel,
 	url: function() {
-		return 'weights/' + formatDate(this.fromDate) + '/' + formatDate(this.toDate);
+		return 'weights/' + fromDate.toLocaleFormat("%Y-%m-%d") + '/' + toDate.toLocaleFormat("%Y-%m-%d");
 	}
 });
 

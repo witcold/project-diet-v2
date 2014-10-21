@@ -73,9 +73,9 @@ var AppRouter = Backbone.Router.extend({
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	},
 	month: function (fromDate, toDate) {
-		var now = new Date(Date.parse(fromDate));
-		now.setHours(0,0,0,0);
-		now.setDate(1);
+		fromDate = new Date(Date.parse(fromDate));
+		toDate = new Date(Date.parse(toDate));
+		var now = fromDate;
 		var prevFrom = new Date(now);
 		prevFrom.setMonth(now.getMonth() - 1);
 		var nextFrom = new Date(now);
@@ -85,15 +85,15 @@ var AppRouter = Backbone.Router.extend({
 		var dateView = new DateView({
 			model: {
 				now: now,
-				prevFrom: formatDate(prevFrom),
-				prevTo: formatDate(now),
-				nextFrom: formatDate(nextFrom),
-				nextTo: formatDate(nextTo)
+				prevFrom: prevFrom.toLocaleFormat("%Y-%m-%d"),
+				prevTo: now.toLocaleFormat("%Y-%m-%d"),
+				nextFrom: nextFrom.toLocaleFormat("%Y-%m-%d"),
+				nextTo: nextTo.toLocaleFormat("%Y-%m-%d")
 			}
 		});
 		var weights = new WeightList();
-		weights.fromDate = new Date(Date.parse(fromDate));
-		weights.toDate = new Date(Date.parse(toDate)-1);
+		weights.fromDate = fromDate;
+		weights.toDate = toDate;
 		weights.fetch({ reset: true });
 		var weightsListView = new WeightListVeiw({ collection: weights });
 	}
