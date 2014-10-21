@@ -4,7 +4,7 @@ _.templateSettings = {
 	escape: /\(@-([\s\S]+?)@\)/g
 };
 
-var DateView = Backbone.View.extend({
+var DatePagerView = Backbone.View.extend({
 	el: $('#date'),
 	template: _.template($("#weight-month-pager-template").html()),
 	initialize: function () {
@@ -45,60 +45,90 @@ var WeightListItemView = Backbone.View.extend({
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "current",
-		":fromDate/:toDate": "month"
+		":month": "month"
 	},
-	current: function () {
-		var now = new Date();
-		now.setHours(0,0,0,0);
-		now.setDate(1);
-		var prevFrom = new Date(now);
-		prevFrom.setMonth(now.getMonth() - 1);
-		var nextFrom = new Date(now);
-		nextFrom.setMonth(now.getMonth() + 1);
-		var nextTo = new Date(now);
-		nextTo.setMonth(now.getMonth() + 2);
-		var dateView = new DateView({
+	render: function (date) {
+		var now = new Date(date);
+		var toDate = new Date(now);
+		toDate.setMonth(toDate.getMonth() + 1);
+		toDate.setDate(0);
+		var prev = new Date(date);
+		prev.setMonth(prev.getMonth() - 1);
+		var next = new Date(date);
+		next.setMonth(next.getMonth() + 1);
+		var datePagerView = new DatePagerView({
 			model: {
 				now: now,
-				prevFrom: prevFrom.toLocaleFormat("%Y-%m-%d"),
-				prevTo: now.toLocaleFormat("%Y-%m-%d"),
-				nextFrom: nextFrom.toLocaleFormat("%Y-%m-%d"),
-				nextTo: nextTo.toLocaleFormat("%Y-%m-%d")
+				prev: prev.toLocaleFormat("%Y-%m"),
+				next: next.toLocaleFormat("%Y-%m"),
 			}
 		});
 		var weights = new WeightList();
 		weights.fromDate = now;
-		weights.toDate = nextFrom;
-		weights.fetch();
-		var weightsListView = new WeightListVeiw({ collection: weights });
-	},
-	month: function (fromDate, toDate) {
-		fromDate = new Date(Date.parse(fromDate));
-		toDate = new Date(Date.parse(toDate));
-		var now = fromDate;
-		var prevFrom = new Date(now);
-		prevFrom.setMonth(now.getMonth() - 1);
-		var nextFrom = new Date(now);
-		nextFrom.setMonth(now.getMonth() + 1);
-		var nextTo = new Date(now);
-		nextTo.setMonth(now.getMonth() + 2);
-		var dateView = new DateView({
-			model: {
-				now: now,
-				prevFrom: prevFrom.toLocaleFormat("%Y-%m-%d"),
-				prevTo: now.toLocaleFormat("%Y-%m-%d"),
-				nextFrom: nextFrom.toLocaleFormat("%Y-%m-%d"),
-				nextTo: nextTo.toLocaleFormat("%Y-%m-%d")
-			}
-		});
-		var weights = new WeightList();
-		weights.fromDate = fromDate;
 		weights.toDate = toDate;
 		weights.fetch({ reset: true });
 		var weightsListView = new WeightListVeiw({ collection: weights });
+	},
+	current: function () {
+		this.render(new Date().toLocaleFormat("%Y-%m"));
+	},
+	month: function (month) {
+		this.render(month);
 	}
 });
 
 var app = new AppRouter();
 
 Backbone.history.start();
+
+$('#datetimepicker').datetimepicker({
+	format: 'YYYY.MM.DD',
+	pickTime: false,
+	useStrict: true
+});
+
+var datetimepicker = $('#datetimepicker').data("DateTimePicker");
+var weightform = $('#weightForm');
+
+$(function plot() {
+	var weightChart = plotEmptyChart('#placeholder', {
+		tooltip: {
+			valueSuffix: ' <spring:message code="weight.measure"/>'
+		}
+	});
+	$.get('weight/raw', function(result) {
+		weightChart.addSeries({
+			name: '<spring:message code="label.weight"/>',
+			data: process(result, 'date', 'weight')
+		});
+	});
+});
+
+function deleteWeight(date) {
+	if (confirm('<spring:message code="form.confirm"/>'))
+		$.post('weight/delete', {'date': date}, function(result) {
+			location.reload();
+		});
+};
+
+function editForm(date, weight) {
+	datetimepicker.setDate(new Date(date));
+	weightform.find('#datetimepicker .input-group-addon').hide();
+	weightform.find('.date').removeClass('input-group');
+	$('#weight').val(weight);
+	$('#weightModal').modal('show');
+};
+
+$('#weightModal').on('hidden.bs.modal', function (e) {
+	weightform.trigger('reset');
+	weightform.find('.date').addClass('input-group');
+	weightform.find('.input-group-addon').show();
+});
+
+function validateDate(event) {
+	var date = weightform.find('#datetimepicker input').val();
+	if (!date) {
+		datetimepicker.show(event);
+		return false;
+	}
+}

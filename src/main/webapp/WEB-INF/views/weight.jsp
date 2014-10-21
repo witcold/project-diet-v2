@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -46,49 +45,38 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span>
-							<span class="sr-only">Close</span>
-						</button>
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title">
 							<spring:message code="weight.add"/>
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="weightForm" action="weight/add" accept-charset="UTF-8" method="post" modelAttribute="weight" onSubmit="return validateDate(event)">
+						<form id="weightForm" action="" onSubmit="return validateDate(event)">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input path="date" readonly="true" placeholder="${date}" class="form-control"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
+									<input name="date" placeholder="${date}" class="form-control" readonly>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
 							</div>
 							<div class="form-group input-group">
-								<form:input path="weight" type="number" min="1" step="0.001" max="999" class="form-control" required="true"/>
-								<span class="input-group-addon">
-									<spring:message code="weight.measure"/>
-								</span>
+								<input name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+								<span class="input-group-addon"><spring:message code="weight.measure"/></span>
 							</div>
-						</form:form>
+						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<spring:message code="form.close"/>
-						</button>
-						<button type="submit" class="btn btn-primary" form="weightForm">
-							<spring:message code="form.save"/>
-						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
+						<button type="submit" class="btn btn-primary" form="weightForm"><spring:message code="form.save"/></button>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<script type="text/template" id="weight-month-pager-template">
-			<a href="weight#(@= prevFrom @)/(@= prevTo @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
-			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleString().slice(3,10) @)</a>
-			<a href="weight#(@= nextFrom @)/(@= nextTo @)" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+			<a href="weight#(@= prev @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleFormat("%m.%Y") @)</a>
+			<a href="weight#(@= next @)" class="btn btn-default navbar-btn" role="button">&rarr;</a>
 		</script>
 
 		<script type="text/template" id="weight-tr-template">
@@ -109,61 +97,5 @@
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
 		<script src="resources/js/backbone/weight.js"></script>
-
-		<script type="text/javascript">
-			$('#datetimepicker').datetimepicker({
-				format: 'YYYY.MM.DD',
-				pickTime: false,
-				useStrict: true
-			});
-
-			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
-			var weightform = $('#weightForm');
-
-			$(function plot() {
-				var weightChart = plotEmptyChart('#placeholder', {
-					tooltip: {
-						valueSuffix: ' <spring:message code="weight.measure"/>'
-					}
-				});
-				$.get('weight/raw', function(result) {
-					weightChart.addSeries({
-						name: '<spring:message code="label.weight"/>',
-						data: process(result, 'date', 'weight')
-					});
-				});
-			});
-
-			function deleteWeight(date) {
-				if (confirm('<spring:message code="form.confirm"/>'))
-					$.post('weight/delete', {'date': date}, function(result) {
-						location.reload();
-					});
-			};
-
-			function editForm(date, weight) {
-				weightform.attr('action', 'weight/update');
-				datetimepicker.setDate(new Date(date));
-				weightform.find('#datetimepicker .input-group-addon').hide();
-				weightform.find('.date').removeClass('input-group');
-				$('#weight').val(weight);
-				$('#weightModal').modal('show');
-			};
-
-			$('#weightModal').on('hidden.bs.modal', function (e) {
-				weightform.trigger('reset');
-				weightform.attr('action', 'weight/add');
-				weightform.find('.date').addClass('input-group');
-				weightform.find('.input-group-addon').show();
-			});
-
-			function validateDate(event) {
-				var date = weightform.find('#datetimepicker input').val();
-				if (!date) {
-					datetimepicker.show(event);
-					return false;
-				}
-			}
-		</script>
 	</body>
 </html>
