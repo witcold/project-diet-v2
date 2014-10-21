@@ -10,7 +10,7 @@ if(!Date.prototype.toLocaleFormat){
 			S: this.getSeconds()
 		}, k;
 		for(k in f)
-			format = format.replace('%' + k, f[k] < 10 ? "0" + f[k] : f[k]);
+			format = format.replace('%' + k, f[k] < 10 ? '0' + f[k] : f[k]);
 		return format;
 	}
 };
@@ -31,7 +31,7 @@ var WeightModel = Backbone.Model.extend({
 var WeightList = Backbone.Collection.extend({
 	model: WeightModel,
 	url: function() {
-		return 'weights/' + fromDate.toLocaleFormat("%Y-%m-%d") + '/' + toDate.toLocaleFormat("%Y-%m-%d");
+		return 'weights/' + this.fromDate.toLocaleFormat('%Y-%m-%d') + '/' + this.toDate.toLocaleFormat('%Y-%m-%d');
 	}
 });
 

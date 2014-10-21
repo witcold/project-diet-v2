@@ -60,10 +60,10 @@ var AppRouter = Backbone.Router.extend({
 		var dateView = new DateView({
 			model: {
 				now: now,
-				prevFrom: formatDate(prevFrom),
-				prevTo: formatDate(now),
-				nextFrom: formatDate(nextFrom),
-				nextTo: formatDate(nextTo)
+				prevFrom: prevFrom.toLocaleFormat("%Y-%m-%d"),
+				prevTo: now.toLocaleFormat("%Y-%m-%d"),
+				nextFrom: nextFrom.toLocaleFormat("%Y-%m-%d"),
+				nextTo: nextTo.toLocaleFormat("%Y-%m-%d")
 			}
 		});
 		var weights = new WeightList();
