@@ -101,12 +101,12 @@
 		</script>
 
 		<script type="text/template" id="diary-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@ new Date(timestamp).toLocaleFormat("%Y-%m-%d") @)', (@= food.id @), '(@= food.name @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td><a style="cursor: pointer;" onclick="editForm('(@ new Date(timestamp).toLocaleFormat("%Y-%m-%d %H:%M") @)', (@= food.id @), '(@= food.name @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
 			<td>(@= new Date(timestamp).toLocaleFormat("%d.%m.%Y %H:%M") @)</td>
 			<td>(@= food.name @)</td>
 			<td>(@= weight @)</td>
 			<td>(@= Math.round(food.calories*weight*10) @)</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteDiary((@= food.id @), '(@= new Date(timestamp).toLocaleFormat("%Y.%m.%d") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td class="text-right"><a style="cursor: pointer;" onclick="deleteDiary((@= food.id @), '(@= new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
