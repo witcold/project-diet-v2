@@ -85,7 +85,11 @@
 			</div>
 		</div>
 
-		<%@ include file="templates/weight-month-pager.html" %>
+		<script type="text/template" id="weight-month-pager-template">
+			<a href="weight#(@= prevFrom @)/(@= prevTo @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleString().slice(3,10) @)</a>
+			<a href="weight#(@= nextFrom @)/(@= nextTo @)" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+		</script>
 
 		<script type="text/template" id="weight-tr-template">
 			<td><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>

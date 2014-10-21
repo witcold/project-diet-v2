@@ -94,7 +94,11 @@
 			</div>
 		</div>
 
-		<%@ include file="templates/diary-day-pager.html" %>
+		<script type="text/template" id="diary-day-pager-template">
+			<a href="diary#(@= prev @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
+			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleString().slice(0,10) @)</a>
+			<a href="diary#(@= next @)" class="btn btn-default navbar-btn" role="button">&rarr;</a>
+		</script>
 
 		<script type="text/template" id="diary-tr-template">
 			<td><a style="cursor: pointer;" onclick="editForm('(@ new Date(timestamp).toLocaleFormat("%Y-%m-%d") @)', (@= food.id @), '(@= food.name @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
