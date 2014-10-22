@@ -80,10 +80,10 @@
 		</script>
 
 		<script type="text/template" id="weight-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td id="edit"><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
 			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
 			<td>(@= weight @)</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= new Date(date).toLocaleFormat("%Y.%m.%d") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
@@ -97,5 +97,31 @@
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
 		<script src="resources/js/backbone/weight.js"></script>
+		<script type="text/javascript">
+			function deleteWeight(date) {
+				if (confirm('<spring:message code="form.confirm"/>'))
+					$.post('weight/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
+			};
+
+			$('#datetimepicker').datetimepicker({
+				format: 'YYYY.MM.DD',
+				pickTime: false,
+				useStrict: true
+			});
+
+			$(function plot() {
+				var weightChart = plotEmptyChart('#placeholder', {
+					tooltip: {
+						valueSuffix: ' <spring:message code="weight.measure"/>'
+					}
+				});
+				$.get('weight/raw', function(result) {
+					weightChart.addSeries({
+						name: '<spring:message code="label.weight"/>',
+						data: process(result, 'date', 'weight')
+					});
+				});
+			});
+		</script>
 	</body>
 </html>

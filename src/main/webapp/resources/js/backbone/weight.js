@@ -39,6 +39,11 @@ var WeightListItemView = Backbone.View.extend({
 	},
 	render: function () {
 		this.$el.html(this.template(this.model.attributes));
+		var self = this;
+		this.$el.find('#delete').on('click', function () {
+			deleteWeight(self.model.get('date'));
+			weights.remove(self.model);
+		});
 	}
 });
 
@@ -82,35 +87,8 @@ var app = new AppRouter();
 
 Backbone.history.start();
 
-$('#datetimepicker').datetimepicker({
-	format: 'YYYY.MM.DD',
-	pickTime: false,
-	useStrict: true
-});
-
 var datetimepicker = $('#datetimepicker').data("DateTimePicker");
 var weightform = $('#weightForm');
-
-$(function plot() {
-	var weightChart = plotEmptyChart('#placeholder', {
-		tooltip: {
-			valueSuffix: ' <spring:message code="weight.measure"/>'
-		}
-	});
-	$.get('weight/raw', function(result) {
-		weightChart.addSeries({
-			name: '<spring:message code="label.weight"/>',
-			data: process(result, 'date', 'weight')
-		});
-	});
-});
-
-function deleteWeight(date) {
-	if (confirm('<spring:message code="form.confirm"/>'))
-		$.post('weight/delete', {'date': date}, function(result) {
-			location.reload();
-		});
-};
 
 function editForm(date, weight) {
 	datetimepicker.setDate(new Date(date));
@@ -120,7 +98,7 @@ function editForm(date, weight) {
 	$('#weightModal').modal('show');
 };
 
-$('#weightModal').on('hidden.bs.modal', function (e) {
+$('#weightModal').on('hidden.bs.modal', function () {
 	weightform.trigger('reset');
 	weightform.find('.date').addClass('input-group');
 	weightform.find('.input-group-addon').show();
