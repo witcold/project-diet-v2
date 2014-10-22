@@ -43,50 +43,39 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span>
-							<span class="sr-only">Close</span>
-						</button>
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title">
 							<spring:message code="goal.add"/>
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="goalForm" action="goal/add" accept-charset="UTF-8" method="post" modelAttribute="goal" onSubmit="return validateDate(event)">
+						<form id="goalForm" action="" onSubmit="sendForm(event)">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<form:input readonly="true" path="date" placeholder="${date}" class="form-control"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
+									<input id="date" name="date" placeholder="${date}" class="form-control" readonly>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
 							</div>
 							<div class="form-group input-group">
-								<form:input type="number" min="1" step="0.001" max="999" path="weight" class="form-control" required="true"/>
-								<span class="input-group-addon">
-									<spring:message code="weight.measure"/>
-								</span>
+								<input id="weight" name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+								<span class="input-group-addon"><spring:message code="weight.measure"/></span>
 							</div>
-						</form:form>
+						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<spring:message code="form.close"/>
-						</button>
-						<button type="submit" class="btn btn-primary" form="goalForm">
-							<spring:message code="form.save"/>
-						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
+						<button type="submit" class="btn btn-primary" form="goalForm"><spring:message code="form.save"/></button>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<script type="text/template" id="goal-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td id="edit"><a style="cursor: pointer;"><span class="glyphicon glyphicon-pencil"></span></a></td>
 			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
 			<td>(@= weight @)</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteWeight('(@= new Date(date).toLocaleFormat("%Y.%m.%d") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
@@ -100,50 +89,10 @@
 		<script src="resources/js/backbone/goal.js"></script>
 
 		<script type="text/javascript">
-			$('#datetimepicker').datetimepicker({
-				format: 'YYYY.MM.DD',
-				pickTime: false,
-				useStrict: true
-			});
-
-			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
-			var goalform = $('#goalForm');
-
 			function deleteGoal(date) {
 				if (confirm('<spring:message code="form.confirm"/>'))
-					$.ajax({
-						url: 'goal/delete',
-						data: {'date': date},
-						type: 'POST',
-						success: function(result) {
-							location.reload();
-						}
-					});
+					$.post('goal/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
 			};
-
-			function editForm(date, weight) {
-				goalform.attr('action', 'goal/update');
-				datetimepicker.setDate(new Date(date));
-				goalform.find('#datetimepicker .input-group-addon').hide();
-				goalform.find('.date').removeClass('input-group');
-				$('#weight').val(weight);
-				$('#goalModal').modal('show');
-			};
-
-			$('#goalModal').on('hidden.bs.modal', function (e) {
-				goalform.trigger('reset');
-				goalform.attr('action', 'goal/add');
-				goalform.find('.date').addClass('input-group');
-				goalform.find('.input-group-addon').show();
-			});
-
-			function validateDate(event) {
-				var date = goalform.find('#datetimepicker input').val();
-				if (!date) {
-					datetimepicker.show(event);
-					return false;
-				}
-			}
 		</script>
 	</body>
 </html>

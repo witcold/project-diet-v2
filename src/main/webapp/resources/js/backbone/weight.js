@@ -131,8 +131,7 @@ function sendForm (event) {
 
 	var posting = $.post('weight/add', weight);
 
-	posting.done(function (data) {
-		var content = $(data).find('#content');
+	posting.done(function () {
 		weights.add(weight);
 	});
 	$('#weightModal').modal('hide');
