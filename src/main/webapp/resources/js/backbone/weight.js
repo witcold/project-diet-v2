@@ -40,6 +40,9 @@ var WeightListItemView = Backbone.View.extend({
 	render: function () {
 		this.$el.html(this.template(this.model.attributes));
 		var self = this;
+		this.$el.find('#edit').on('click', function () {
+			editForm(self.model.get('date'), self.model.get('weight'));
+		});
 		this.$el.find('#delete').on('click', function () {
 			deleteWeight(self.model.get('date'));
 			weights.remove(self.model);
@@ -87,6 +90,11 @@ var app = new AppRouter();
 
 Backbone.history.start();
 
+$('#datetimepicker').datetimepicker({
+	format: 'YYYY.MM.DD',
+	pickTime: false,
+	useStrict: true
+});
 var datetimepicker = $('#datetimepicker').data("DateTimePicker");
 var weightform = $('#weightForm');
 

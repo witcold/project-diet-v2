@@ -80,7 +80,7 @@
 		</script>
 
 		<script type="text/template" id="weight-tr-template">
-			<td id="edit"><a style="cursor: pointer;" onclick="editForm('(@= new Date(date).toLocaleFormat("%Y-%m-%d") @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td id="edit"><a style="cursor: pointer;"><span class="glyphicon glyphicon-pencil"></span></a></td>
 			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
 			<td>(@= weight @)</td>
 			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -102,12 +102,6 @@
 				if (confirm('<spring:message code="form.confirm"/>'))
 					$.post('weight/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
 			};
-
-			$('#datetimepicker').datetimepicker({
-				format: 'YYYY.MM.DD',
-				pickTime: false,
-				useStrict: true
-			});
 
 			$(function plot() {
 				var weightChart = plotEmptyChart('#placeholder', {
