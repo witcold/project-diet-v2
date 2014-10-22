@@ -55,12 +55,12 @@
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
-									<input name="date" placeholder="${date}" class="form-control" readonly>
+									<input id="date" name="date" placeholder="${date}" class="form-control" readonly>
 									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
 							</div>
 							<div class="form-group input-group">
-								<input name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+								<input id="weight" name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
 								<span class="input-group-addon"><spring:message code="weight.measure"/></span>
 							</div>
 						</form>
