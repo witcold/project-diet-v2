@@ -132,10 +132,11 @@ function validateDate(event) {
 }
 
 function sendForm (event) {
-	if (!validateDate(event)) {
-		return false;
-	}
 	event.preventDefault();
+	if (!validateDate(event)) {
+		datetimepicker.show(event);
+		return;
+	}
 
 	var weight = {
 		date: weightform.find("input[name='date']").val(),
