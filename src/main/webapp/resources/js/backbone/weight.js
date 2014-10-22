@@ -132,8 +132,9 @@ function validateDate(event) {
 }
 
 function sendForm (event) {
-	if (!validateDate(event))
+	if (!validateDate(event)) {
 		return false;
+	}
 	event.preventDefault();
 
 	var weight = {
@@ -147,5 +148,5 @@ function sendForm (event) {
 		var content = $(data).find('#content');
 		weights.add(weight);
 	});
-	return true;
+	$('#weightModal').modal('hide');
 }
