@@ -42,6 +42,8 @@ var WeightListItemView = Backbone.View.extend({
 	}
 });
 
+var weights = new WeightList();
+
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "current",
@@ -63,7 +65,6 @@ var AppRouter = Backbone.Router.extend({
 				next: next.toLocaleFormat("%Y-%m"),
 			}
 		});
-		var weights = new WeightList();
 		weights.fromDate = now;
 		weights.toDate = toDate;
 		weights.fetch({ reset: true });
@@ -127,8 +128,24 @@ $('#weightModal').on('hidden.bs.modal', function (e) {
 
 function validateDate(event) {
 	var date = weightform.find('#datetimepicker input').val();
-	if (!date) {
-		datetimepicker.show(event);
+	return !!date;
+}
+
+function sendForm (event) {
+	if (!validateDate(event))
 		return false;
-	}
+	event.preventDefault();
+
+	var weight = {
+		date: weightform.find("input[name='date']").val(),
+		weight: weightform.find("input[name='weight']").val()
+	};
+
+	var posting = $.post('weight/add', weight);
+
+	posting.done(function (data) {
+		var content = $(data).find('#content');
+		weights.add(weight);
+	});
+	return true;
 }

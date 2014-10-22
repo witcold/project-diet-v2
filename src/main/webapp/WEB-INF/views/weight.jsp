@@ -51,7 +51,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form id="weightForm" action="" onSubmit="return validateDate(event)">
+						<form id="weightForm" action="" onSubmit="return sendForm(event)">
 							<div class="form-group">
 								<spring:message code="date" var="date"/>
 								<div class='input-group date' id='datetimepicker'>
