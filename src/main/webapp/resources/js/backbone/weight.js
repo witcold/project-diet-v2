@@ -86,17 +86,15 @@ var AppRouter = Backbone.Router.extend({
 	}
 });
 
-var app = new AppRouter();
-
-Backbone.history.start();
-
-$('#datetimepicker').datetimepicker({
+var datetimepicker = $('#datetimepicker').datetimepicker({
 	format: 'YYYY.MM.DD',
 	pickTime: false,
 	useStrict: true
-});
-var datetimepicker = $('#datetimepicker').data("DateTimePicker");
+}).data("DateTimePicker");
 var weightform = $('#weightForm');
+
+var app = new AppRouter();
+Backbone.history.start();
 
 function editForm(date, weight) {
 	datetimepicker.setDate(new Date(date));
@@ -112,14 +110,14 @@ $('#weightModal').on('hidden.bs.modal', function () {
 	weightform.find('.input-group-addon').show();
 });
 
-function validateDate(event) {
+function validateDate() {
 	var date = weightform.find('#datetimepicker input').val();
 	return !!date;
 }
 
 function sendForm (event) {
 	event.preventDefault();
-	if (!validateDate(event)) {
+	if (!validateDate()) {
 		datetimepicker.show(event);
 		return;
 	}

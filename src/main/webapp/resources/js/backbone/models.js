@@ -1,5 +1,5 @@
-if(!Date.prototype.toLocaleFormat){
-	Date.prototype.toLocaleFormat = function(format) {
+if (!Date.prototype.toLocaleFormat) {
+	Date.prototype.toLocaleFormat = function (format) {
 		var f = {
 			Y: this.getFullYear(),
 			y: this.getFullYear() - (this.getFullYear() >= 2000? 2000 : 1900),

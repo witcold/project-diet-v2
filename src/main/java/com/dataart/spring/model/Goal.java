@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author vmeshcheryakov
  *
@@ -22,6 +24,7 @@ public class Goal implements Serializable {
 
 	@Column(name = "date")
 	@Id
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+4")
 	private Date date;
 
 	@Column(name = "weight")

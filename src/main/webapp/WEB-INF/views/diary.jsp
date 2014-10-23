@@ -59,36 +59,28 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						<form:form id="diaryForm" action="diary/add" accept-charset="UTF-8" method="post" modelAttribute="diary" onSubmit="return validateForm()">
+						<form id="diaryForm" action="" onSubmit="sendForm(event)">
 							<div class="form-group">
 								<spring:message code="diary.timestamp" var="timestamp"/>
 								<div class="input-group date" id="datetimepicker">
-									<form:input readonly="true" path="timestamp" placeholder="${timestamp}" class="form-control"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
+									<input id="timestamp" name="timestamp" placeholder="${timestamp}" class="form-control" readonly>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
 							</div>
 							<div class="form-group">
 								<spring:message code="diary.food" var="food"/>
-								<input type="text" id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
-								<form:input id="foodId" type="hidden" path="food.id"/>
+								<input id="foodTypeahead" placeholder="${food}" autocomplete="off" class="form-control typeahead" required>
+								<input id="foodId" name="food.id" type="hidden">
 							</div>
 							<div class="form-group input-group">
-								<form:input type="number" min="0.001" step="0.001" max="10" path="weight" class="form-control" required="true"/>
-								<span class="input-group-addon">
-									<spring:message code="weight.measure"/>
-								</span>
+								<input id="weight" name="weight" type="number" min="0.001" step="0.001" max="10" class="form-control" required>
+								<span class="input-group-addon"><spring:message code="weight.measure"/></span>
 							</div>
-						</form:form>
+						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							<spring:message code="form.close"/>
-						</button>
-						<button type="submit" class="btn btn-primary" form="diaryForm">
-							<spring:message code="form.save"/>
-						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.close"/></button>
+						<button type="submit" class="btn btn-primary" form="diaryForm"><spring:message code="form.save"/></button>
 					</div>
 				</div>
 			</div>
@@ -101,18 +93,18 @@
 		</script>
 
 		<script type="text/template" id="diary-tr-template">
-			<td><a style="cursor: pointer;" onclick="editForm('(@ new Date(timestamp).toLocaleFormat("%Y-%m-%d %H:%M") @)', (@= food.id @), '(@= food.name @)', (@= weight @))"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td id="edit"><a style="cursor: pointer;"><span class="glyphicon glyphicon-pencil"></span></a></td>
 			<td>(@= new Date(timestamp).toLocaleFormat("%d.%m.%Y %H:%M") @)</td>
 			<td>(@= food.name @)</td>
 			<td>(@= weight @)</td>
 			<td>(@= Math.round(food.calories*weight*10) @)</td>
-			<td class="text-right"><a style="cursor: pointer;" onclick="deleteDiary((@= food.id @), '(@= new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M") @)')" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="resources/js/3rdparty/bootstrap.js"></script>
 		<script src="resources/js/3rdparty/bootstrap-datetimepicker.js"></script>
 		<script src="//code.highcharts.com/highcharts.js"></script>
 		<script src="resources/js/3rdparty/typeahead.bundle.js"></script>
@@ -133,29 +125,25 @@
 				queryTokenizer: Bloodhound.tokenizers.whitespace
 			});
 			engine.initialize();
-			String.prototype.capitalize = function() {
-				return this.charAt(0).toUpperCase() + this.slice(1);
-			}
+
+
+			if (!String.prototype.capitalize) {
+				String.prototype.capitalize = function () {
+					return this.charAt(0).toUpperCase() + this.slice(1);
+				}
+			};
+
 			$('.typeahead').typeahead(null, {
 				displayKey: 'name' + '${lang}'.capitalize(),
 				source: engine.ttAdapter()
-			});
-			$('.typeahead').on('typeahead:selected typeahead:autocompleted', function(e, datum) {
+			}).on('typeahead:selected typeahead:autocompleted', function(e, datum) {
 				$('#foodId').val(datum.id);
 			});
 
-			$('#datetimepicker').datetimepicker({
-				format: 'YYYY.MM.DD HH:mm',
-				pickDate: false,
-				useStrict: true
-			});
-
-			var datetimepicker = $('#datetimepicker').data("DateTimePicker");
-			var diaryform = $('#diaryForm');
-
-			$(function() {
-				datetimepicker.setDate(new Date('<fmt:formatDate value="${currentDate}" pattern="yyyy.MM.dd"/>'));
-			});
+			function deleteDiary(foodId, timestamp) {
+				if (confirm('<spring:message code="form.confirm" />'))
+					$.post('diary/delete', {'foodId': foodId, 'timestamp': new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M")});
+			};
 
 			$(function plot() {
 				var diaryChart = plotEmptyChart('#placeholder', {
@@ -170,39 +158,6 @@
 					});
 				});
 			});
-
-			function deleteDiary(foodId, timestamp) {
-				if (confirm('<spring:message code="form.confirm" />'))
-					$.post('diary/delete', {'foodId': foodId, 'timestamp': timestamp}, function(result) {
-						location.reload();
-					});
-			};
-
-			function editForm(date, foodId, foodName, weight) {
-				diaryform.attr('action', 'diary/update');
-				datetimepicker.setDate(new Date(date));
-				diaryform.find('#datetimepicker .input-group-addon').hide();
-				diaryform.find('.date').removeClass('input-group');
-				diaryform.find('#foodTypeahead').val(foodName);
-				diaryform.find('#foodId').val(foodId);
-				diaryform.find('#weight').val(weight);
-				$('#diaryModal').modal('show');
-			};
-
-			$('#diaryModal').on('hidden.bs.modal', function (e) {
-				diaryform.trigger('reset');
-				diaryform.attr('action', 'diary/add');
-				diaryform.find('.date').addClass('input-group');
-				diaryform.find('.input-group-addon').show();
-			});
-
-			function validateForm(event) {
-				var food = diaryform.find('#foodId').val();
-				if (!parseInt(food)) {
-					diaryform.find('#foodTypeahead').focus();
-					return false;
-				}
-			}
 		</script>
 	</body>
 </html>

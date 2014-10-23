@@ -39,8 +39,19 @@ var DiaryListItemView = Backbone.View.extend({
 	},
 	render: function () {
 		this.$el.html(this.template(this.model.attributes));
+		var self = this;
+		this.$el.find('#edit').on('click', function () {
+			editForm(self.model.get('timestamp'), self.model.get('foodId'), self.model.get('foodName'), self.model.get('weight'));
+		});
+		this.$el.find('#delete').on('click', function () {
+			deleteDiary(self.model.get('foodId'), self.model.get('timestamp'));
+			diaries.remove(self.model);
+		});
 	}
 });
+
+
+var diaries = new DiaryList();
 
 var AppRouter = Backbone.Router.extend({
 	routes: {
@@ -49,6 +60,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	current: function () {
 		var now = new Date();
+		datetimepicker.setDate(now);
 		now.setHours(0,0,0,0);
 		var prev = new Date(now);
 		prev.setDate(now.getDate() - 1);
@@ -61,13 +73,13 @@ var AppRouter = Backbone.Router.extend({
 				next: next.toLocaleFormat("%Y-%m-%d"),
 			}
 		});
-		var diaries = new DiaryList();
 		diaries.date = now;
 		diaries.fetch();
 		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
 	},
 	date: function (date) {
 		var now = new Date(Date.parse(date));
+		datetimepicker.setDate(now);
 		now.setHours(0,0,0,0);
 		var prev = new Date(now);
 		prev.setDate(now.getDate() - 1);
@@ -80,13 +92,70 @@ var AppRouter = Backbone.Router.extend({
 				next: next.toLocaleFormat("%Y-%m-%d"),
 			}
 		});
-		var diaries = new DiaryList();
 		diaries.date = now;
 		diaries.fetch({ reset: true });
 		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
 	}
 });
 
-var app = new AppRouter();
+var datetimepicker = $('#datetimepicker').datetimepicker({
+	format: 'YYYY.MM.DD HH:mm',
+	pickDate: false,
+	useStrict: true
+}).data("DateTimePicker");
+var diaryform = $('#diaryForm');
 
+var app = new AppRouter();
 Backbone.history.start();
+
+function editForm(timestamp, foodId, foodName, weight) {
+	datetimepicker.setDate(new Date(timestamp));
+	diaryform.find('#datetimepicker .input-group-addon').hide();
+	diaryform.find('.date').removeClass('input-group');
+	diaryform.find('#foodTypeahead').val(foodName);
+	diaryform.find('#foodId').val(foodId);
+	diaryform.find('#weight').val(weight);
+	$('#diaryModal').modal('show');
+};
+
+$('#diaryModal').on('hidden.bs.modal', function (e) {
+	diaryform.trigger('reset');
+	diaryform.find('.date').addClass('input-group');
+	diaryform.find('.input-group-addon').show();
+});
+
+function validateDate() {
+	var date = diaryform.find('#datetimepicker input').val();
+	return !!date;
+}
+
+function validateForm() {
+	var food = diaryform.find('#foodId').val();
+	return !!parseInt(food);
+}
+
+function sendForm (event) {
+	event.preventDefault();
+	if (!validateDate()) {
+		datetimepicker.show(event);
+		return;
+	}
+	if (!validateForm()) {
+		diaryform.find('#foodTypeahead').focus();
+		return;
+	}
+
+	var diary = {
+		timestamp: diaryform.find("input[name='timestamp']").val(),
+		food: {},
+		weight: diaryform.find("input[name='weight']").val()
+	};
+	diary.food.id = diaryform.find("input[name='food.id']").val();
+
+	var posting = $.post('diary/add', diary);
+
+	posting.done(function () {
+		diaries.add(diary);
+	});
+	$('#diaryModal').modal('hide');
+}
