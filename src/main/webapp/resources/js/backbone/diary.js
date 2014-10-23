@@ -25,6 +25,20 @@ var DiaryListVeiw = Backbone.View.extend({
 	}
 });
 
+var TotalCaloriesView = Backbone.View.extend({
+	el: $('blockquote.lead'),
+	template: _.template($("#diary-total-calories-template").html()),
+	initialize: function () {
+		this.listenTo(this.collection, 'add remove reset', this.render);
+	},
+	render: function () {
+		var sum = this.collection.reduce(function (memo, model) {
+			return memo + model.get('food').calories*model.get('weight')*10;
+		}, 0);
+		this.$el.html(this.template({total: sum}));
+	}
+});
+
 var DiaryListItemView = Backbone.View.extend({
 	tagName: 'tr',
 	template: _.template($("#diary-tr-template").html()),
@@ -53,43 +67,32 @@ var AppRouter = Backbone.Router.extend({
 		"": "current",
 		":date": "date"
 	},
-	current: function () {
-		var now = new Date();
-		datetimepicker.setDate(now);
-		now.setHours(0,0,0,0);
-		var prev = new Date(now);
-		prev.setDate(now.getDate() - 1);
-		var next = new Date(now);
-		next.setDate(now.getDate() + 1);
+	render: function (date) {
+		datetimepicker.setDate(date);
+		var prev = new Date(date);
+		prev.setDate(date.getDate() - 1);
+		var next = new Date(date);
+		next.setDate(date.getDate() + 1);
 		var dateView = new DateView({
 			model: {
-				now: now,
+				now: date,
 				prev: prev.toLocaleFormat("%Y-%m-%d"),
 				next: next.toLocaleFormat("%Y-%m-%d"),
 			}
 		});
-		diaries.date = now;
+		diaries.date = date;
 		diaries.fetch();
 		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
+		var total = new TotalCaloriesView({ collection: diaries });
+	},
+	current: function () {
+		var now = new Date();
+		now.setHours(0,0,0,0);
+		this.render(now);
 	},
 	date: function (date) {
 		var now = new Date(Date.parse(date));
-		datetimepicker.setDate(now);
-		now.setHours(0,0,0,0);
-		var prev = new Date(now);
-		prev.setDate(now.getDate() - 1);
-		var next = new Date(now);
-		next.setDate(now.getDate() + 1);
-		var dateView = new DateView({
-			model: {
-				now: now,
-				prev: prev.toLocaleFormat("%Y-%m-%d"),
-				next: next.toLocaleFormat("%Y-%m-%d"),
-			}
-		});
-		diaries.date = now;
-		diaries.fetch({ reset: true });
-		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
+		this.render(now);
 	}
 });
 

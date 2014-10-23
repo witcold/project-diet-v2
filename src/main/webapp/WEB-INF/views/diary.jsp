@@ -40,9 +40,9 @@
 					<tbody id="diary-table">
 					</tbody>
 				</table>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diaryModal">
-					<spring:message code="diary.add"/>
-				</button>
+				<script type="text/template" id="diary-total-calories-template"> <spring:message code="diary.calories.total"/>: (@= total @) <spring:message code="calories.measure"/></script>
+				<blockquote class="lead"></blockquote>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diaryModal"><spring:message code="diary.add"/></button>
 			</div>
 		</div>
 
