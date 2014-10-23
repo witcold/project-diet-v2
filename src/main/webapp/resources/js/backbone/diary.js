@@ -147,12 +147,16 @@ function sendForm (event) {
 
 	var diary = {
 		timestamp: diaryform.find("input[name='timestamp']").val(),
-		food: {},
 		weight: diaryform.find("input[name='weight']").val()
 	};
-	diary.food.id = diaryform.find("input[name='food.id']").val();
+	diary['food.id'] = diaryform.find("input[name='food.id']").val();
 
 	var posting = $.post('diary/add', diary);
+
+	diary.food = {
+		name: diaryform.find("#foodTypeahead").val(),
+		calories: lastDatum.calories
+	};
 
 	posting.done(function () {
 		diaries.add(diary);

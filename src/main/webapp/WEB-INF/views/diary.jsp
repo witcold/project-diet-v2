@@ -126,18 +126,19 @@
 			});
 			engine.initialize();
 
-
 			if (!String.prototype.capitalize) {
 				String.prototype.capitalize = function () {
 					return this.charAt(0).toUpperCase() + this.slice(1);
 				}
 			};
 
+			var lastDatum;
 			$('.typeahead').typeahead(null, {
 				displayKey: 'name' + '${lang}'.capitalize(),
 				source: engine.ttAdapter()
 			}).on('typeahead:selected typeahead:autocompleted', function(e, datum) {
 				$('#foodId').val(datum.id);
+				lastDatum = datum;
 			});
 
 			function deleteDiary(foodId, timestamp) {
