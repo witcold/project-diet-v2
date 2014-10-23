@@ -59,32 +59,6 @@ public class WeightController {
 		return "weight";
 	}
 
-	@RequestMapping(value="/add",  method = RequestMethod.POST)
-	public String add(Weight weight, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		weight.setUserId(user.getId());
-		weightDAO.insertOrUpdate(weight);
-		return "redirect:/weight";
-	}
-
-	@RequestMapping(value="/update",  method = RequestMethod.POST)
-	public String update(Weight weight, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		weight.setUserId(user.getId());
-		weightDAO.update(weight);
-		return "redirect:/weight";
-	}
-
-	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String delete(Date date, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		Weight weight = new Weight();
-		weight.setUserId(user.getId());
-		weight.setDate(date);
-		weightDAO.delete(weight);
-		return "redirect:/weight";
-	}
-
 	@RequestMapping(value="/raw", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Weight> getData(

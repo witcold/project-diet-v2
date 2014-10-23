@@ -44,4 +44,30 @@ public class WeightRestController {
 		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 	}
 
+	@RequestMapping(value="/add",  method = RequestMethod.POST)
+	public String add(Weight weight, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		weight.setUserId(user.getId());
+		weightDAO.insertOrUpdate(weight);
+		return "ok";
+	}
+
+	@RequestMapping(value="/update",  method = RequestMethod.POST)
+	public String update(Weight weight, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		weight.setUserId(user.getId());
+		weightDAO.update(weight);
+		return "ok";
+	}
+
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String delete(Date date, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		Weight weight = new Weight();
+		weight.setUserId(user.getId());
+		weight.setDate(date);
+		weightDAO.delete(weight);
+		return "ok";
+	}
+
 }

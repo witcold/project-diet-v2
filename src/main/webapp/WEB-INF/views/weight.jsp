@@ -100,7 +100,7 @@
 		<script type="text/javascript">
 			function deleteWeight(date) {
 				if (confirm('<spring:message code="form.confirm"/>'))
-					$.post('weight/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
+					$.post('weights/delete', {'date': new Date(date).toLocaleFormat("%Y-%m-%d")});
 			};
 
 			$(function plot() {

@@ -123,11 +123,11 @@ function sendForm (event) {
 	}
 
 	var weight = {
-		date: weightform.find("input[name='date']").val(),
+		date: new Date(weightform.find("input[name='date']").val()).toLocaleFormat("%Y-%m-%d"),
 		weight: weightform.find("input[name='weight']").val()
 	};
 
-	var posting = $.post('weight/add', weight);
+	var posting = $.post('weights/add', weight);
 
 	posting.done(function () {
 		weights.add(weight);
