@@ -143,7 +143,7 @@
 
 			function deleteDiary(foodId, timestamp) {
 				if (confirm('<spring:message code="form.confirm" />'))
-					$.post('diary/delete', {'foodId': foodId, 'timestamp': new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M")});
+					$.post('diary/delete', {'food.id': foodId, 'timestamp': new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M")});
 			};
 
 			$(function plot() {

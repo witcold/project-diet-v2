@@ -44,7 +44,7 @@ var DiaryListItemView = Backbone.View.extend({
 			editForm(self.model.get('timestamp'), self.model.get('foodId'), self.model.get('foodName'), self.model.get('weight'));
 		});
 		this.$el.find('#delete').on('click', function () {
-			deleteDiary(self.model.get('foodId'), self.model.get('timestamp'));
+			deleteDiary(self.model.get('food').id, self.model.get('timestamp'));
 			diaries.remove(self.model);
 		});
 	}
