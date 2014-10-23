@@ -41,7 +41,8 @@ var DiaryListItemView = Backbone.View.extend({
 		this.$el.html(this.template(this.model.attributes));
 		var self = this;
 		this.$el.find('#edit').on('click', function () {
-			editForm(self.model.get('timestamp'), self.model.get('foodId'), self.model.get('foodName'), self.model.get('weight'));
+			lastDatum = self.model.get('food');
+			editForm(self.model.get('timestamp'), lastDatum.id, lastDatum.name, self.model.get('weight'));
 		});
 		this.$el.find('#delete').on('click', function () {
 			deleteDiary(self.model.get('food').id, self.model.get('timestamp'));
