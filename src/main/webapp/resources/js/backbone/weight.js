@@ -1,9 +1,3 @@
-_.templateSettings = {
-	evaluate: /\(@([\s\S]+?)@\)/g,
-	interpolate: /\(@=(.+?)@\)/g,
-	escape: /\(@-([\s\S]+?)@\)/g
-};
-
 var DatePagerView = Backbone.View.extend({
 	el: $('#date'),
 	template: _.template($("#weight-month-pager-template").html()),

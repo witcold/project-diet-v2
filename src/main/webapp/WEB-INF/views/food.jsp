@@ -21,9 +21,7 @@
 				</h1>
 				<ol class="breadcrumb">
 					<li>
-						<a href="food">
-							<spring:message code="label.food"/>
-						</a>
+						<a href="food"><spring:message code="label.food"/></a>
 					</li>
 					<li class="active">
 						<c:choose>
@@ -57,11 +55,11 @@
 		</div>
 
 		<script type="text/template" id="food-tr-template">
-			<td>{{ name }}</td>
-			<td>{{ calories }}</td>
-			<td>{{ proteins }}</td>
-			<td>{{ fats }}</td>
-			<td>{{ carbohydrates }}</td>
+			<td>(@= name @)</td>
+			<td>(@= calories @)</td>
+			<td>(@= proteins @)</td>
+			<td>(@= fats @)</td>
+			<td>(@= carbohydrates @)</td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

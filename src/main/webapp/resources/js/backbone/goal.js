@@ -1,9 +1,3 @@
-_.templateSettings = {
-	evaluate: /\(@([\s\S]+?)@\)/g,
-	interpolate: /\(@=(.+?)@\)/g,
-	escape: /\(@-([\s\S]+?)@\)/g
-};
-
 var GoalListVeiw = Backbone.View.extend({
 	el: $("#goal-table"),
 	initialize: function () {

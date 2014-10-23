@@ -1,9 +1,3 @@
-_.templateSettings = {
-	evaluate: /\(@([\s\S]+?)@\)/g,
-	interpolate: /\(@=(.+?)@\)/g,
-	escape: /\(@-([\s\S]+?)@\)/g
-};
-
 var DateView = Backbone.View.extend({
 	el: $('#date'),
 	template: _.template($("#diary-day-pager-template").html()),

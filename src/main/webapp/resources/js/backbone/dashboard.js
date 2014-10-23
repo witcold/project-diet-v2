@@ -1,7 +1,3 @@
-_.templateSettings = {
-	interpolate: /\{\{(.+?)\}\}/g
-};
-
 var UserView = Backbone.View.extend({
 	el: $(".personal"),
 	template: _.template($("#personal-template").html()),

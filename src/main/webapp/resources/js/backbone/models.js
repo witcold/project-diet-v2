@@ -1,3 +1,9 @@
+_.templateSettings = {
+	evaluate: /\(@([\s\S]+?)@\)/g,
+	interpolate: /\(@=(.+?)@\)/g,
+	escape: /\(@-([\s\S]+?)@\)/g
+};
+
 if (!Date.prototype.toLocaleFormat) {
 	Date.prototype.toLocaleFormat = function (format) {
 		var f = {

@@ -1,7 +1,3 @@
-_.templateSettings = {
-	interpolate: /\{\{(.+?)\}\}/g
-};
-
 var CategoriesListVeiw = Backbone.View.extend({
 	el: $(".categories"),
 	initialize: function () {
