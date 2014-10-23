@@ -54,30 +54,6 @@ public class DiaryController {
 		return "diary";
 	}
 
-	@RequestMapping(value="/add",  method = RequestMethod.POST)
-	public String add(Diary diary, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		diary.setUserId(user.getId());
-		diaryDAO.insertOrUpdate(diary);
-		return "redirect:/diary";
-	}
-
-	@RequestMapping(value="/update",  method = RequestMethod.POST)
-	public String update(Diary diary, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		diary.setUserId(user.getId());
-		diaryDAO.update(diary);
-		return "redirect:/diary";
-	}
-
-	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	public String delete(Diary diary, HttpSession session) {
-		User user = (User) session.getAttribute("account");
-		diary.setUserId(user.getId());
-		diaryDAO.delete(diary);
-		return "redirect:/diary";
-	}
-
 	@RequestMapping(value = "/aggregated", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CaloriesDTO> getData(

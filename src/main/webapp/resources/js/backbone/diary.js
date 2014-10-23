@@ -152,7 +152,7 @@ function sendForm (event) {
 	};
 	diary['food.id'] = diaryform.find("input[name='food.id']").val();
 
-	var posting = $.post('diary/add', diary);
+	var posting = $.post('diaries/add', diary);
 
 	diary.food = {
 		name: diaryform.find("#foodTypeahead").val(),

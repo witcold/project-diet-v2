@@ -36,6 +36,7 @@ public class DiaryRestController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+		binder.registerCustomEditor(Date.class, "timestamp", new CustomDateEditor(new SimpleDateFormat("yyyy.MM.dd HH:mm"), false));
 	}
 
 	@RequestMapping(value = "/{date}", method = RequestMethod.GET)
@@ -49,6 +50,30 @@ public class DiaryRestController {
 		}
 		return result;
 		
+	}
+
+	@RequestMapping(value="/add",  method = RequestMethod.POST)
+	public String add(Diary diary, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		diary.setUserId(user.getId());
+		diaryDAO.insertOrUpdate(diary);
+		return "ok";
+	}
+
+	@RequestMapping(value="/update",  method = RequestMethod.POST)
+	public String update(Diary diary, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		diary.setUserId(user.getId());
+		diaryDAO.update(diary);
+		return "ok";
+	}
+
+	@RequestMapping(value="/delete", method = RequestMethod.POST)
+	public String delete(Diary diary, HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		diary.setUserId(user.getId());
+		diaryDAO.delete(diary);
+		return "ok";
 	}
 
 }
