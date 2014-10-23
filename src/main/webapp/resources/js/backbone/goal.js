@@ -94,7 +94,7 @@ function sendForm (event) {
 		weight: goalform.find("input[name='weight']").val()
 	};
 
-	var posting = $.post('goal/add', goal);
+	var posting = $.post('goals/add', goal);
 
 	posting.done(function () {
 		goals.add(goal);

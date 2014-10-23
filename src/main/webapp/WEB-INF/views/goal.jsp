@@ -91,7 +91,7 @@
 		<script type="text/javascript">
 			function deleteGoal(date) {
 				if (confirm('<spring:message code="form.confirm"/>'))
-					$.post('goal/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
+					$.post('goals/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
 			};
 		</script>
 	</body>
