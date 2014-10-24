@@ -3,6 +3,7 @@ package com.dataart.spring.controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dataart.spring.dao.DiaryDAO;
 import com.dataart.spring.dto.CaloriesDTO;
-import com.dataart.spring.model.Diary;
 import com.dataart.spring.model.User;
 import com.dataart.spring.utils.DateUtils;
 
@@ -33,11 +32,6 @@ public class DiaryController {
 
 	@Autowired
 	private DiaryDAO diaryDAO;
-
-	@ModelAttribute("diary")
-	public Diary getDiary() {
-		return new Diary();
-	}
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
