@@ -152,7 +152,7 @@
 						valueSuffix: ' <spring:message code="calories.measure"/>'
 					}
 				});
-				$.get('diary/aggregated', function(result) {
+				$.get('diaries/aggregated', function(result) {
 					diaryChart.addSeries({
 						name: '<spring:message code="diary.calories.total"/>',
 						data: process(result, 'date', 'calories')

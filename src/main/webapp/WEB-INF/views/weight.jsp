@@ -109,7 +109,7 @@
 						valueSuffix: ' <spring:message code="weight.measure"/>'
 					}
 				});
-				$.get('weight/raw', function(result) {
+				$.get('weights', function(result) {
 					weightChart.addSeries({
 						name: '<spring:message code="label.weight"/>',
 						data: process(result, 'date', 'weight')

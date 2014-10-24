@@ -72,7 +72,7 @@ function plotWeight(weightPath, weightValueSuffix, weightChartName, goalChartNam
 			valueSuffix: weightValueSuffix
 		}
 	});
-	$.get('weight/raw', function(result) {
+	$.get('weights', function(result) {
 		weightChart.addSeries({
 			name: weightChartName,
 			data: process(result, 'date', 'weight')
@@ -93,7 +93,7 @@ function plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalChartName) {
 			valueSuffix: diaryValueSuffix
 		}
 	});
-	$.get('diary/aggregated', function(result) {
+	$.get('diaries/aggregated', function(result) {
 		diaryChart.addSeries({
 			name: diaryChartName,
 			data: process(result, 'date', 'calories')

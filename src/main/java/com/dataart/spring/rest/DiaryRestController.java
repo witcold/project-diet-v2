@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dataart.spring.dao.DiaryDAO;
+import com.dataart.spring.dto.CaloriesDTO;
 import com.dataart.spring.dto.DiaryDTO;
 import com.dataart.spring.model.Diary;
 import com.dataart.spring.model.User;
+import com.dataart.spring.utils.DateUtils;
 
 /**
  * @author vmeshcheryakov
@@ -50,6 +52,14 @@ public class DiaryRestController {
 		}
 		return result;
 		
+	}
+
+	@RequestMapping(value = "/aggregated", method = RequestMethod.GET)
+	public List<CaloriesDTO> aggregated(HttpSession session) {
+		User user = (User) session.getAttribute("account");
+		Date from = DateUtils.getFirstDayOfMonth(null);
+		Date to = DateUtils.getLastDayOfMonth(from);
+		return diaryDAO.getAggregatedInfo(user.getId(), from, to);
 	}
 
 	@RequestMapping(value="/add",  method = RequestMethod.POST)

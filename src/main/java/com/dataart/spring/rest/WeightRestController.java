@@ -51,6 +51,12 @@ public class WeightRestController {
 		return weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public List<Weight> get(HttpSession session) {
+		return get(DateUtils.getFirstDayOfMonth(null),
+				DateUtils.getLastDayOfMonth(null), session);
+	}
+
 	@RequestMapping(value = "/calories", method = RequestMethod.GET)
 	public List<CaloriesDTO> getBmr(HttpSession session) {
 		User user = (User) session.getAttribute("account");
