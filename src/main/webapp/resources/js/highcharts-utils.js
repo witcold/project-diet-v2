@@ -98,7 +98,7 @@ function plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalChartName) {
 			name: diaryChartName,
 			data: process(result, 'date', 'calories')
 		});
-		$.get('weight/bmr', function(result) {
+		$.get('weights/calories', function(result) {
 			diaryChart.addSeries({
 				name: goalDiaryChartName,
 				dashStyle: 'dot',

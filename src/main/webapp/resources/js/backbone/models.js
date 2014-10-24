@@ -89,7 +89,7 @@ var BMRModel = Backbone.Model.extend({
 
 var BMRList = Backbone.Collection.extend({
 	model: BMRModel,
-	url: 'weight/bmr'
+	url: 'weights/calories'
 });
 
 var bmrs = new BMRList();
