@@ -77,7 +77,7 @@ function plotWeight(weightPath, weightValueSuffix, weightChartName, goalChartNam
 			name: weightChartName,
 			data: process(result, 'date', 'weight')
 		});
-		$.get('goal/raw', function(result) {
+		$.get('goals', function(result) {
 			weightChart.addSeries({
 				name: goalChartName,
 				dashStyle: 'dot',
