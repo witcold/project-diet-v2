@@ -14,7 +14,7 @@
 
 		<script type="text/template" id="title-template">(@= obj['label.welcome'] @)</script>
 
-		<script type="text/template" id="container-template"><h1>(@= obj['label.welcome'] @)</h1><p>(@= obj['label.login'] @)</p></script>
+		<script type="text/template" id="container-template"><h1>(@= obj['label.welcome'] @)</h1><p>(@= obj['label.login'] @).</p></script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
