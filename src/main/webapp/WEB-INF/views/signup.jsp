@@ -21,7 +21,7 @@
 		</style>
 	</head>
 	<body>
-		<%@ include file="fragments/menu-light.jsp" %>
+		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="modal-dialog">
 				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="signUpDTO">

@@ -13,7 +13,7 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
-		<%@ include file="fragments/menu-light.jsp" %>
+		<%@ include file="fragments/menu.jsp" %>
 		<div class="container">
 			<div class="jumbotron">
 				<h2>

@@ -13,7 +13,7 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
-		<%@ include file="fragments/menu-light.jsp" %>
+		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="modal-dialog">
 				<form action="login" accept-charset="UTF-8" method="post">
