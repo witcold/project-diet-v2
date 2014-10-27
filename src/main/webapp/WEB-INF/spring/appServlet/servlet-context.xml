@@ -22,7 +22,7 @@
 	</beans:bean>
 
 	<beans:bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		class="com.dataart.spring.config.LocalizationMessageSource">
 		<beans:property name="useCodeAsDefaultMessage" value="true" />
 		<beans:property name="basename" value="WEB-INF/messages/messages" />
 		<beans:property name="defaultEncoding" value="UTF-8" />
