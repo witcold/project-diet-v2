@@ -16,25 +16,24 @@
 		<%@ include file="fragments/menu-light.jsp" %>
 		<div class="jumbotron">
 			<div class="modal-dialog">
-				<form:form action="login" accept-charset="UTF-8" method="post" modelAttribute="user">
+				<form action="login" accept-charset="UTF-8" method="post">
 					<h2 class="modal-header">
 						<spring:message code="label.login"/>
 					</h2>
 					<form:errors path="*" element="div" class="alert alert-danger"/>
 					<div class="form-group">
 						<spring:message code="user.login" var="login"/>
-						<form:input type="email" path="login" placeholder="${login}" maxlength="40" class="form-control" required="true" autofocus="true"/>
+						<input name="login" type="email" placeholder="${login}" maxlength="40" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<spring:message code="user.password" var="password"/>
-						<form:password path="password" placeholder="${password}" class="form-control" required="true"/>
+						<input name="password" type="password" placeholder="${password}" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<form:button class="btn btn-success">
-							<spring:message code="form.log.in"/>
-						</form:button>
+						<spring:message code="form.log.in" var="logIn"/>
+						<input type="submit" value="${logIn}" class="btn btn-success">
 					</div>
-				</form:form>
+				</form>
 			</div>
 		</div>
 

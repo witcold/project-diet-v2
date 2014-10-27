@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,11 +29,6 @@ public class LoginController {
 
 	@Autowired
 	private UserDAO userDAO;
-
-	@ModelAttribute("user")
-	public User getUser() {
-		return new User();
-	}
 
 	@InitBinder("user")
 	public void initBinder(WebDataBinder binder) {
