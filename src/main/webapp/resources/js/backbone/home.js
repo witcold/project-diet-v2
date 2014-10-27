@@ -17,9 +17,7 @@ var AppRouter = Backbone.Router.extend({
 		var containerView = new ContainerView(messages);
 	},
 	home: function () {
-		$.getScript('messages', function () {
-			this.render(messages);
-		})
+		this.render(messages);
 	}
 });
 
