@@ -5,7 +5,7 @@ var ContainerView  = Backbone.View.extend({
 		this.render();
 	},
 	render: function () {
-		this.$el.html(this.template(this.messages));
+		this.$el.html(this.template(messages));
 	}
 });
 
@@ -14,9 +14,7 @@ var AppRouter = Backbone.Router.extend({
 		"": "home"
 	},
 	home: function () {
-		var containerView = new ContainerView({
-			messages: messages
-		});
+		var containerView = new ContainerView();
 	}
 });
 

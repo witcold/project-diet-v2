@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
-			<spring:message code="welcome"/>
+			<spring:message code="label.welcome"/>
 		</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
@@ -19,8 +19,8 @@
 		</div>
 
 		<script type="text/template" id="container-template">
-			<h1>(@= welcome @)</h1>
-			<p>(@= label.login @)</p>
+			<h1>(@= obj['label.welcome'] @)</h1>
+			<p>(@= obj['label.login'] @)</p>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
