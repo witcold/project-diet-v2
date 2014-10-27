@@ -19,7 +19,7 @@
 		</div>
 
 		<script type="text/template" id="container-template">
-			<h1>(@= label.welcome @)</h1>
+			<h1>(@= welcome @)</h1>
 			<p>(@= label.login @)</p>
 		</script>
 

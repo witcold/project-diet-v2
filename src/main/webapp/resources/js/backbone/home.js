@@ -13,11 +13,10 @@ var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "home"
 	},
-	render: function (messages) {
-		var containerView = new ContainerView(messages);
-	},
 	home: function () {
-		this.render(messages);
+		var containerView = new ContainerView({
+			messages: messages
+		});
 	}
 });
 
