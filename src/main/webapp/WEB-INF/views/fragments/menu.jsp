@@ -12,7 +12,7 @@
 
 <script type="text/template" id="menu-language-template">
 	<a data-toggle="dropdown" class="btn" role="button" href="#">
-		<img alt="${lang}" src="resources/images/${lang}.png">(@= obj['language'] @)<span class="caret"></span>
+		<img alt="${lang}" src="resources/images/${lang}.png"> (@= obj['language'] @)<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="?lang=ru"><img alt="ru_RU" src="resources/images/ru.png"> ru</a></li>
@@ -29,7 +29,7 @@
 </script>
 
 <script type="text/template" id="menu-logout-template">
-	(@= obj['form.log.as'] @)<c:out value="${account.login}"/>. <a href="logout">(@= obj['form.log.out'] @)</a>
+	(@= obj['form.log.as'] @) <c:out value="${account.login}"/>. <a href="logout">(@= obj['form.log.out'] @)</a>
 </script>
 
 <script type="text/template" id="menu-signup-template">
