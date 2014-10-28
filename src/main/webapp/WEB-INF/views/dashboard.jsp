@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -7,9 +5,7 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>
-			<spring:message code="label.dashboard"/>
-		</title>
+		<title></title>
 		<link rel="stylesheet" href="resources/css/bootstrap.css">
 	</head>
 	<body>
@@ -26,8 +22,10 @@
 			</div>
 		</div>
 
+		<script type="text/template" id="title-template">(@= i18n['label.dashboard'] @)</script>
+
 		<script type="text/template" id="personal-template">
-			<h1><spring:message code="label.dashboard"/></h1>
+			<h1>(@= i18n['label.dashboard'] @)</h1>
 			<h3>Hello, mr. (@= firstName @) (@= lastName @)!</h3>
 			<h4>Your height: <small>(@= height @) cm</small></h4>
 			<h4>Your age: <small>(@= age @) year</small></h4>
@@ -45,16 +43,17 @@
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="messages"></script>
 		<script type="text/javascript">
 			var weightPath = '#weightPlaceholder';
-			var weightValueSuffix = ' <spring:message code="weight.measure"/>';
-			var weightChartName = '<spring:message code="label.weight"/>';
-			var goalWeightChartName = '<spring:message code="label.goal"/>';
+			var weightValueSuffix = ' ' + messages.i18n['weight.measure'];
+			var weightChartName = messages.i18n['label.weight'];
+			var goalWeightChartName = messages.i18n['label.goal'];
 
 			var diaryPath = '#diaryPlaceholder';
-			var diaryValueSuffix = ' <spring:message code="calories.measure"/>';
-			var diaryChartName = '<spring:message code="diary.calories.total"/>';
-			var goalDiaryChartName = '<spring:message code="label.goal"/>';
+			var diaryValueSuffix = ' ' + messages.i18n['calories.measure'];
+			var diaryChartName = messages.i18n['diary.calories.total'];
+			var goalDiaryChartName = messages.i18n['label.goal'];
 		</script>
 		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
 		<script src="resources/js/3rdparty/bootstrap.js"></script>
@@ -63,7 +62,6 @@
 		<script src="resources/js/3rdparty/underscore.js"></script>
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
-		<script src="messages"></script>
 		<script src="resources/js/backbone/dashboard.js"></script>
 		<script src="resources/js/backbone/menu.js"></script>
 	</body>

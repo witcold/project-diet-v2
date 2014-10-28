@@ -1,3 +1,14 @@
+var TitleView = Backbone.View.extend({
+	el: $("title"),
+	template: _.template($("#title-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
 var UserView = Backbone.View.extend({
 	el: $(".personal"),
 	template: _.template($("#personal-template").html()),
@@ -7,12 +18,8 @@ var UserView = Backbone.View.extend({
 		this.model.fetch();
 	},
 	render: function () {
-		this.$el.html(this.template(this.model.attributes));
+		this.$el.html(this.template($.extend({}, messages, this.model.attributes)));
 	}
-});
-
-var userView = new UserView({
-	model: user
 });
 
 var WeightView = Backbone.View.extend({
@@ -36,10 +43,6 @@ var WeightView = Backbone.View.extend({
 	}
 });
 
-var weightView = new WeightView({
-	collection: weights
-});
-
 var CaloriestView = Backbone.View.extend({
 	el: $(".calories"),
 	template: _.template($("#calories-template").html()),
@@ -54,15 +57,21 @@ var CaloriestView = Backbone.View.extend({
 	}
 });
 
-var caloriesView = new CaloriestView({
-	collection: bmrs
-});
-
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "dashboard"
 	},
 	dashboard: function () {
+		var titleView = new TitleView();
+		var userView = new UserView({
+			model: user
+		});
+		var weightView = new WeightView({
+			collection: weights
+		});
+		var caloriesView = new CaloriestView({
+			collection: bmrs
+		});
 		plotWeight(weightPath, weightValueSuffix, weightChartName, goalWeightChartName);
 		plotDiary(diaryPath, diaryValueSuffix, diaryChartName, goalDiaryChartName);
 	}

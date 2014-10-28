@@ -7,7 +7,7 @@ var TitleView = Backbone.View.extend({
 	render: function () {
 		this.$el.html(this.template(messages));
 	}
-})
+});
 
 var ContainerView  = Backbone.View.extend({
 	el: $(".container"),
