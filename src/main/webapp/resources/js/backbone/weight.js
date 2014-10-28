@@ -1,3 +1,43 @@
+var TitleView = Backbone.View.extend({
+	el: $("title"),
+	template: _.template($("#title-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var ContainerView = Backbone.View.extend({
+	el: $(".container"),
+	template: _.template($("#table-header-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.find('#container-label').html(messages.i18n['label.weight']);
+		this.$el.find('#table-header').html(this.template(messages));
+		this.$el.find('#add-weight').html(messages.i18n['weight.add']);
+	}
+});
+
+var ModalView = Backbone.View.extend({
+	el: $(".modal-content"),
+	template: _.template($("#modal-template").html()),
+	initialize: function () {
+		this.render();
+		datetimepicker = $('#datetimepicker').datetimepicker({
+			format: 'YYYY.MM.DD',
+			pickTime: false,
+			useStrict: true
+		}).data("DateTimePicker");
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
 var DatePagerView = Backbone.View.extend({
 	el: $('#date'),
 	template: _.template($("#weight-month-pager-template").html()),
@@ -44,14 +84,15 @@ var WeightListItemView = Backbone.View.extend({
 	}
 });
 
-var weights = new WeightList();
-
 var AppRouter = Backbone.Router.extend({
 	routes: {
 		"": "current",
 		":month": "month"
 	},
 	render: function (date) {
+		var titleView = new TitleView();
+		var containerView = new ContainerView();
+		var modalView = new ModalView();
 		var now = new Date(date);
 		var toDate = new Date(now);
 		toDate.setMonth(toDate.getMonth() + 1);
@@ -71,6 +112,7 @@ var AppRouter = Backbone.Router.extend({
 		weights.toDate = toDate;
 		weights.fetch({ reset: true });
 		var weightsListView = new WeightListVeiw({ collection: weights });
+		plot();
 	},
 	current: function () {
 		this.render(new Date().toLocaleFormat("%Y-%m"));
@@ -80,15 +122,30 @@ var AppRouter = Backbone.Router.extend({
 	}
 });
 
-var datetimepicker = $('#datetimepicker').datetimepicker({
-	format: 'YYYY.MM.DD',
-	pickTime: false,
-	useStrict: true
-}).data("DateTimePicker");
+var datetimepicker;
 var weightform = $('#weightForm');
 
 var app = new AppRouter();
 Backbone.history.start();
+
+function deleteWeight(date) {
+	if (confirm(messages.i18n['form.confirm']))
+		$.post('weights/delete', {'date': new Date(date).toLocaleFormat("%Y-%m-%d")});
+};
+
+function plot() {
+	var weightChart = plotEmptyChart('#placeholder', {
+		tooltip: {
+			valueSuffix: ' ' + messages.i18n['weight.measure']
+		}
+	});
+	$.get('weights', function(result) {
+		weightChart.addSeries({
+			name: messages.i18n['label.weight'],
+			data: process(result, 'date', 'weight')
+		});
+	});
+};
 
 function editForm(date, weight) {
 	datetimepicker.setDate(new Date(date));
