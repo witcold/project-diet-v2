@@ -7,45 +7,19 @@
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>
-			<spring:message code="label.food"/>
-		</title>
+		<title></title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>
-					<spring:message code="label.food"/>
-				</h1>
-				<ol class="breadcrumb">
-					<li>
-						<a href="food"><spring:message code="label.food"/></a>
-					</li>
-					<li class="active">
-						<c:choose>
-							<c:when test="${not empty currentCategory}">
-								<c:out value="${currentCategory.getName(lang)}"/>
-							</c:when>
-							<c:otherwise>
-								<spring:message code="food.category.all"/>
-							</c:otherwise>
-						</c:choose>
-					</li>
-				</ol>
+				<h1 id="container-label"></h1>
 				<div class="categories list-group col-md-2">
 				</div>
 				<div class="col-md-10">
 					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th><spring:message code="food.name"/></th>
-								<th><spring:message code="food.calories"/></th>
-								<th><spring:message code="food.proteins"/></th>
-								<th><spring:message code="food.fats"/></th>
-								<th><spring:message code="food.carbohydrates"/></th>
-							</tr>
+						<thead id="table-header">
 						</thead>
 						<tbody id="food-table">
 						</tbody>
@@ -53,6 +27,18 @@
 				</div>
 			</div>
 		</div>
+
+		<script type="text/template" id="title-template">(@= i18n['label.food'] @)</script>
+
+		<script type="text/template" id="table-header-template">
+			<tr>
+				<th>(@= i18n['food.name'] @)</th>
+				<th>(@= i18n['food.calories'] @)</th>
+				<th>(@= i18n['food.proteins'] @)</th>
+				<th>(@= i18n['food.fats'] @)</th>
+				<th>(@= i18n['food.carbohydrates'] @)</th>
+			</tr>
+		</script>
 
 		<script type="text/template" id="food-tr-template">
 			<td>(@= name @)</td>

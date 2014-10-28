@@ -1,3 +1,42 @@
+var TitleView = Backbone.View.extend({
+	el: $("title"),
+	template: _.template($("#title-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var titleView = new TitleView();
+
+var ContainerTitleView = Backbone.View.extend({
+	el: $("#container-label"),
+	initialize: function () {
+		this.render();
+	},
+	render: function (categoryName) {
+		this.$el.html(messages.i18n['label.food']);
+		if (categoryName) {
+			this.$el.append("<small> " + categoryName + "</small>");
+		}
+	}
+});
+
+var containerTitleView = new ContainerTitleView();
+
+var TableTitleView = Backbone.View.extend({
+	el: $("#table-header"),
+	template: _.template($("#table-header-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
 var CategoriesListVeiw = Backbone.View.extend({
 	el: $(".categories"),
 	initialize: function () {
@@ -15,7 +54,7 @@ var CategoriesListVeiw = Backbone.View.extend({
 	}
 });
 
-var categories = new CategoriesListVeiw({
+var categoriesView = new CategoriesListVeiw({
 	collection: categories
 });
 
@@ -62,16 +101,19 @@ var AppRouter = Backbone.Router.extend({
 		"": "all",
 		"category/:id": "category"
 	},
-	all: function () {
+	render: function (category) {
+		var tableTitleView = new TableTitleView();
 		var foods = new FoodList();
-		foods.fetch();
-		var foodsListView = new FoodsListView({ collection: foods });
-	},
-	category: function (id) {
-		var foods = new FoodList();
-		foods.category = id;
+		foods.category = category;
 		foods.fetch({ reset: true });
 		var foodsListView = new FoodsListView({ collection: foods });
+	},
+	all: function () {
+		this.render();
+	},
+	category: function (id) {
+		containerTitleView.render(categories.get(id).get("name"));
+		this.render(id);
 	}
 });
 
