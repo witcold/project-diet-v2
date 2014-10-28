@@ -68,6 +68,8 @@
 		<script src="resources/js/3rdparty/underscore.js"></script>
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
+		<script src="messages"></script>
 		<script src="resources/js/backbone/food.js"></script>
+		<script src="resources/js/backbone/menu.js"></script>
 	</body>
 </html>

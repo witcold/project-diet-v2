@@ -25,7 +25,12 @@
 		</div>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="//code.jquery.com/jquery-1.11.1.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
+		<script src="resources/js/3rdparty/bootstrap.js"></script>
+		<script src="resources/js/3rdparty/underscore.js"></script>
+		<script src="resources/js/3rdparty/backbone.js"></script>
+		<script src="resources/js/backbone/models.js"></script>
+		<script src="messages"></script>
+		<script src="resources/js/backbone/menu.js"></script>
 	</body>
 </html>
