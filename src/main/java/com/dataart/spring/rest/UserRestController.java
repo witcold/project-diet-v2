@@ -1,5 +1,7 @@
 package com.dataart.spring.rest;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,4 +26,10 @@ public class UserRestController {
 	public User get(@PathVariable("login") String login) {
 		return userDAO.selectByLogin(login);
 	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public User get(HttpSession session) {
+		return (User) session.getAttribute("account");
+	}
+
 }

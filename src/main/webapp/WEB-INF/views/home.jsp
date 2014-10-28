@@ -24,5 +24,6 @@
 		<script src="resources/js/backbone/models.js"></script>
 		<script src="messages"></script>
 		<script src="resources/js/backbone/home.js"></script>
+		<script src="resources/js/backbone/menu.js"></script>
 	</body>
 </html>
