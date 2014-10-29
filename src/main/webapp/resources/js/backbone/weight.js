@@ -9,6 +9,8 @@ var TitleView = Backbone.View.extend({
 	}
 });
 
+var titleView = new TitleView();
+
 var ContainerView = Backbone.View.extend({
 	el: $(".container"),
 	template: _.template($("#table-header-template").html()),
@@ -94,7 +96,6 @@ var AppRouter = Backbone.Router.extend({
 		":month": "month"
 	},
 	render: function (date) {
-		var titleView = new TitleView();
 		var now = new Date(date);
 		var toDate = new Date(now);
 		toDate.setMonth(toDate.getMonth() + 1);

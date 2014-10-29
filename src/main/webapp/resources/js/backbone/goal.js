@@ -1,3 +1,49 @@
+var TitleView = Backbone.View.extend({
+	el: $("title"),
+	template: _.template($("#title-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var titleView = new TitleView();
+
+var ContainerView = Backbone.View.extend({
+	el: $(".container"),
+	template: _.template($("#table-header-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.find('#container-label').html(messages.i18n['label.goal']);
+		this.$el.find('#table-header').html(this.template(messages));
+		this.$el.find('#add-goal').html(messages.i18n['goal.add']);
+	}
+});
+
+var containerView = new ContainerView();
+
+var ModalView = Backbone.View.extend({
+	el: $(".modal-content"),
+	template: _.template($("#modal-template").html()),
+	initialize: function () {
+		this.render();
+		datetimepicker = $('#datetimepicker').datetimepicker({
+			format: 'YYYY.MM.DD',
+			pickTime: false,
+			useStrict: true
+		}).data("DateTimePicker");
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var modalView = new ModalView();
+
 var GoalListVeiw = Backbone.View.extend({
 	el: $("#goal-table"),
 	initialize: function () {
@@ -45,17 +91,16 @@ var AppRouter = Backbone.Router.extend({
 	}
 });
 
-var app = new AppRouter();
+var datetimepicker;
+var goalform = $('#goalForm');
 
+var app = new AppRouter();
 Backbone.history.start();
 
-$('#datetimepicker').datetimepicker({
-	format: 'YYYY.MM.DD',
-	pickTime: false,
-	useStrict: true
-});
-var datetimepicker = $('#datetimepicker').data("DateTimePicker");
-var goalform = $('#goalForm');
+function deleteGoal(date) {
+	if (confirm(messages.i18n['form.confirm']))
+		$.post('goals/delete', {'date': new Date(date).toLocaleFormat("%Y.%m.%d")});
+};
 
 function editForm(date, weight) {
 	datetimepicker.setDate(new Date(date));
