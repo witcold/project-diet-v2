@@ -3,6 +3,8 @@ package com.dataart.spring.controllers;
 import java.io.IOException;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,10 @@ public class MessagesController {
 	private LocalizationMessageSource messageSource;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String get(Model model, Locale locale) throws IOException {
+	public String get(Model model, Locale locale, HttpServletResponse response) throws IOException {
+		long now = System.currentTimeMillis();
+		response.setDateHeader("Last-Modified", now);
+		response.setDateHeader("Expires", now + 1000 * 60 * 60 * 24);
 		model.addAttribute("keys", messageSource.getKeys(locale));
 		return "messages";
 	}
