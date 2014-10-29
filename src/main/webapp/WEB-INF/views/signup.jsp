@@ -1,16 +1,14 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="${pageContext.request.locale}">
+<html lang="${pageContext.response.locale}">
 	<head>
 		<base href="${pageContext.request.contextPath}/">
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>
-			<spring:message code="form.sign.up"/>
-		</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="resources/css/bootstrap.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="resources/css/bootstrap-slider.css">
 		<style type="text/css">
@@ -97,12 +95,12 @@
 						<span class="input-group-addon aligned">
 							<spring:message code="user.country"/>
 						</span>
-						<form:select path="countryId" class="form-control" required="true">
-							<form:option value="" disabled="true" label=""/>
-							<form:option value="RU" label="RU"/>
-							<form:option value="GB" label="GB"/>
-							<form:option value="US" label="US"/>
-						</form:select>
+						<select name="countryId" class="form-control" required>
+							<option disabled>
+							<option value="RU" label="RU">
+							<option value="GB" label="GB">
+							<option value="US" label="US">
+						</select>
 					</div>
 					<h4>
 						<spring:message code="signup.other"/>
@@ -150,7 +148,8 @@
 		<script src="resources/js/3rdparty/underscore.js"></script>
 		<script src="resources/js/3rdparty/backbone.js"></script>
 		<script src="resources/js/backbone/models.js"></script>
-		<script src="messages"></script>
+		<script src="messages?${pageContext.response.locale}"></script>
+		<script src="resources/js/backbone/signup.js"></script>
 		<script src="resources/js/backbone/menu.js"></script>
 
 		<script type="text/javascript">

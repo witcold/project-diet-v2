@@ -1,6 +1,6 @@
 <%@ page session="true" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="${pageContext.request.locale}">
+<html lang="${pageContext.response.locale}">
 	<head>
 		<base href="${pageContext.request.contextPath}/">
 		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="messages"></script>
+		<script src="messages?${pageContext.response.locale}"></script>
 		<script type="text/javascript">
 			var weightPath = '#weightPlaceholder';
 			var weightValueSuffix = ' ' + messages.i18n['weight.measure'];

@@ -63,9 +63,6 @@ public class SignUpController {
 		binder.setValidator(new SignUpValidator());
 	}
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String greeting(Model model) {
 		model.addAttribute("genders", Gender.values());

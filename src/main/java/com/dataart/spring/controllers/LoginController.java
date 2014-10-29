@@ -35,9 +35,6 @@ public class LoginController {
 		binder.setValidator(new LoginValidator());
 	}
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
 		return "login";

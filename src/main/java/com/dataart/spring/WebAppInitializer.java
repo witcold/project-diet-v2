@@ -36,7 +36,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
 		FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encodingFilter", filter);
-		encodingFilter.addMappingForUrlPatterns(null, false, "/*"); //TODO there is another method,  may be it is better?
+		encodingFilter.addMappingForUrlPatterns(null, false, "/*");
 	}
 
 }
