@@ -22,6 +22,8 @@ var ContainerView = Backbone.View.extend({
 	}
 });
 
+var containerView = new ContainerView();
+
 var ModalView = Backbone.View.extend({
 	el: $(".modal-content"),
 	template: _.template($("#modal-template").html()),
@@ -37,6 +39,8 @@ var ModalView = Backbone.View.extend({
 		this.$el.html(this.template(messages));
 	}
 });
+
+var modalView = new ModalView();
 
 var DatePagerView = Backbone.View.extend({
 	el: $('#date'),
@@ -91,8 +95,6 @@ var AppRouter = Backbone.Router.extend({
 	},
 	render: function (date) {
 		var titleView = new TitleView();
-		var containerView = new ContainerView();
-		var modalView = new ModalView();
 		var now = new Date(date);
 		var toDate = new Date(now);
 		toDate.setMonth(toDate.getMonth() + 1);

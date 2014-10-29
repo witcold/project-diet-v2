@@ -43,6 +43,22 @@
 			<a href="weight#(@= next @)" class="btn btn-default navbar-btn" role="button">&rarr;</a>
 		</script>
 
+		<script type="text/template" id="table-header-template">
+			<tr>
+				<th class="col-xs-1" style="width: 1px;"></th>
+				<th>(@= i18n['date'] @)</th>
+				<th>(@= i18n['weight.weight'] @)</th>
+				<th class="col-xs-1" style="width: 1px;"></th>
+			</tr>
+		</script>
+
+		<script type="text/template" id="weight-tr-template">
+			<td id="edit"><a style="cursor: pointer;"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
+			<td>(@= weight @)</td>
+			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+		</script>
+
 		<script type="text/template" id="modal-template">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
@@ -66,22 +82,6 @@
 				<button type="button" class="btn btn-default" data-dismiss="modal">(@= i18n['form.close'] @)</button>
 				<button type="submit" class="btn btn-primary" form="weightForm">(@= i18n['form.save'] @)</button>
 			</div>
-		</script>
-
-		<script type="text/template" id="table-header-template">
-			<tr>
-				<th class="col-xs-1" style="width: 1px;"></th>
-				<th>(@= i18n['date'] @)</th>
-				<th>(@= i18n['weight.weight'] @)</th>
-				<th class="col-xs-1" style="width: 1px;"></th>
-			</tr>
-		</script>
-
-		<script type="text/template" id="weight-tr-template">
-			<td id="edit"><a style="cursor: pointer;"><span class="glyphicon glyphicon-pencil"></span></a></td>
-			<td>(@= new Date(date).toLocaleFormat("%d.%m.%Y") @)</td>
-			<td>(@= weight @)</td>
-			<td id="delete" class="text-right"><a style="cursor: pointer;" class="text-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</script>
 
 		<!-- Placed at the end of the document so the pages load faster -->

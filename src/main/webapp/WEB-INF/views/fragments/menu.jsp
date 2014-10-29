@@ -25,7 +25,7 @@
 	<li class="${weightActive}"><a href="weight">(@= i18n['label.weight'] @)</a></li>
 	<li class="${foodActive}"><a href="food">(@= i18n['label.food'] @)</a></li>
 	<li class="${diaryActive}"><a href="diary">(@= i18n['label.diary'] @)</a></li>
-	<li class="${goalsActive}"><a href="goal">(@= i18n['label.goal'] @)</a></li>
+	<li class="${goalActive}"><a href="goal">(@= i18n['label.goal'] @)</a></li>
 </script>
 
 <script type="text/template" id="menu-logout-template">

@@ -1,3 +1,49 @@
+var TitleView = Backbone.View.extend({
+	el: $("title"),
+	template: _.template($("#title-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var titleView = new TitleView();
+
+var ContainerView = Backbone.View.extend({
+	el: $(".container"),
+	template: _.template($("#table-header-template").html()),
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.find('#container-label').html(messages.i18n['label.diary']);
+		this.$el.find('#table-header').html(this.template(messages));
+		this.$el.find('#add-diary').html(messages.i18n['diary.add']);
+	}
+});
+
+var containerView = new ContainerView();
+
+var ModalView = Backbone.View.extend({
+	el: $(".modal-content"),
+	template: _.template($("#modal-template").html()),
+	initialize: function () {
+		this.render();
+		datetimepicker = $('#datetimepicker').datetimepicker({
+			format: 'YYYY.MM.DD HH:mm',
+			pickDate: false,
+			useStrict: true
+		}).data("DateTimePicker");
+	},
+	render: function () {
+		this.$el.html(this.template(messages));
+	}
+});
+
+var modalView = new ModalView();
+
 var DateView = Backbone.View.extend({
 	el: $('#date'),
 	template: _.template($("#diary-day-pager-template").html()),
@@ -35,7 +81,7 @@ var TotalCaloriesView = Backbone.View.extend({
 		var sum = this.collection.reduce(function (memo, model) {
 			return memo + model.get('food').calories*model.get('weight')*10;
 		}, 0);
-		this.$el.html(this.template({total: sum}));
+		this.$el.html(this.template($.extend({total: sum}, messages)));
 	}
 });
 
@@ -84,6 +130,7 @@ var AppRouter = Backbone.Router.extend({
 		diaries.fetch();
 		var diaryListVeiw = new DiaryListVeiw({ collection: diaries });
 		var total = new TotalCaloriesView({ collection: diaries });
+		plot();
 	},
 	current: function () {
 		var now = new Date();
@@ -96,15 +143,30 @@ var AppRouter = Backbone.Router.extend({
 	}
 });
 
-var datetimepicker = $('#datetimepicker').datetimepicker({
-	format: 'YYYY.MM.DD HH:mm',
-	pickDate: false,
-	useStrict: true
-}).data("DateTimePicker");
+var datetimepicker;
 var diaryform = $('#diaryForm');
 
 var app = new AppRouter();
 Backbone.history.start();
+
+function deleteDiary(foodId, timestamp) {
+	if (confirm(messages.i18n['form.confirm']))
+		$.post('diaries/delete', {'food.id': foodId, 'timestamp': new Date(timestamp).toLocaleFormat("%Y.%m.%d %H:%M")});
+};
+
+function plot() {
+	var diaryChart = plotEmptyChart('#placeholder', {
+		tooltip: {
+			valueSuffix: ' ' + messages.i18n['calories.measure']
+		}
+	});
+	$.get('diaries/aggregated', function(result) {
+		diaryChart.addSeries({
+			name: messages.i18n['diary.calories.total'],
+			data: process(result, 'date', 'calories')
+		});
+	});
+};
 
 function editForm(timestamp, foodId, foodName, weight) {
 	datetimepicker.setDate(new Date(timestamp));
