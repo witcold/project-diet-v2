@@ -21,8 +21,6 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="title-template">(@= i18n['label.dashboard'] @)</script>
-
 		<script type="text/template" id="personal-template">
 			<h1>(@= i18n['label.dashboard'] @)</h1>
 			<h3>Hello, mr. (@= firstName @) (@= lastName @)!</h3>

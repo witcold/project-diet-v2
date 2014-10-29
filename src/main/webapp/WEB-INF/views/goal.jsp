@@ -30,8 +30,6 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="title-template">(@= i18n['label.diary'] @)</script>
-
 		<script type="text/template" id="table-header-template">
 			<tr>
 				<th class="col-xs-1" style="width: 1px;"></th>

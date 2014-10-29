@@ -34,8 +34,6 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="title-template">(@= i18n['label.dashboard'] @)</script>
-
 		<script type="text/template" id="weight-month-pager-template">
 			<a href="weight#(@= prev @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
 			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleFormat("%m.%Y") @)</a>

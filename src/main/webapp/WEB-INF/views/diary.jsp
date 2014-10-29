@@ -37,8 +37,6 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="title-template">(@= i18n['label.diary'] @)</script>
-
 		<script type="text/template" id="diary-day-pager-template">
 			<a href="diary#(@= prev @)" class="btn btn-default navbar-btn" role="button">&larr;</a>
 			<a class="btn btn-link navbar-btn disabled" role="button">(@= now.toLocaleString().slice(0,10) @)</a>

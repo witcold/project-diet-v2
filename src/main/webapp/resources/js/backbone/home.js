@@ -1,13 +1,14 @@
 var TitleView = Backbone.View.extend({
 	el: $("title"),
-	template: _.template($("#title-template").html()),
 	initialize: function () {
 		this.render();
 	},
 	render: function () {
-		this.$el.html(this.template(messages));
+		this.$el.html(messages.i18n['label.welcome']);
 	}
 });
+
+var titleView = new TitleView();
 
 var ContainerView  = Backbone.View.extend({
 	el: $(".container"),
@@ -20,16 +21,6 @@ var ContainerView  = Backbone.View.extend({
 	}
 });
 
-var AppRouter = Backbone.Router.extend({
-	routes: {
-		"": "home"
-	},
-	home: function () {
-		var containerView = new ContainerView();
-		var titleView = new TitleView();
-	}
-});
-
-var app = new AppRouter();
+var containerView = new ContainerView();
 
 Backbone.history.start();

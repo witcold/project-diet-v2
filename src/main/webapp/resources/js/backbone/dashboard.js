@@ -1,11 +1,10 @@
 var TitleView = Backbone.View.extend({
 	el: $("title"),
-	template: _.template($("#title-template").html()),
 	initialize: function () {
 		this.render();
 	},
 	render: function () {
-		this.$el.html(this.template(messages));
+		this.$el.html(messages.i18n['label.dashboard']);
 	}
 });
 

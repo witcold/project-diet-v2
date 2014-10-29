@@ -25,8 +25,6 @@
 			</div>
 		</div>
 
-		<script type="text/template" id="title-template">(@= i18n['label.food'] @)</script>
-
 		<script type="text/template" id="table-header-template">
 			<tr>
 				<th>(@= i18n['food.name'] @)</th>
