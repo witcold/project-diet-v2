@@ -22,123 +22,77 @@
 		<%@ include file="fragments/menu.jsp" %>
 		<div class="jumbotron">
 			<div class="modal-dialog">
-				<form:form action="signup" accept-charset="UTF-8" method="post" modelAttribute="signUpDTO">
-					<h2 class="modal-header">
-						<spring:message code="label.signup"/>
-					</h2>
-					<form:errors path="*" element="div" class="alert alert-danger"/>
-					<h4>
-						<spring:message code="signup.account"/>
-					</h4>
-					<div class="form-group input-group">
-						<spring:message code="user.login" var="login"/>
-						<span class="input-group-addon aligned">
-							<c:out value="${login}"/>
-						</span>
-						<form:input type="email" path="login" placeholder="${login}" maxlength="40" class="form-control" required="true"/>
-					</div>
-					<div class="form-group input-group">
-						<spring:message code="user.password" var="password"/>
-						<span class="input-group-addon aligned">
-							<c:out value="${password}"/>
-						</span>
-						<form:password path="password" placeholder="${password}" class="form-control" required="true"/>
-					</div>
-					<div class="form-group input-group">
-						<spring:message code="signup.password.confirm" var="passwordConfirm"/>
-						<span class="input-group-addon aligned">
-							<c:out value="${password}"/>
-						</span>
-						<form:password path="passwordConfirm" placeholder="${passwordConfirm}" class="form-control" required="true"/>
-					</div>
-					<h4>
-						<spring:message code="signup.personal"/>
-					</h4>
-					<div class="form-group input-group">
-						<spring:message code="user.name.first" var="firstname"/>
-						<span class="input-group-addon aligned">
-							<c:out value="${firstname}"/>
-						</span>
-						<form:input path="firstName" placeholder="${firstname}" maxlength="40" class="form-control" required="true"/>
-					</div>
-					<div class="form-group input-group">
-						<spring:message code="user.name.last" var="lastname"/>
-						<span class="input-group-addon aligned">
-							<c:out value="${lastname}"/>
-						</span>
-						<form:input path="lastName" placeholder="${lastname}" maxlength="40" class="form-control" required="true"/>
-					</div>
-					<div class="form-group input-group">
-						<span class="input-group-addon aligned">
-							<spring:message code="user.gender"/>
-						</span>
-						<form:select path="gender" class="form-control" required="true">
-							<form:option value="" disabled="true"><spring:message code="signup.gender"/></form:option>
-							<c:forEach var="option" items="${genders}">
-								<spring:message code="${option.description}" var="label"/>
-								<form:option value="${option}" label="${label}"/>
-							</c:forEach>
-						</form:select>
-					</div>
-					<div class="form-group input-group" id="datetimepicker">
-						<spring:message code="signup.birthdate" var="birthdate"/>
-						<span class="input-group-addon aligned">
-							<spring:message code="user.date.birth"/>
-						</span>
-						<form:input path="birthDate" readonly="true" placeholder="${birthdate}" class="form-control"/>
-						<span class="input-group-addon">
-							<span class="glyphicon glyphicon-calendar"></span>
-						</span>
-					</div>
-					<div class="form-group input-group">
-						<spring:message code="signup.country" var="country"/>
-						<span class="input-group-addon aligned">
-							<spring:message code="user.country"/>
-						</span>
-						<select name="countryId" class="form-control" required>
-							<option disabled>
-							<option value="RU" label="RU">
-							<option value="GB" label="GB">
-							<option value="US" label="US">
-						</select>
-					</div>
-					<h4>
-						<spring:message code="signup.other"/>
-					</h4>
-					<div class="form-group input-group">
-						<span class="input-group-addon aligned">
-							<spring:message code="user.weight"/>
-						</span>
-						<form:input path="weight" type="number" min="1" step="0.001" max="999" class="form-control" required="true"/>
-						<span class="input-group-addon">
-							<spring:message code="weight.measure"/>
-						</span>
-					</div>
-					<div class="form-group input-group">
-						<span class="input-group-addon aligned">
-							<spring:message code="user.height"/>
-						</span>
-						<form:input path="height" type="number" min="1" max="500" class="form-control" required="true"/>
-						<span class="input-group-addon">
-							<spring:message code="height.measure"/>
-						</span>
-					</div>
-					<div class="form-group input-group">
-						<span class="input-group-addon aligned">
-							<spring:message code="user.activity"/>
-						</span>
-						<form:input path="activityLevel" type="number" min="1" step="0.01" max="3" value="1.50" class="form-control" required="true"/>
-						<span class="input-group-addon">
-							<input id="paeLevel"/>
-						</span>
-					</div>
-					<button type="submit" class="btn btn-success">
-						<spring:message code="form.sign.up"/>
-					</button>
-				</form:form>
 			</div>
 		</div>
-		
+
+		<script type="text/template" id="form-template">
+			<form action="signup" accept-charset="UTF-8" method="post">
+				<h2 class="modal-header">(@= i18n['label.signup'] @)</h2>
+				<form:errors path="*" element="div" class="alert alert-danger"/>
+				<h4>(@= i18n['signup.account'] @)</h4>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.login'] @)</span>
+					<input name="login" type="email" placeholder="(@= i18n['user.login'] @)" maxlength="40" class="form-control" required>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.password'] @)</span>
+					<input name="password" type="password" placeholder="(@= i18n['user.password'] @)" class="form-control" required>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['signup.password.confirm'] @)</span>
+					<input name="passwordConfirm" type="password" placeholder="(@= i18n['signup.password.confirm'] @)" class="form-control" required>
+				</div>
+				<h4>(@= i18n['signup.personal'] @)</h4>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.name.first'] @)</span>
+					<input name="firstName" placeholder="(@= i18n['user.name.first'] @)" maxlength="40" class="form-control" required>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.name.last'] @)</span>
+					<input name="lastName" placeholder="(@= i18n['user.name.last'] @)" maxlength="40" class="form-control" required>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.gender'] @)</span>
+					<select name="gender" class="form-control" required>
+						<option disabled>(@= i18n['signup.gender'] @)</option>
+						<c:forEach var="option" items="${genders}"><option value="${option}" label="(@= i18n['${option.description}'] @)">
+						</c:forEach>
+					</select>
+				</div>
+				<div class="form-group input-group" id="datetimepicker">
+					<span class="input-group-addon aligned">(@= i18n['user.date.birth'] @)</span>
+					<input name="birthDate" placeholder="(@= i18n['signup.birthdate'] @)" class="form-control" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.country'] @)</span>
+					<select name="countryId" class="form-control" required>
+						<option disabled>(@= i18n['signup.country'] @)</option>
+						<option value="RU" label="RU">
+						<option value="GB" label="GB">
+						<option value="US" label="US">
+					</select>
+				</div>
+				<h4>(@= i18n['signup.other'] @)</h4>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.weight'] @)</span>
+					<input name="weight" type="number" min="1" step="0.001" max="999" class="form-control" required>
+					<span class="input-group-addon">(@= i18n['weight.measure'] @)</span>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.height'] @)</span>
+					<input name="height" type="number" min="1" max="500" class="form-control" required>
+					<span class="input-group-addon">(@= i18n['height.measure'] @)</span>
+				</div>
+				<div class="form-group input-group">
+					<span class="input-group-addon aligned">(@= i18n['user.activity'] @)</span>
+					<input name="activityLevel" type="number" min="1" step="0.01" max="3" value="1.50" class="form-control" required>
+					<span class="input-group-addon"><input id="paeLevel"/></span>
+				</div>
+				<button type="submit" class="btn btn-success">(@= i18n['form.sign.up'] @)</button>
+			</form>
+		</script>
+
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="resources/js/3rdparty/jquery-1.11.1.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
@@ -151,32 +105,5 @@
 		<script src="messages?${pageContext.response.locale}"></script>
 		<script src="resources/js/backbone/signup.js"></script>
 		<script src="resources/js/backbone/menu.js"></script>
-
-		<script type="text/javascript">
-			$('#datetimepicker').datetimepicker({
-				format: 'YYYY.MM.DD',
-				pickTime: false,
-				useStrict: true
-			});
-
-			var input = $('#activityLevel');
-
-			var slider = $('#paeLevel').slider({
-				min: 1,
-				max: 3,
-				precision: 2,
-				step: 0.1,
-				value: 1.50,
-				formatter: function(value) {
-					return value;
-				}
-			}).on('slide', function () {
-				input.val(slider.getValue());
-			}).data('slider');
-
-			input.on('change', function() {
-				slider.setValue(parseFloat(input.val()));
-			});
-		</script>
 	</body>
 </html>
