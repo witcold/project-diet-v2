@@ -12,7 +12,6 @@ var UserView = Backbone.View.extend({
 	el: $(".personal"),
 	template: _.template($("#personal-template").html()),
 	initialize: function () {
-		this.model.set("id", "user@domain");
 		this.listenTo(this.model, 'change', this.render);
 		this.model.fetch();
 	},
