@@ -109,33 +109,5 @@
 		<script src="messages?${pageContext.response.locale}"></script>
 		<script src="resources/js/backbone/diary.js"></script>
 		<script src="resources/js/backbone/menu.js"></script>
-
-		<script type="text/javascript">
-			var engine = new Bloodhound({
-				name: 'foods',
-				local: [],
-				remote: 'food/raw?query=%QUERY',
-				datumTokenizer: function(d) {
-					return Bloodhound.tokenizers.whitespace(d.name);
-				},
-				queryTokenizer: Bloodhound.tokenizers.whitespace
-			});
-			engine.initialize();
-
-			if (!String.prototype.capitalize) {
-				String.prototype.capitalize = function () {
-					return this.charAt(0).toUpperCase() + this.slice(1);
-				}
-			};
-
-			var lastDatum;
-			$('.typeahead').typeahead(null, {
-				displayKey: 'name' + '${lang}'.capitalize(),
-				source: engine.ttAdapter()
-			}).on('typeahead:selected typeahead:autocompleted', function(e, datum) {
-				$('#foodId').val(datum.id);
-				lastDatum = datum;
-			});
-		</script>
 	</body>
 </html>

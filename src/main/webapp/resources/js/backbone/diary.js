@@ -35,6 +35,24 @@ var ModalView = Backbone.View.extend({
 			pickDate: false,
 			useStrict: true
 		}).data("DateTimePicker");
+		var engine = new Bloodhound({
+			name: 'foods',
+			local: [],
+			remote: 'foods/search?query=%QUERY',
+			datumTokenizer: function(d) {
+				return Bloodhound.tokenizers.whitespace(d.name);
+			},
+			queryTokenizer: Bloodhound.tokenizers.whitespace
+		});
+		engine.initialize();
+
+		$('.typeahead').typeahead(null, {
+			displayKey: 'name',
+			source: engine.ttAdapter()
+		}).on('typeahead:selected typeahead:autocompleted', function(e, datum) {
+			$('#foodId').val(datum.id);
+			lastDatum = datum;
+		});
 	},
 	render: function () {
 		this.$el.html(this.template(messages));
@@ -142,6 +160,7 @@ var AppRouter = Backbone.Router.extend({
 	}
 });
 
+var lastDatum;
 var datetimepicker;
 var diaryform = $('#diaryForm');
 
