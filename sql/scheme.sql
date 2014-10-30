@@ -67,7 +67,7 @@ CREATE TABLE categories (
 	FOREIGN KEY (parent_id) REFERENCES categories (category_id)
 );
 
-INSERT INTO categories (category_id, parent_id, name_en, name_ru) VALUES (0, 0, 'NULL', 'NULL');
+INSERT INTO categories (category_id, parent_id, name_en, name_ru) VALUES (0, 0, 'All categories', 'Все категории');
 
 CREATE TABLE foods (
 	food_id			BIGSERIAL,
