@@ -13,7 +13,6 @@ import com.dataart.spring.model.User;
  */
 public class LoginValidator implements Validator {
 
-
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return User.class.equals(clazz);

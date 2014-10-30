@@ -70,13 +70,11 @@ public class WeightRestController {
 
 		List<Weight> list = weightDAO.selectByUserIdWithRange(user.getId(), from, to);
 		List<CaloriesDTO> bmrList = new ArrayList<CaloriesDTO>();
-		if (!list.isEmpty()) {
-			for (Weight weight : list) {
-				CaloriesDTO bmr = new CaloriesDTO();
-				bmr.setDate(weight.getDate());
-				bmr.setCalories((int) (user.getActivityLevel()*BMR.calculate(gender, age, height, weight.getWeight())));
-				bmrList.add(bmr);
-			}
+		for (Weight weight : list) {
+			CaloriesDTO bmr = new CaloriesDTO();
+			bmr.setDate(weight.getDate());
+			bmr.setCalories((int) (user.getActivityLevel()*BMR.calculate(gender, age, height, weight.getWeight())));
+			bmrList.add(bmr);
 		}
 		return bmrList;
 	}

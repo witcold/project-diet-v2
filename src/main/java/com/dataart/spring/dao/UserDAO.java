@@ -20,7 +20,7 @@ public class UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void insert(final User user) {
+	public void insert(User user) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(user);
 	}

@@ -7,7 +7,10 @@ import java.util.Date;
  * @author vmeshcheryakov
  *
  */
-public class DateUtils {
+public final class DateUtils {
+
+	private DateUtils() {
+	}
 
 	public static Date getDayStart(Date date) {
 		Calendar calendar = Calendar.getInstance();

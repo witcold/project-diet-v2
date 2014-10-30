@@ -15,8 +15,8 @@
 		<img alt="${lang}" src="resources/images/${lang}.png"> (@= i18n['language'] @)<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="?lang=ru"><img alt="ru_RU" src="resources/images/ru.png"> ru</a></li>
-		<li><a href="?lang=en"><img alt="en_US" src="resources/images/en.png"> en</a></li>
+		<li><a href="(@= location.pathname @)?lang=ru"><img alt="ru_RU" src="resources/images/ru.png"> ru</a></li>
+		<li><a href="(@= location.pathname @)?lang=en"><img alt="en_US" src="resources/images/en.png"> en</a></li>
 	</ul>
 </script>
 
