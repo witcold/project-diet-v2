@@ -8,7 +8,11 @@ import com.dataart.spring.model.Gender;
  * Basal metabolic rate
  * @author Witold Mescheryakov
  */
-public class BMR {
+public final class BMR {
+
+	private BMR() {
+		throw new AssertionError();
+	}
 
 	/**
 	 * Harris-Benedict equation (original)
@@ -101,31 +105,22 @@ public class BMR {
 	 */
 	public static int calculate(Gender gender, int age, int height, float weight) {
 		float[] list = new float[5];
-		if (gender == Gender.MALE) {
-			list[0] = BMR.calculateHB(true, height, weight, age);
-			list[1] = BMR.calculateHBR(true, height, weight, age);
-			list[2] = BMR.calculateM(true, height, weight, age);
-			list[3] = BMR.calculateKM(true, height, weight, age);
-			list[4] = BMR.calculateC(true, height, weight, age);
-			Arrays.sort(list);
-			return (int) list[2];
-		} else if (gender == Gender.FEMALE) {
-			list[0] = BMR.calculateHB(false, height, weight, age);
-			list[1] = BMR.calculateHBR(false, height, weight, age);
-			list[2] = BMR.calculateM(false, height, weight, age);
-			list[3] = BMR.calculateKM(false, height, weight, age);
-			list[4] = BMR.calculateC(false, height, weight, age);
-			Arrays.sort(list);
-			return (int) list[2];
-		} else { //let's calculate arithmetic mean
+		if (gender == Gender.MALE || gender == Gender.FEMALE) { // Simple case
+			boolean isMale = (gender == Gender.MALE);
+			list[0] = BMR.calculateHB(isMale, height, weight, age);
+			list[1] = BMR.calculateHBR(isMale, height, weight, age);
+			list[2] = BMR.calculateM(isMale, height, weight, age);
+			list[3] = BMR.calculateKM(isMale, height, weight, age);
+			list[4] = BMR.calculateC(isMale, height, weight, age);
+		} else { // Other gender? Well, let's calculate arithmetic mean
 			list[0] = 0.5f * (BMR.calculateHB(true, height, weight, age) + BMR.calculateHB(false, height, weight, age));
 			list[1] = 0.5f * (BMR.calculateHBR(true, height, weight, age) + BMR.calculateHBR(false, height, weight, age));
 			list[2] = 0.5f * (BMR.calculateM(true, height, weight, age) + BMR.calculateM(false, height, weight, age));
 			list[3] = 0.5f * (BMR.calculateKM(true, height, weight, age) + BMR.calculateKM(false, height, weight, age));
 			list[4] = 0.5f * (BMR.calculateC(true, height, weight, age) + BMR.calculateC(false, height, weight, age));
-			Arrays.sort(list);
-			return (int) list[2];
 		}
+		Arrays.sort(list);
+		return (int) list[2];
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.dataart.spring.dto;
 
-import java.io.Serializable;
-
 import com.dataart.spring.model.Category;
 
 /**
@@ -9,7 +7,7 @@ import com.dataart.spring.model.Category;
  * @author vmeshcheryakov
  *
  */
-public class CategoryDTO implements Serializable {
+public class CategoryDTO {
 
 	private long id;
 

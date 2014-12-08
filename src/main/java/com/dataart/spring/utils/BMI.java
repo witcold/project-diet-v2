@@ -4,7 +4,12 @@ package com.dataart.spring.utils;
  * Body mass index
  * @author Witold Mescheryakov
  */
-public class BMI {
+public final class BMI {
+
+	private BMI() {
+		throw new AssertionError();
+	}
+
 	/**
 	 * Quetelet formula
 	 * 1869
@@ -21,4 +26,5 @@ public class BMI {
 			return 0;
 		}
 	}
+
 }

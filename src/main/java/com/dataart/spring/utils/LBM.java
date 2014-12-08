@@ -5,7 +5,12 @@ package com.dataart.spring.utils;
  * @author Witold Mescheryakov
  *
  */
-public class LBM {
+public final class LBM {
+
+	private LBM() {
+		throw new AssertionError();
+	}
+
 	/**
 	 * Hume formula
 	 * 1966
@@ -22,4 +27,5 @@ public class LBM {
 			return (0.29569f * weight) + (0.41813f * height) - 43.2933f;
 		}
 	}
+
 }

@@ -28,7 +28,7 @@ public class MessagesController {
 	public String get(Model model, Locale locale, HttpServletResponse response) throws IOException {
 		long now = System.currentTimeMillis();
 		response.setDateHeader("Last-Modified", now);
-		response.setDateHeader("Expires", now + 1000 * 60 * 60 * 24);
+		response.setDateHeader("Expires", now + 1000 * 60 * 60 * 24); // Now + 1 day
 		model.addAttribute("keys", messageSource.getKeys(locale));
 		return "messages";
 	}

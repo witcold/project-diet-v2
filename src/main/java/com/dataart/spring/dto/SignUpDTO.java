@@ -1,6 +1,5 @@
 package com.dataart.spring.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.dataart.spring.model.Gender;
@@ -10,7 +9,7 @@ import com.dataart.spring.model.User;
  * @author vmeshcheryakov
  *
  */
-public class SignUpDTO implements Serializable {
+public class SignUpDTO {
 
 	private long id;
 

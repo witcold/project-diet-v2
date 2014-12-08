@@ -1,6 +1,5 @@
 package com.dataart.spring.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
 	@Column(name = "user_id")
 	@Id

@@ -1,7 +1,5 @@
 package com.dataart.spring.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "foods")
-public class Food implements Serializable {
+public class Food {
 
 	@Column(name = "food_id")
 	@Id
