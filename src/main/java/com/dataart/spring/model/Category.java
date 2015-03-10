@@ -32,7 +32,7 @@ public class Category {
 	private String nameRu;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "parentId")
+	@OneToMany(targetEntity = Category.class, mappedBy = "parentId")
 	private List<Category> subcategories;
 
 	public Category() {

@@ -45,6 +45,9 @@ var CategoriesListVeiw = Backbone.View.extend({
 	render: function () {
 		var self = this;
 		this.$el.empty();
+//		if (this.collection.size == 0) {
+//			$("#food-table").html("No data found");
+//		}
 		_.each(this.collection.models, function (category) {
 			var view = new CategoriesLisItemtVeiw({model: category});
 			self.$el.append(view.el);

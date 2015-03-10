@@ -24,6 +24,7 @@ import com.dataart.spring.model.User;
  * @author vmeshcheryakov
  *
  */
+//TODO Extend this list
 @WebFilter(filterName = "SessionFilter", urlPatterns = {"/dashboard/*", "/weight/*", "/food/*", "/diary/*", "/goal/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SessionFilter implements Filter {
 

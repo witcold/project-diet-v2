@@ -1,12 +1,14 @@
 package com.dataart.spring.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,6 +60,10 @@ public class User {
 
 	@Column(name = "activity_level")
 	private float activityLevel;
+
+	@JsonIgnore
+	@OneToMany(targetEntity = Weight.class, mappedBy = "userId")
+	private List<Weight> weights;
 
 	public User() {
 	}
@@ -142,13 +148,22 @@ public class User {
 		this.activityLevel = activityLevel;
 	}
 
+	public List<Weight> getWeights() {
+		return weights;
+	}
+
+	public void setWeights(List<Weight> weights) {
+		this.weights = weights;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", login=" + login + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", gender=" + gender + ", birthDate=" + birthDate
 				+ ", countryId=" + countryId + ", height=" + height
-				+ ", activityLevel=" + activityLevel + "]";
+				+ ", activityLevel=" + activityLevel + ", weights=" + weights
+				+ "]";
 	}
 
 }
